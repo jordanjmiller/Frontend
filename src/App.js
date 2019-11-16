@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Route } from 'react-router-dom';
+import Header from './components/Header';
+import LandingPage from './components/LandingPage';
+import Login from './components/Login';
+import PrivateRoute from './utils/PrivateRoute';
+import SignUpForm from './components/SignUpForm';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Route exact path='/' render={props => <LandingPage {...props} />} />
+      <Route exact path='/Login' render={props => <Login {...props} />} />
+      <Route exact path='/Register' render={props => <SignUpForm {...props} />} />
+      {/* <PrivateRoute></PrivateRoute> */}
     </div>
   );
 }
 
 export default App;
+
+
+// https://ddq.herokuapp.com/api/auth/register
+// https://ddq.herokuapp.com/api/auth/login
