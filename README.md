@@ -8,11 +8,11 @@ axios
 react-router-dom
 styled-components
 
-redux
+<!-- redux
 react-redux
 redux-thunk
 
-@testing-library/react
+@testing-library/react -->
 
 
 Temporary Documentation:
