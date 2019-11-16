@@ -11,7 +11,7 @@ export default function Header(props) {
       <Link to='/'> <h1 className='initial'>DevDesk</h1> </Link>
       </div>
       
-      {(() => {
+      {/* {(() => {
         if (props.loggedIn === true) {
           return (
             <>
@@ -32,7 +32,7 @@ export default function Header(props) {
             </nav>
           );
         }
-      })()}
+      })()} */}
 
     </div>
     </>
