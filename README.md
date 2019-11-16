@@ -14,13 +14,13 @@ redux-thunk
 
 @testing-library/react
 
-
+Test 
 
 Temporary Documentation:
-
+<!-- 
 Login.js:
 
-Enter username and password. onSubmit, axios.get server's /api/auth/login endpoint. If username/password match a user on the server, a token containing the user object is returned and saved into sessionStorage, and then the user is redirected to their dashboard (helper > student). Link to SignUpForm at the bottom of login form.
+Enter username and password. onSubmit, axios.get server's /api/auth/login endpoint. If username/password match a user on the server, a token containing the user object is returned and saved into sessionStorage, and then the user is redirected to their dashboard (helper > student). Link to SignUpForm at the bottom of login form. -->
 
 SignUpForm.js
 
