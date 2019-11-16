@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import axios from 'axios';
+import { decode } from '../modules/decode';
 
-export default function SignUpForm() {
+export default function SignUpForm(props) {
     const [newUser, setNewUser] = useState({
         username: '', 
         password: '',
@@ -8,17 +10,17 @@ export default function SignUpForm() {
         helper: false,
         student: false,
     });
-    const [email, setEmail] = useState('');
-    const [cohort, setCohort] = useState('');
+    const [newUserEmail, setNewUserEmail] = useState('');
+    const [newUserCohort, setNewUserCohort] = useState('');
 
-    console.log('newUser: ', newUser);
+    // console.log('newUser: ', newUser);
     
     const handleChange = (e) => {
         setNewUser({...newUser, [e.target.name]: e.target.value});
-        console.log(newUser);
+        // console.log(newUser);
     }
     const toggleBool = (e) => {
-        console.log('e.target.name: ', e.target.name);
+        // console.log('e.target.name: ', e.target.name);
         if (e.target.name === 'helper'){
             setNewUser({...newUser, helper: !newUser.helper});
         }
@@ -30,24 +32,43 @@ export default function SignUpForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // e.target.reset();
-
+        // console.log('newUser: ', newUser);
         if(validateInputs()){
-            console.log('it worked no way!- returned true');
+            // console.log('SignUpForm.js validateInputs returned true');
+
+            if (newUserEmail !== ''){
+                setNewUser({...newUser, email: newUserEmail});
+            }
+            if (newUserCohort !== ''){
+                setNewUser({...newUser, cohort: newUserCohort});
+            }
+
+            axios.post('https://ddq.herokuapp.com/api/auth/register', newUser)
+            .then(res => {
+                // console.log('axios: api/auth/register response: ',res);
+                alert('Signed up! Logging in now..');
+                axios.post('https://ddq.herokuapp.com/api/auth/login', { username: newUser.username, password: newUser.password})
+                .then(res => {
+                    // console.log('axios: api/auth/login response: ', res);
+                    sessionStorage.setItem('token', res.data.token);
+                    alert(res.data.message);
+                    // console.log('Decoded token', decode(res.data.token));
+                    if (decode(res.data.token).helper){
+                        props.history.push('/HelperDashboard');
+                    }
+                    else{
+                        props.history.push('/StudentDashboard');
+                    }
+                })
+                .catch(err => {console.log('SignUp Login Catch Error: ', err.response.data.error)
+                alert(err.response.data.error)});
+            })
+            .catch(err => {console.log('SignUp Catch Error: ', err.response.data.error)
+            alert(err.response.data.error)});
         }
         else{
-            console.log('it worked no way!- returned false');
+            console.log('SignUpForm.js validateInputs returned false');
         }
-
-        console.log('newUser: ', newUser);
-        // axios.post('http://localhost:5000/api/login', userCredentials)
-        // .then(res => {
-        //     console.log(res);
-        //     sessionStorage.setItem('token', res.data.payload);
-        //     props.history.push('/FriendsList');
-        // })
-        // .catch(err => {console.log('LOGIN CATCH ERROR: ', err.response.data.error)
-        // alert(err.response.data.error)});
-        // setUserCredentials({username: '', password: ''})
     }
 
     const validateInputs = () => {
@@ -77,7 +98,7 @@ export default function SignUpForm() {
             <form onSubmit={handleSubmit}>
                 <input name='username' onChange={handleChange} placeholder='username'/>
                 <br/>
-                <input name='password' onChange={handleChange} placeholder='password'/>
+                <input type='password' name='password' onChange={handleChange} placeholder='password'/>
                 <br/>
                 <input name='name' onChange={handleChange} placeholder='name'/>
                 <br/>
