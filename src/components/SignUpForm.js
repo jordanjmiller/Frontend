@@ -21,7 +21,7 @@ export default function SignUpForm(props) {
     if (e.target.name === 'email'){
       setNewUserEmail(e.target.value);
     }
-    else if (e.target.name === 'email'){
+    else if (e.target.name === 'cohort'){
       setNewUserCohort(e.target.value);
     }
     else{
