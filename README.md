@@ -4,9 +4,14 @@ App deployed at: lambdadevdesk.now.sh
 Dependencies used:
 
 jwt-decode
+
 axios
+
 react-router-dom
+
 styled-components
+
+react-loading-overlay
 
 <!-- redux
 react-redux
@@ -34,18 +39,27 @@ Optional inputs:
 email, cohort
 
 
-Protected Routes:
-
-StudentRoute:
-
-Requires a valid token, and requires the current user to be a student to access.
-
-
-HelperRoute:
-
-Requires a valid token, and requires the current user to be a helper to access.
-
-
 PrivateRoute:
 
-Requires a valid token, does not check anything about the currentUser.
+Allows access or redirects based off currentUser and token status. Routes:
+
+if token exists:
+
+    if path = /StudentDashboard
+
+        if currentUser.student render component
+
+        else return 'Must be student!' and redirect home
+
+    else if path = /HelperDashboard
+
+        if currentUser.helper render component
+
+        else return 'Must be helper!!' and redirect home
+
+    if path = /Login
+
+        return 'Already logged in!' and redirect to LogOff
+
+
+else (token does not exist): return 'Must be logged in!' alert and redirect to login page. 
