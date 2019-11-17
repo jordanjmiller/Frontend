@@ -22,39 +22,42 @@ const StyledLoader = styled(LoadingOverlay)`
 
 function App() {
   const [currentUser, setCurrentUser] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    console.log('use effect ran')
     //if currentUser is null, load data from server if you have a token. 
     //otherwise if you don't have a token you will be unable to access private routes and will be redirected to login page if you try.
     if (!currentUser && sessionStorage.getItem('token')){
-      console.log('app load user useEffect firing if !current user && token');
+      // console.log('app load user useEffect firing if !current user && token');
       setLoading(true);
       axiosWithAuth().get('/users/user')
-      .then(res => { console.log(res);
+      .then(res => { 
+          // console.log(res);
           setCurrentUser(res.data);
-          console.log(currentUser);
+          // console.log(currentUser);
       })
       .catch(err => { console.log(err.response.data.error) });
     }
     else{
       setLoading(false);
     }
-  }, [currentUser])
+  }, [currentUser, loading])
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loading, setLoading }}>
       <StyledLoader active={loading} spinner text='Loading...'>
-        {currentUser && 
-          <div className="App">
+        <div className='App'>
           <Header />
           <Route exact path='/' render={props => <LandingPage {...props} />} />
           <Route exact path='/Login' render={props => <Login {...props} />} />
-          <Route exact path='/LogOut' render={props => <LogOut {...props} />} />
-          <Route exact path='/Register' render={props => <SignUpForm {...props} />} />
-          <PrivateRoute exact path='/StudentDashboard' component={StudentDashboard} />
-          <PrivateRoute exact path='/HelperDashboard' component={HelperDashboard} />
-        </div>}
+          {!loading && 
+          <div>
+            <Route exact path='/LogOut' render={props => <LogOut {...props} />} />
+            <Route exact path='/Register' render={props => <SignUpForm {...props} />} />
+            <PrivateRoute exact path='/StudentDashboard' component={StudentDashboard} />
+            <PrivateRoute exact path='/HelperDashboard' component={HelperDashboard} />
+          </div>
+          }
+        </div>
       </StyledLoader>
     </CurrentUserContext.Provider>
   );
