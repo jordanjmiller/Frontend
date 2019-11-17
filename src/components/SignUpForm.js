@@ -3,26 +3,33 @@ import axios from "axios";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export default function SignUpForm(props) {
+  const { setCurrentUser } = useContext(CurrentUserContext);
   const [newUser, setNewUser] = useState({
     username: "",
     password: "",
     name: "",
     helper: false,
     student: false,
-    email: "",
-    cohort: ""
   });
-  //removed setNewUserEmail and cohort because they are not being used and throwing warnings for unused vars from react.
-  //readd if you need them
-  // const [newUserEmail] = useState('');
-  // const [newUserCohort] = useState('');
+  
+  const [newUserEmail, setNewUserEmail] = useState('');
+  const [newUserCohort, setNewUserCohort] = useState('');
 
   // console.log('newUser: ', newUser);
-  const { setCurrentUser } = useContext(CurrentUserContext);
+
   const handleChange = e => {
-    setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    if (e.target.name === 'email'){
+      setNewUserEmail(e.target.value);
+    }
+    else if (e.target.name === 'cohort'){
+      setNewUserCohort(e.target.value);
+    }
+    else{
+      setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    }
     // console.log(newUser);
   };
+
   const toggleBool = e => {
     // console.log('e.target.name: ', e.target.name);
     if (e.target.name === "helper") {
@@ -62,10 +69,7 @@ export default function SignUpForm(props) {
             }
             })
             .catch(err => {
-              console.log(
-                "SignUp Login Catch Error: ",
-                err.response.data.error
-              );
+              console.log("SignUp Login Catch Error: ", err.response.data.error);
               alert(err.response.data.error);
             });
         })
@@ -75,7 +79,7 @@ export default function SignUpForm(props) {
         });
     // console.log(newUser);
     } else {
-      console.log("SignUpForm.js validateInputs returned false");
+      // console.log("SignUpForm.js validateInputs returned false");
     }
   };
 
@@ -84,35 +88,27 @@ export default function SignUpForm(props) {
       alert("You must enter a password.");
       return false;
     }
-    if (!/(@|#|\$|&|\*)/.test(password)) {
-      alert("You must enter a specials char ");
+    if (password.length < 5 || password.length > 20) {
+      alert("Password cannot be less than 5 or greater than 20 characters");
       return false;
     }
-    if (password.length < 5 || password.length > 20) {
-      alert("Password is less than 5 or greater than 20 ");
+    if (!/(!|@|#|\$|&|\*|%|^)/.test(password)) {
+      alert("Password must contain at least one special character");
       return false;
     }
     if (!/([A-Z])/.test(password)) {
-      alert("Password must contain atleast one capitalized letter");
+      alert("Password must contain at least one capitalized letter");
       return false;
     }
     if (!/([0-9])/.test(password)) {
-        alert("Password must contain atleast one number");
+        alert("Password must contain at least one number");
         return false;
     }
     return true;
   };
 
   const validateInputs = () => {
-    if (newUser.email === "") {
-      alert("Enter an email");
-      return false;
-    }
-    if (newUser.cohort === "") {
-      alert("Pick a Cohort ");
-      return false;
-    }
-    console.log("validate Firing");
+    // console.log("validate Firing");
     if (newUser.username === "") {
       alert("You must enter a username.");
       return false;
@@ -128,6 +124,22 @@ export default function SignUpForm(props) {
       alert("You must choose to enroll as a helper, student, or both.");
       return false;
     }
+    if (newUserEmail !== "") {
+      //email is not a required input- to validate check if it is not null then check the data
+      //empty strings cannot be sent to the backend as they will be stored incorrectly- 
+      //so if email/cohort is empty we will not send them on the user object
+
+      //add to newUser obj since not null
+      setNewUser({...newUser, email: newUserEmail})
+    }
+    if (newUserCohort !== "") {
+      //cohort is not a required input- to validate check if it is not null then check the data
+      //empty strings cannot be sent to the backend as they will be stored incorrectly- 
+      //so if email/cohort is empty we will not send them on the user object
+
+      //add to newUser obj since not null
+      setNewUser({...newUser, cohort: newUserCohort});
+    }
     return true;
   };
 
@@ -135,45 +147,21 @@ export default function SignUpForm(props) {
     <div>
       <h2>Sign up for an account</h2>
       <form onSubmit={handleSubmit}>
-        <input name="username" onChange={handleChange} placeholder="username" 
-        value={newUser.username}
-        />
+        <input name="username" onChange={handleChange} placeholder="username" />
         <br />
-        <input
-          name="password"
-          value={newUser.password}
-          type="password"
-          onChange={handleChange}
-          placeholder="password"
-        />
+        <input name="password" type="password" onChange={handleChange} placeholder="password" />
         <br />
-        <input name="name" onChange={handleChange} placeholder="name" 
-        value={newUser.name}
-        />
+        <input name="name" onChange={handleChange} placeholder="name" />
         <br />
-        <input
-          name="email"
-          value={newUser.email}
-          type="email"
-          onChange={handleChange}
-          placeholder="email"
-        />
+        <input name="email" type="email" onChange={handleChange} placeholder="email" />
         <br />
-        <input 
-          name="cohort"
-          type="text"
-          value={newUser.cohort}
-          onChange={handleChange}
-          placeholder="cohort"
-        />
+        <input name="cohort" type="text" onChange={handleChange} placeholder="cohort" />
         <br />
-        <label>
-          Helper
-          <input type="checkbox" name="helper" onChange={toggleBool} />
+        <label> Helper
+          <input name="helper" type="checkbox" onChange={toggleBool} />
         </label>
-        <label>
-          Student
-          <input type="checkbox" name="student" onChange={toggleBool} />
+        <label> Student
+          <input name="student" type="checkbox" onChange={toggleBool} />
         </label>
         <br />
         <button type="submit">Submit</button>
