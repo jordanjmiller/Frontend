@@ -10,8 +10,10 @@ export default function SignUpForm(props) {
         helper: false,
         student: false,
     });
-    const [newUserEmail, setNewUserEmail] = useState('');
-    const [newUserCohort, setNewUserCohort] = useState('');
+    //removed setNewUserEmail and cohort because they are not being used and throwing warnings for unused vars from react. 
+    //readd if you need them
+    const [newUserEmail] = useState('');
+    const [newUserCohort] = useState('');
 
     // console.log('newUser: ', newUser);
     
@@ -113,12 +115,5 @@ export default function SignUpForm(props) {
             </form>
         </div>
     )
-}   
-//    username: string required
-//    password: string required
-//    name: string required
-//    helper: boolean required
-//    student: boolean required
-//    email: string optional
-//    cohort: string optional
+}
 
