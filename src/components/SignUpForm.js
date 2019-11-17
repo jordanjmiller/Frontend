@@ -113,6 +113,10 @@ export default function SignUpForm(props) {
       alert("You must enter a username.");
       return false;
     }
+    else if(!(/^[a-z][a-z0-9_]*$/i.test(newUser.username))) {
+      alert("Username must start with a letter and may only contain a-z, _, or numbers.");
+      return false;
+    }
     if (!isValidPassword(newUser.password)) {
       return false;
     }

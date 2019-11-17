@@ -30,13 +30,17 @@ SignUpForm.js
 
 Form to create a new user. On Submit, new user object is sent to server. If username has not already been taken, it returns a success message (else error) and the form calls the login endpoint using the new user's username and password. Once that succeeds the user is redirected to their dashboard.
 
-Required inputs:
+SignUpForm Validation:
 
-username, password, helper (t/f checkbox), student (t/f checkbox)
+Username: must start with a letter and may only contain a-z, _, and numbers.
 
-Optional inputs:
+Password: must be between 5 and 20 characters long and include one capitol letter, number, and special character.
 
-email, cohort
+Name: Cannot be null
+
+Helper/Student: One or both must be selected
+
+Email/cohort: Optional inputs, not currently validated except email has input type:email.
 
 
 PrivateRoute:
