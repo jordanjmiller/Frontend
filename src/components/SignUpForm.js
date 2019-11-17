@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-import { decode } from "../modules/decode";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export default function SignUpForm(props) {
   const [newUser, setNewUser] = useState({
-    username: "test",
-    password: "Password21@",
-    name: "Ray",
+    username: "",
+    password: "",
+    name: "",
     helper: false,
     student: false,
-    email: "test@test",
-    cohort: "web"
+    email: "",
+    cohort: ""
   });
   //removed setNewUserEmail and cohort because they are not being used and throwing warnings for unused vars from react.
   //readd if you need them
@@ -18,7 +18,7 @@ export default function SignUpForm(props) {
   // const [newUserCohort] = useState('');
 
   // console.log('newUser: ', newUser);
-
+  const { setCurrentUser } = useContext(CurrentUserContext);
   const handleChange = e => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
     // console.log(newUser);
@@ -50,8 +50,7 @@ export default function SignUpForm(props) {
             })
             .then(res => {
               // console.log('axios: api/auth/login response: ', res);
-              console.log(res.data)
-            //   console.log(decode(res.data.token))
+              setCurrentUser({...res.data.user});
               sessionStorage.setItem("token", res.data.token);
               alert(res.data.message);
               // console.log('Decoded token', decode(res.data.token));
