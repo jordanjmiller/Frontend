@@ -17,7 +17,7 @@ export default function Login(props) {
         // console.log('Login.js handleSubmit userCredentials:', userCredentials);
         axios.post('https://ddq.herokuapp.com/api/auth/login', userCredentials)
         .then(res => {
-            // console.log('axios: api/auth/login response: ', res);
+            console.log('axios: api/auth/login response: ', res);
             sessionStorage.setItem('token', res.data.token);
             //setState(res.data.user);
             alert(res.data.message);
