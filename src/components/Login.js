@@ -19,6 +19,7 @@ export default function Login(props) {
         .then(res => {
             // console.log('axios: api/auth/login response: ', res);
             sessionStorage.setItem('token', res.data.token);
+            //setState(res.data.user);
             alert(res.data.message);
             // console.log('Decoded token', decode(res.data.token));
             if (decode(res.data.token).helper){

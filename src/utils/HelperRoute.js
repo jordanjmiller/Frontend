@@ -17,7 +17,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         console.log('current user:', currentUser);
-        if (sessionStorage.getItem('token') && currentUser.student) {
+        if (sessionStorage.getItem('token') && currentUser.helper) {
           return <Component {...props} />;
         } else {
           alert('You must be logged in to view this page.');

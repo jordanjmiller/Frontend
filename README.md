@@ -32,3 +32,20 @@ username, password, helper (t/f checkbox), student (t/f checkbox)
 Optional inputs:
 
 email, cohort
+
+
+Protected Routes:
+
+StudentRoute:
+
+Requires a valid token, and requires the current user to be a student to access.
+
+
+HelperRoute:
+
+Requires a valid token, and requires the current user to be a helper to access.
+
+
+PrivateRoute:
+
+Requires a valid token, does not check anything about the currentUser.
