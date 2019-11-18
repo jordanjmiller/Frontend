@@ -35,7 +35,7 @@ function App() {
           setCurrentUser(res.data);
           // console.log(currentUser);
       })
-      .catch(err => { console.log(err.response.data.error) });
+      .catch(err => { console.log(err.response.data.message) });
     }
     else{
       setLoading(false);

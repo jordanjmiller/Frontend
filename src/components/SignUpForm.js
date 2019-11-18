@@ -69,13 +69,13 @@ export default function SignUpForm(props) {
             }
             })
             .catch(err => {
-              console.log("SignUp Login Catch Error: ", err.response.data.error);
-              alert(err.response.data.error);
+              console.log("SignUp Login Catch Error: ", err.response.data.message);
+              alert(err.response.data.message);
             });
         })
         .catch(err => {
-          console.log("SignUp Catch Error: ", err.response.data.error);
-          alert(err.response.data.error);
+          console.log("SignUp Catch Error: ", err.response.data.message);
+          alert(err.response.data.message);
         });
     // console.log(newUser);
     } else {
