@@ -10,6 +10,7 @@ export default function Login(props) {
     const handleChange = (e) => {
         setUserCredentials({...userCredentials, [e.target.name]: e.target.value});
     }
+    // console.log(userCredentials);
 
     const handleSubmit = (e) => {
         e.preventDefault();

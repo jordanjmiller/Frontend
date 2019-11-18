@@ -31,7 +31,7 @@ function App() {
       setLoading(true);
       axiosWithAuth().get('/users/user')
       .then(res => { 
-          console.log(res);
+          // console.log(res);
           setCurrentUser(res.data);
           // console.log(currentUser);
       })
