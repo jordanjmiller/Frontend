@@ -33,8 +33,8 @@ export default function Login(props) {
                 props.history.push('/StudentDashboard');
             }
         })
-        .catch(err => {console.log('LOGIN CATCH ERROR: ', err)
-        alert(err)});
+        .catch(err => {console.log('LOGIN CATCH ERROR: ', err.response.data.message)
+        alert(err.response.data.message)});
         setUserCredentials({username: '', password: ''})
     }
 
@@ -52,3 +52,5 @@ export default function Login(props) {
         </div>
     )
 }
+
+// new endpoint /api/util/username send username in body, returns true if in use, false if not
