@@ -20,3 +20,27 @@
 .App-link {
   color: #09d3ac;
 }
+
+
+
+/* debugging classes */
+.initial {
+  border: 1px solid black;
+}
+
+.active{
+border: 2px solid blue;
+}
+
+.headerDiv{
+  border: 1px solid pink;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav{
+      background-color: pink;
+      width: 400px;
+      display: flex;
+      justify-content: space-evenly;
+}

@@ -31,7 +31,7 @@ function App() {
       setLoading(true);
       axiosWithAuth().get('/users/user')
       .then(res => { 
-          // console.log(res);
+          console.log(res);
           setCurrentUser(res.data);
           // console.log(currentUser);
       })
@@ -46,7 +46,7 @@ function App() {
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loading, setLoading }}>
       <StyledLoader active={loading} spinner text='Loading...'>
         <div className='App'>
-          <Header />
+          <Route path='/' render={props => <Header {...props} />} />
           <Route exact path='/' render={props => <LandingPage {...props} />} />
           <Route exact path='/Login' render={props => <Login {...props} />} />
           {!loading && 
@@ -64,7 +64,3 @@ function App() {
 }
 
 export default App;
-
-
-// https://ddq.herokuapp.com/api/auth/register
-// https://ddq.herokuapp.com/api/auth/login
