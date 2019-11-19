@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Route } from 'react-router-dom';
 import SidebarNav from './SidebarNav.js';
 
-import Account from './Account.js';
+import Account from '../Global/Account.js';
 import CreateTicket from './CreateTicket.js';
 
 import OpenTicketList from './Unassigned/OpenTicketList.js';

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom';
-import process1 from '../images/process1.jpg';
-import process2 from '../images/process2.jpg';
-import process3 from '../images/process3.jpg';
+import process1 from '../../images/process1.jpg';
+import process2 from '../../images/process2.jpg';
+import process3 from '../../images/process3.jpg';
 
 export default function LandingPage() {
     return (

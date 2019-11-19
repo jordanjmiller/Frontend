@@ -6,11 +6,11 @@ import PrivateRoute from './utils/PrivateRoute';
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay";
 
-import Header from './components/Header';
-import LandingPage from './components/LandingPage';
-import Login from './components/Login';
-import LogOut from './components/LogOut';
-import SignUpForm from './components/SignUpForm';
+import Header from './components/Global/Header';
+import LandingPage from './components/Global/LandingPage';
+import Login from './components/Global/Login';
+import LogOut from './components/Global/LogOut';
+import SignUpForm from './components/Global/SignUpForm';
 
 
 import Dashboard from './components/Dashboard/Dashboard.js'
