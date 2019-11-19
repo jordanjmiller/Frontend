@@ -1,0 +1,39 @@
+
+.card-list {
+    max-width: 1200px;
+    margin: 3% auto 0;
+    .flex(space-around, @wrap: wrap);
+
+    @media @phone {
+        .flex(center, center, @direction: column);
+    }
+    
+    .card {
+        background-color: #fff;
+        width: 30%;
+        text-align: center;
+        box-shadow: 0px 1px 4px 0px rgba(216, 216, 216, 0.75);
+
+        @media @tablet {
+            width: 45%;
+            margin-bottom: 6%;
+        }
+
+        @media @phone {
+            width: 90%;
+            margin-bottom: 7%;
+        }
+
+        .card-img {
+            max-width: 100%;
+        }
+
+        .card-body {
+            padding: 10%;
+        }
+
+        a {
+            font-weight: @bold-font-weight;
+        }
+    }
+}
