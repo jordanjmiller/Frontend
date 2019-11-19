@@ -12,9 +12,9 @@ export default function SidebarNav() {
     return (
         <div className='sidebarDiv'>
             <nav className='sidebarNav'>
-                <NavLink to='/Unassigned'>Unassigned</NavLink> 
-                <NavLink to='/Mine'>Mine</NavLink>
-                <NavLink to='/Closed'>Closed</NavLink>
+                <NavLink style={{ textDecoration: 'none' }} to='/Dashboard/Unassigned'>Unassigned</NavLink> 
+                <NavLink style={{ textDecoration: 'none' }} to='/Dashboard/Mine'>Mine</NavLink>
+                <NavLink style={{ textDecoration: 'none' }} to='/Dashboard/Closed'>Closed</NavLink>
             </nav>
         </div>
     )

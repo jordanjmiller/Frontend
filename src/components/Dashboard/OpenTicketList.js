@@ -20,7 +20,7 @@ export default function OpenTicketList() {
     console.log(helpRequests);
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
-            <h1>This is the Helper Dashboard</h1>
+            <h1>This is OpenTicketList.js</h1>
             <table className='tickettable'>
                 <thead>
                     <tr>

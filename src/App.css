@@ -26,7 +26,8 @@
 }
 
 .sidebarDiv{
-  background-color: #383651;
+  /* bg color colorpicked from whimsical template */
+  background-color: #c3cfd9;
   border: 1px solid black;
   width: 30%;
   min-height: 100vh;
@@ -37,6 +38,7 @@
   flex-direction: column;
   width: 100%;
   padding-top: 20px;
+  text-decoration: none;
   /* flex-wrap: wrap; */
 }
 .sidebarNav a{
@@ -63,7 +65,7 @@ border: 2px solid blue;
   align-items: center;
 }
 nav {
-      background-color: pink;
+      /* background-color: pink; */
       width: 400px;
       display: flex;
       justify-content: space-evenly;

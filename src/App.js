@@ -13,7 +13,6 @@ import LogOut from './components/LogOut';
 import SignUpForm from './components/SignUpForm';
 
 import Dashboard from './components/Dashboard/Dashboard.js'
-import HelperDashboard from './components/Dashboard/OpenTicketList.js';
 
 import { CurrentUserContext } from './contexts/CurrentUserContext.js';
 
