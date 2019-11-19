@@ -13,7 +13,7 @@ export default function OpenTicketList() {
     useEffect(() => {
         axiosWithAuth().get('/tickets/open')
         .then(res => {
-            // console.log(res.data)
+            console.log(res.data)
             setHelpRequests(res.data)
         });
         // add error catch 
@@ -27,7 +27,7 @@ export default function OpenTicketList() {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Status</th>
+                        {/* <th>Status</th> */}
                         <th>Description</th>
                         <th>Subject</th>
                         <th>Age</th>
@@ -40,6 +40,8 @@ export default function OpenTicketList() {
                             <tr>
                             <OpenTicket 
                             key={request.id}
+                            id={request.id}
+                            name={request.name}
                             category={request.category}
                             title={request.title}
                             description={request.description}

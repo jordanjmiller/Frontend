@@ -20,9 +20,10 @@ export default function Header() {
                     <>
                     <h4>Welcome {currentUser.name}!</h4>
                         <nav className='loggedIn'>
-                            <NavLink className='navLink' exact to='/'> Home</NavLink> 
+                            {/* <NavLink className='navLink' exact to='/'> Home</NavLink> WS: Removed because the logo brings them home  */}
                             <NavLink className='navLink' to='/Dashboard/Account'>Account</NavLink>
                             <NavLink className='navLink' to='/Dashboard/CreateTicket'>Create Ticket</NavLink>
+                            <NavLink className='navLink' to='/Dashboard/Unassigned'>Dashboard</NavLink>
                             {/* Not sure what below is intended to link to */}
                             {/* <NavLink to='/'>Tickets</NavLink> */}
                         </nav>
