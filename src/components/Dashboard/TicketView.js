@@ -16,7 +16,7 @@ export default function TicketView() {
           Account
         </NavLink>
         <NavLink className="navLink" to="/Dashboard/ReviewTicket"> {/* // Need to make a Component for ReviewTicket */}
-          Review Tickets
+          Review Ticket
         </NavLink>
       </nav>
     </div>
