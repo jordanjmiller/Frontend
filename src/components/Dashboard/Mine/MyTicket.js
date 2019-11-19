@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as timeago from 'timeago.js';
 
 
-export default function OpenTicket(props) {
+export default function MyTicket(props) {
     return (
         <>
             <td className='boldrows'>{props.student_name}</td> 
