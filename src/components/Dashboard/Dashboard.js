@@ -8,7 +8,7 @@ import CreateTicket from './CreateTicket.js';
 import OpenTicketList from './Unassigned/OpenTicketList.js';
 import UserTicketList from './Mine/UserTicketList.js';
 import ClosedTicketList from './Closed/ClosedTicketList.js';
-import Ticket from './Ticket';
+import TicketView from './TicketView';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
@@ -30,7 +30,7 @@ export default function Dashboard() {
                 <Route exact path='/Dashboard/Unassigned' component={OpenTicketList} />
                 <Route exact path='/Dashboard/Mine' component={UserTicketList} />
                 <Route exact path='/Dashboard/Closed' component={ClosedTicketList} />
-                <Route exact path='/Dashboard/Tickets/:id' component={Ticket} />
+                <Route exact path='/Dashboard/Tickets/:id' component={TicketView} />
             </CurrentUserContext.Provider>
         </div>
     )
