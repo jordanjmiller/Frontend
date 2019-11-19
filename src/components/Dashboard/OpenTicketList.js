@@ -11,13 +11,13 @@ export default function OpenTicketList() {
     useEffect(() => {
         axiosWithAuth().get('/tickets/open')
         .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             setHelpRequests(res.data)
         });
         // add error catch 
     }, []);
 
-    console.log(helpRequests);
+    // console.log(helpRequests);
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
             <h1>This is OpenTicketList.js</h1>

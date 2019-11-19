@@ -1,12 +1,32 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-// import { CurrentUserContext } from '../contexts/CurrentUserContext';
+
+export default function SidebarNav({searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, filterByStudent, setFilterByStudent }) {
 
 
-export default function SidebarNav() {
-    // const { currentUser } = useContext(CurrentUserContext);
+    let fullWindowLocation = window.location.toString();
+    let noBaseWindowLocation = fullWindowLocation.slice(21, fullWindowLocation.length);
+    // console.log('sidebar props', fullWindowLocation);
+    // console.log('sidebar props', noBaseWindowLocation);
 
+    const handleChange = e => {
+          setSearchTerm(e.target.value);
+        console.log('SideBar Search Term:', searchTerm);
+      };
+    
+      const toggleBool = e => {
+        if (e.target.name === "helper") {
+            setFilterByHelper(!filterByHelper);
+        } 
+        else if (e.target.name === "student") {
+            setFilterByStudent(!filterByStudent);
+        }
+      };
+
+      const clearSearchTerm = () => {
+          setSearchTerm('');
+      };
 
 
     return (
@@ -16,6 +36,35 @@ export default function SidebarNav() {
                 <NavLink style={{ textDecoration: 'none' }} to='/Dashboard/Mine'>Mine</NavLink>
                 <NavLink style={{ textDecoration: 'none' }} to='/Dashboard/Closed'>Closed</NavLink>
             </nav>
+
+            {/* only if at any of the three above routes display filter tools. */}
+            {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
+
+                if(noBaseWindowLocation === '/Dashboard/Unassigned' | noBaseWindowLocation === '/Dashboard/Mine' | noBaseWindowLocation === '/Dashboard/Closed')
+                {
+                    return (
+                        <div>
+                            <h1>it's working!!!</h1>
+                            <h2>create filter checks and search term. set context bools 
+                                to be used in Unassigned Mine and Closed to use to filter with</h2>
+
+                                <label> Search by Category                  
+                                <input name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Category..." />
+                                </label>
+                                <br />
+                                <button onClick={clearSearchTerm}>Clear</button>
+                                <br />
+                                <label> Helper
+                                <input name="helper" type="checkbox" checked={filterByHelper} onChange={toggleBool} />
+                                </label>
+                                <label> Student
+                                <input name="student" type="checkbox" checked={filterByStudent} onChange={toggleBool} />
+                                </label>
+                            
+                        </div>
+                    );
+                }
+            })()}
         </div>
     )
 }

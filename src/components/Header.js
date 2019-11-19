@@ -5,7 +5,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 export default function Header() {
     const { currentUser } = useContext(CurrentUserContext);
-    console.log(currentUser);
+    // console.log(currentUser);
 
   return (
     <>
