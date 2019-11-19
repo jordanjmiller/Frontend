@@ -15,6 +15,8 @@ import StudentDashboard from './components/Student/StudentDashboard.js';
 import HelperDashboard from './components/Helper/HelperDashboard.js';
 
 import { CurrentUserContext } from './contexts/CurrentUserContext.js';
+// import SidebarNav from './components/Dashboard/SidebarNav';
+// import Dashboard from './components/Dashboard/Dashboard';
 
 const StyledLoader = styled(LoadingOverlay)`
     min-height: 100vh;
@@ -23,6 +25,7 @@ const StyledLoader = styled(LoadingOverlay)`
 function App() {
   const [currentUser, setCurrentUser] = useState('');
   const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
     //if currentUser is null, load data from server if you have a token. 
     //otherwise if you don't have a token you will be unable to access private routes and will be redirected to login page if you try.
@@ -42,6 +45,8 @@ function App() {
     }
   }, [currentUser, loading])
 
+
+
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loading, setLoading }}>
       <StyledLoader active={loading} spinner text='Loading...'>
@@ -53,6 +58,13 @@ function App() {
           <div>
             <Route exact path='/LogOut' render={props => <LogOut {...props} />} />
             <Route exact path='/Register' render={props => <SignUpForm {...props} />} />
+
+            {/* <div className='dashboard'>
+              <PrivateRoute exact path='^(?!/$)' component={SidebarNav} />
+              <PrivateRoute exact path='/Dashboard/Unassigned' component={Dashboard} />
+            </div> */}
+
+
             <PrivateRoute exact path='/StudentDashboard' component={StudentDashboard} />
             <PrivateRoute exact path='/HelperDashboard' component={HelperDashboard} />
           </div>

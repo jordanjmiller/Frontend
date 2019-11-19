@@ -1,18 +1,18 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+import * as timeago from 'timeago.js';
 
 export default function HelpListItem(props) {
     return (
-        <div> 
-            <p>{props.title}</p>
-            <p>{props.description}</p>
-            <p>{props.category}</p>
-            <p>{props.time_created}</p>
-        </div>
-        // <tr>
-        //     <td>{props.title}</td>
-        //     <td>{props.description}</td>
-        //     <td>{props.category}</td>
-        //     <td>{props.time_created}</td>
-        // </tr>
+        <>
+            <td className='boldrows'>Student Name -- replace</td> 
+            <td className='boldrows'>Status -- replace</td>
+            <td>{props.title}</td>
+            <td className='boldrows'>{props.category}</td>
+            <td>{timeago.format(props.created_at)}</td>
+            <td><Link to='/'>View</Link></td>
+        </>
+    
     )
 }
+

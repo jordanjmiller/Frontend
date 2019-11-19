@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import HelpListItem from './HelpListItem';
+import './Dashboard.css';
+
 
 export default function HelperDashboard() {
 
@@ -19,30 +21,33 @@ export default function HelperDashboard() {
     return (
         <div>
             <h1>This is the Helper Dashboard</h1>
-            {/* <table>
+            <table className='tickettable'>
                 <thead>
-                    <tr>Title</tr>
-                    <tr>Description</tr>
-                    <tr>Category</tr>
-                    <tr>Time Created</tr>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Subject</th>
+                        <th>Age</th>
+                        <th>Link</th>
+                    </tr>
                 </thead>
-                <tr> */}
-                <div>
-                {helpRequests.map(request => {
-                     return (
-
-                        <HelpListItem 
-                        key={request.id}
-                        category={request.category}
-                        title={request.title}
-                        description={request.description}
-                        time_created={request.time_created}
-                        />
-                        )
-                    })}
-                    </div>
-                {/* </tr>
-            </table> */}
+                <tbody>
+                    {helpRequests.map(request => {
+                        return (
+                            <tr>
+                            <HelpListItem 
+                            key={request.id}
+                            category={request.category}
+                            title={request.title}
+                            description={request.description}
+                            created_at={request.created_at}
+                            />
+                            </tr>
+                            )
+                        })}
+                </tbody>
+            </table> 
         </div>
     )
 }
