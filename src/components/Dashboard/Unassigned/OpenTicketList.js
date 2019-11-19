@@ -1,7 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import OpenTicket from './OpenTicket';
-import '../Dashboard.css';
 
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
@@ -12,6 +11,7 @@ export default function OpenTicketList() {
 
     useEffect(() => {
         axiosWithAuth().get('/tickets/open')
+        
         .then(res => {
             // console.log(res.data)
             setHelpRequests(res.data)
@@ -22,7 +22,6 @@ export default function OpenTicketList() {
     // console.log(helpRequests);
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
-            <h1>This is OpenTicketList.js</h1>
             <table className='tickettable'>
                 <thead>
                     <tr>
@@ -41,7 +40,7 @@ export default function OpenTicketList() {
                             <OpenTicket 
                             key={request.id}
                             id={request.id}
-                            name={request.name}
+                            student_name={request.student_name}
                             category={request.category}
                             title={request.title}
                             description={request.description}
