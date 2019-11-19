@@ -178,6 +178,9 @@ header nav a {
     margin: 1.5rem 0;
   }
 }
+header nav .active {
+  color: #BF0033;
+}
 footer {
   height: 150px;
   text-align: center;
