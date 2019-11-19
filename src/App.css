@@ -21,43 +21,6 @@
   color: #09d3ac;
 }
 
-.dashboard{
-  display:flex;
-}
-
-.sidebarDiv{
-  /* bg color colorpicked from whimsical template */
-  background-color: #c3cfd9;
-  border: 1px solid black;
-  width: 15%;
-  min-height: 100vh;
-}
-.sidebarNav{
-  /* border: 1px solid black; */
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-top: 20px;
-  text-decoration: none;
-  /* flex-wrap: wrap; */
-}
-.sidebarNav a{
-  margin-bottom: 20px;
-}
-.navLink{
-  color: black;
-  text-decoration: none;
-}
-.navLink:visited{
-  color: black;
-}
-.navLink:hover{
-  color: red;
-}
-
-.helperDashboard{
-  width: 85%;
-}
 
 /* debugging classes */
 .initial {

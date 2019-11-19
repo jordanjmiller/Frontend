@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 import { Route } from 'react-router-dom';
 import SidebarNav from './SidebarNav.js';
 
-import Account from './Account.js';
+import Account from '../Global/Account.js';
 import CreateTicket from './CreateTicket.js';
 
-import OpenTicketList from './OpenTicketList.js';
-import UserTicketList from './UserTicketList.js';
-import ClosedTicketList from './ClosedTicketList.js';
-import Ticket from './Ticket';
+import OpenTicketList from './Unassigned/OpenTicketList.js';
+import UserTicketList from './Mine/UserTicketList.js';
+import ClosedTicketList from './Closed/ClosedTicketList.js';
+import TicketView from './TicketView';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
@@ -30,7 +30,7 @@ export default function Dashboard() {
                 <Route exact path='/Dashboard/Unassigned' component={OpenTicketList} />
                 <Route exact path='/Dashboard/Mine' component={UserTicketList} />
                 <Route exact path='/Dashboard/Closed' component={ClosedTicketList} />
-                <Route exact path='/Dashboard/Tickets/:id' component={Ticket} />
+                <Route exact path='/Dashboard/Tickets/:id' component={TicketView} />
             </CurrentUserContext.Provider>
         </div>
     )

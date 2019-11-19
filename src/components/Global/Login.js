@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 export default function Login(props) {
     const { setCurrentUser } = useContext(CurrentUserContext);

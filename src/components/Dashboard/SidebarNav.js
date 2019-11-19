@@ -54,7 +54,7 @@ export default function SidebarNav() {
                             <br />
                             <br />
                             <label> Search by Category                  
-                            <input name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Category..." />
+                            <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Category..." />
                             </label>
                             <br />
                             <button onClick={clearSearchTerm}>Clear</button>

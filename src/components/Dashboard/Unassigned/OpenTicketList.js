@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useContext} from 'react';
-import { axiosWithAuth } from '../../utils/axiosWithAuth';
+import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import OpenTicket from './OpenTicket';
-import './Dashboard.css';
+import '../Dashboard.css';
 
-import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
 export default function OpenTicketList() {
     const { searchTerm, filterByHelper, filterByStudent, filterByOpenClosed } = useContext(CurrentUserContext);
@@ -13,7 +13,7 @@ export default function OpenTicketList() {
     useEffect(() => {
         axiosWithAuth().get('/tickets/open')
         .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             setHelpRequests(res.data)
         });
         // add error catch 
