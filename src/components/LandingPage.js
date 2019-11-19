@@ -3,9 +3,51 @@ import { Link, NavLink } from 'react-router-dom';
 
 export default function LandingPage() {
     return (
-        <div>
-            <h2>Welcome to DevDesk!</h2>
-            <Link to='/Login'>Click here to login.</Link>
+        <div className="container">
+        <section className="main-hero">
+            <div className="cta">
+                <h1>Get support, fast.</h1>
+                <p>Problem? We're here to help. Get a ticket in and our team of helpers will get you back on track.</p>
+                <Link to='/Dashboard.js'>Submit a Ticket</Link>
+            </div>
+        </section>
+
+        <section className="process">
+            <h2>A simple process.</h2>
+
+            <div className="card-list">
+                
+                <div className="card">
+                    {/* <img className="card-img" src="images/process1.jpg" alt="Frustrated individual"> */}
+                    <div className="card-body">
+                        <h3>Ask your question</h3>
+                        <p>Skip the frustration, get to the answer.</p>
+                        <Link to='/Login'>Get Started</Link>
+                    </div>
+                </div>
+
+                
+                <div className="card">
+                    {/* <img className="card-img" src="images/process2.jpg" alt="Man contemplates code"> */}
+                    <div className="card-body">
+                        <h3>Get help</h3>
+                        <p>Our team of helpers will get you back on track.</p>
+                        <Link to='/Login'>Get Started</Link>
+                    </div>
+                </div>
+
+                
+                <div className="card">
+                    {/* <img className="card-img" src="images/process3.jpg" alt="Programmer at work"> */}
+                    <div className="card-body">
+                        <h3>Get to work</h3>
+                        <p>Get back to getting stuff done.</p>
+                        <Link to='/Login'>Get Started</Link>
+                    </div>
+                </div>
+            </div>
+        </section>
         </div>
+           
     )
 }
