@@ -41,10 +41,17 @@ export default function Login(props) {
 
     return (
         <div>
+            <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-            <input name='username' onChange={handleChange} placeholder='username'/>
-            <input type='password' name='password' onChange={handleChange} placeholder='password'/>
-            <button type='submit'>Submit</button>
+                <label>
+                    Username:
+                    <input name='username' onChange={handleChange} placeholder='username'/>
+                </label>
+                <label>
+                    Password:
+                    <input type='password' name='password' onChange={handleChange} placeholder='password'/>
+                </label>
+                <button type='submit'>Login</button>
             </form>
 
             <br />

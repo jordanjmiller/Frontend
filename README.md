@@ -1,17 +1,15 @@
+Build Week: Lambda DevDesk
+
 Server deployed at: https://ddq.herokuapp.com/api
 App deployed at: lambdadevdesk.now.sh
 
 Dependencies used:
-
-jwt-decode
-
-axios
-
-react-router-dom
-
-styled-components
-
-react-loading-overlay
+- jwt-decode
+- axios
+- react-router-dom
+- styled-components
+- react-loading-overlay
+- less
 
 <!-- redux
 react-redux
@@ -19,6 +17,17 @@ redux-thunk
 
 @testing-library/react -->
 
+### Work flow:
+
+*Beginning of day* 
+- git pull origin development
+- npm install
+- npm start
+- Post what you're working on to Slack 
+
+*Beginning of day* 
+- Send pull request; add team as reviewers
+- Post what you worked on to Slack 
 
 Temporary Documentation:
 
