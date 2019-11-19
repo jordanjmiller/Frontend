@@ -23,6 +23,7 @@ redux-thunk
 *Beginning of day* 
 - git pull origin development
 - npm install
+- less-watch-compiler src/LESS src index.less
 - npm start
 - Post what you're working on to Slack 
 
