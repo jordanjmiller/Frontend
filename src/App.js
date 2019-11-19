@@ -11,8 +11,8 @@ import LandingPage from './components/LandingPage';
 import Login from './components/Login';
 import LogOut from './components/LogOut';
 import SignUpForm from './components/SignUpForm';
-import StudentDashboard from './components/Student/StudentDashboard.js';
-import HelperDashboard from './components/Helper/HelperDashboard.js';
+
+import Dashboard from './components/Dashboard/Dashboard.js'
 
 import { CurrentUserContext } from './contexts/CurrentUserContext.js';
 
@@ -23,6 +23,12 @@ const StyledLoader = styled(LoadingOverlay)`
 function App() {
   const [currentUser, setCurrentUser] = useState('');
   const [loading, setLoading] = useState(true);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterByHelper, setFilterByHelper] = useState(true);
+  const [filterByStudent, setFilterByStudent] = useState(true);
+  const [filterByOpenClosed, setFilterByOpenClosed] = useState(true);
+
   useEffect(() => {
     //if currentUser is null, load data from server if you have a token. 
     //otherwise if you don't have a token you will be unable to access private routes and will be redirected to login page if you try.
@@ -31,7 +37,7 @@ function App() {
       setLoading(true);
       axiosWithAuth().get('/users/user')
       .then(res => { 
-          console.log(res);
+          // console.log(res);
           setCurrentUser(res.data);
           // console.log(currentUser);
       })
@@ -42,8 +48,11 @@ function App() {
     }
   }, [currentUser, loading])
 
+
   return (
-    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loading, setLoading }}>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loading, setLoading,
+      searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, filterByStudent, setFilterByStudent,
+      filterByOpenClosed, setFilterByOpenClosed }}>
       <StyledLoader active={loading} spinner text='Loading...'>
         <div className='App'>
           <Route path='/' render={props => <Header {...props} />} />
@@ -53,8 +62,8 @@ function App() {
           <div>
             <Route exact path='/LogOut' render={props => <LogOut {...props} />} />
             <Route exact path='/Register' render={props => <SignUpForm {...props} />} />
-            <PrivateRoute exact path='/StudentDashboard' component={StudentDashboard} />
-            <PrivateRoute exact path='/HelperDashboard' component={HelperDashboard} />
+
+            <PrivateRoute path='/Dashboard' component={Dashboard} />
           </div>
           }
         </div>

@@ -10,6 +10,7 @@ Dependencies used:
 - styled-components
 - react-loading-overlay
 - less
+- javascript-time-ago
 
 <!-- redux
 react-redux

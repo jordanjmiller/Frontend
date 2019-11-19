@@ -10,6 +10,7 @@ export default function Login(props) {
     const handleChange = (e) => {
         setUserCredentials({...userCredentials, [e.target.name]: e.target.value});
     }
+    // console.log(userCredentials);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,13 +26,8 @@ export default function Login(props) {
             
             // alert(res.data.message);
 
-            //redirect based off of user values
-            if (res.data.user.helper){
-                props.history.push('/HelperDashboard');
-            }
-            else{
-                props.history.push('/StudentDashboard');
-            }
+            //redirect to open queue
+            props.history.push('/Dashboard/Unassigned');
         })
         .catch(err => {console.log('LOGIN CATCH ERROR: ', err.response.data.message)
         alert(err.response.data.message)});
