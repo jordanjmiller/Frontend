@@ -62,11 +62,8 @@ export default function SignUpForm(props) {
               alert(res.data.message);
               // console.log('Decoded token', decode(res.data.token));
 
-              if (res.data.user.helper) {
-                props.history.push("/HelperDashboard");
-              } else {
-                props.history.push("/StudentDashboard");
-            }
+              //redirect to open queue
+              props.history.push('/Dashboard/Unassigned');
             })
             .catch(err => {
               console.log("SignUp Login Catch Error: ", err.response.data.message);

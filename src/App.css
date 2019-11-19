@@ -21,8 +21,30 @@
   color: #09d3ac;
 }
 
-.sidebarNav{
+.dashboard{
+  display:flex;
+}
+
+.sidebarDiv{
+  background-color: #383651;
   border: 1px solid black;
+  width: 30%;
+  min-height: 100vh;
+}
+.sidebarNav{
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 20px;
+  /* flex-wrap: wrap; */
+}
+.sidebarNav a{
+  margin-bottom: 20px;
+}
+
+.helperDashboard{
+  width: 70%;
 }
 
 /* debugging classes */

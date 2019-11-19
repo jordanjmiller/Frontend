@@ -22,8 +22,7 @@ export default function Header(props) {
                         <h1>Welcome {currentUser.name}!</h1>
                             <nav className='loggedIn'>
                                 <NavLink exact to='/'> Home</NavLink> 
-                                <NavLink to='/HelperDashboard'>Helper Dashboard</NavLink>
-                                <NavLink to='/StudentDashboard'>Student Dashboard</NavLink>
+                                <NavLink to='/Dashboard/Unassigned'>Helper Dashboard</NavLink>
                             </nav>
                         </>
                     );

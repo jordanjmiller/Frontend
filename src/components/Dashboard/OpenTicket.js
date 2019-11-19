@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import * as timeago from 'timeago.js';
 
-export default function HelpListItem(props) {
+export default function OpenTicket(props) {
     return (
         <>
             <td className='boldrows'>Student Name -- replace</td> 

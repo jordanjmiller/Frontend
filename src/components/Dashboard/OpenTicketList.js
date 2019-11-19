@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
-import HelpListItem from './HelpListItem';
+import OpenTicket from './OpenTicket';
 import './Dashboard.css';
 
 
-export default function HelperDashboard() {
+export default function OpenTicketList() {
 
     const [helpRequests, setHelpRequests] = useState([]);
 
@@ -19,7 +19,7 @@ export default function HelperDashboard() {
 
     console.log(helpRequests);
     return (
-        <div>
+         <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
             <h1>This is the Helper Dashboard</h1>
             <table className='tickettable'>
                 <thead>
@@ -36,7 +36,7 @@ export default function HelperDashboard() {
                     {helpRequests.map(request => {
                         return (
                             <tr>
-                            <HelpListItem 
+                            <OpenTicket 
                             key={request.id}
                             category={request.category}
                             title={request.title}
