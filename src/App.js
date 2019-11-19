@@ -27,6 +27,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterByHelper, setFilterByHelper] = useState(true);
   const [filterByStudent, setFilterByStudent] = useState(true);
+  const [filterByOpenClosed, setFilterByOpenClosed] = useState(true);
 
   useEffect(() => {
     //if currentUser is null, load data from server if you have a token. 
@@ -50,7 +51,8 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loading, setLoading,
-      searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, filterByStudent, setFilterByStudent }}>
+      searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, filterByStudent, setFilterByStudent,
+      filterByOpenClosed, setFilterByOpenClosed }}>
       <StyledLoader active={loading} spinner text='Loading...'>
         <div className='App'>
           <Route path='/' render={props => <Header {...props} />} />

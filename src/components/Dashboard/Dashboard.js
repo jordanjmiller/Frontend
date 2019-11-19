@@ -15,19 +15,21 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 export default function Dashboard() {
     const { searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, 
-        filterByStudent, setFilterByStudent } = useContext(CurrentUserContext);
+        filterByStudent, setFilterByStudent, filterByOpenClosed, setFilterByOpenClosed } = useContext(CurrentUserContext);
 
     return (
         <div className='dashboard'>
-            <SidebarNav searchTerm={searchTerm} setSearchTerm={setSearchTerm} filterByHelper={filterByHelper} setFilterByHelper={setFilterByHelper} 
-            filterByStudent={filterByStudent} setFilterByStudent={setFilterByStudent}/>
+            <CurrentUserContext.Provider value={{ searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, 
+            filterByStudent, setFilterByStudent, filterByOpenClosed, setFilterByOpenClosed }}>
+                <SidebarNav />
 
-            <Route exact path='/Dashboard/Account' component={Account} />
-            <Route exact path='/Dashboard/CreateTicket' component={CreateTicket} />
+                <Route exact path='/Dashboard/Account' component={Account} />
+                <Route exact path='/Dashboard/CreateTicket' component={CreateTicket} />
 
-            <Route exact path='/Dashboard/Unassigned' component={OpenTicketList} />
-            <Route exact path='/Dashboard/Mine' component={UserTicketList} />
-            <Route exact path='/Dashboard/Closed' component={ClosedTicketList} />
+                <Route exact path='/Dashboard/Unassigned' component={OpenTicketList} />
+                <Route exact path='/Dashboard/Mine' component={UserTicketList} />
+                <Route exact path='/Dashboard/Closed' component={ClosedTicketList} />
+            </CurrentUserContext.Provider>
         </div>
     )
 }

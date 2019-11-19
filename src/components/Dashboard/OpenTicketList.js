@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import OpenTicket from './OpenTicket';
 import './Dashboard.css';
 
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 export default function OpenTicketList() {
+    const { searchTerm, filterByHelper, filterByStudent, filterByOpenClosed } = useContext(CurrentUserContext);
 
     const [helpRequests, setHelpRequests] = useState([]);
 

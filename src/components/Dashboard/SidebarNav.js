@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom';
 
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
-export default function SidebarNav({searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, filterByStudent, setFilterByStudent }) {
-
+export default function SidebarNav() {
+    const { searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, 
+    filterByStudent, setFilterByStudent, filterByOpenClosed, setFilterByOpenClosed } = useContext(CurrentUserContext);
 
     let fullWindowLocation = window.location.toString();
     let noBaseWindowLocation = fullWindowLocation.slice(21, fullWindowLocation.length);
@@ -21,6 +23,9 @@ export default function SidebarNav({searchTerm, setSearchTerm, filterByHelper, s
         } 
         else if (e.target.name === "student") {
             setFilterByStudent(!filterByStudent);
+        }
+        else if (e.target.name === "openClosed") {
+            setFilterByOpenClosed(!filterByOpenClosed);
         }
       };
 
@@ -44,23 +49,26 @@ export default function SidebarNav({searchTerm, setSearchTerm, filterByHelper, s
                 {
                     return (
                         <div>
-                            <h1>it's working!!!</h1>
-                            <h2>create filter checks and search term. set context bools 
-                                to be used in Unassigned Mine and Closed to use to filter with</h2>
-
-                                <label> Search by Category                  
-                                <input name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Category..." />
-                                </label>
-                                <br />
-                                <button onClick={clearSearchTerm}>Clear</button>
-                                <br />
-                                <label> Helper
-                                <input name="helper" type="checkbox" checked={filterByHelper} onChange={toggleBool} />
-                                </label>
-                                <label> Student
-                                <input name="student" type="checkbox" checked={filterByStudent} onChange={toggleBool} />
-                                </label>
-                            
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <label> Search by Category                  
+                            <input name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Category..." />
+                            </label>
+                            <br />
+                            <button onClick={clearSearchTerm}>Clear</button>
+                            <br />
+                            {/* remove helper checkbox if currentuser is not a helper */}
+                            <label> Helper
+                            <input name="helper" type="checkbox" checked={filterByHelper} onChange={toggleBool} />
+                            </label>
+                            <label> Student
+                            <input name="student" type="checkbox" checked={filterByStudent} onChange={toggleBool} />
+                            </label>
+                            <label> Open/Closed
+                            <input name="openClosed" type="checkbox" checked={filterByOpenClosed} onChange={toggleBool} />
+                            </label>
                         </div>
                     );
                 }
