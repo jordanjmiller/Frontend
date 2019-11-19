@@ -20,9 +20,9 @@ export default function Header() {
                     <>
                     <h4>Welcome {currentUser.name}!</h4>
                         <nav className='loggedIn'>
-                            <NavLink exact to='/'> Home</NavLink> 
-                            <NavLink to='/Dashboard/Account'>Account</NavLink>
-                            <NavLink to='/Dashboard/CreateTicket'>Create Ticket</NavLink>
+                            <NavLink className='navLink' exact to='/'> Home</NavLink> 
+                            <NavLink className='navLink' to='/Dashboard/Account'>Account</NavLink>
+                            <NavLink className='navLink' to='/Dashboard/CreateTicket'>Create Ticket</NavLink>
                             {/* Not sure what below is intended to link to */}
                             {/* <NavLink to='/'>Tickets</NavLink> */}
                         </nav>
@@ -33,8 +33,8 @@ export default function Header() {
                 return (
                     <>
                     <nav className='notLoggedIn'>
-                        <NavLink exact to='/'>Home</NavLink>
-                        <NavLink to='/Login'>Login/Sign up</NavLink>
+                        <NavLink className='navLink' exact to='/'>Home</NavLink>
+                        <NavLink className='navLink' to='/Login'>Login/Sign up</NavLink>
                     </nav>
                     </>
                 );

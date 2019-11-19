@@ -37,9 +37,9 @@ export default function SidebarNav() {
     return (
         <div className='sidebarDiv'>
             <nav className='sidebarNav'>
-                <NavLink style={{ textDecoration: 'none' }} to='/Dashboard/Unassigned'>Unassigned</NavLink> 
-                <NavLink style={{ textDecoration: 'none' }} to='/Dashboard/Mine'>Mine</NavLink>
-                <NavLink style={{ textDecoration: 'none' }} to='/Dashboard/Closed'>Closed</NavLink>
+                <NavLink className='navLink' to='/Dashboard/Unassigned'>Unassigned</NavLink> 
+                <NavLink className='navLink' to='/Dashboard/Mine'>Mine</NavLink>
+                <NavLink className='navLink' to='/Dashboard/Closed'>Closed</NavLink>
             </nav>
 
             {/* only if at any of the three above routes display filter tools. */}

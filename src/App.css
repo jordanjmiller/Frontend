@@ -44,6 +44,16 @@
 .sidebarNav a{
   margin-bottom: 20px;
 }
+.navLink{
+  color: black;
+  text-decoration: none;
+}
+.navLink:visited{
+  color: black;
+}
+.navLink:hover{
+  color: red;
+}
 
 .helperDashboard{
   width: 85%;
