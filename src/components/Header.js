@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import logo from '../images/logo.png';
 
 
 export default function Header() {
@@ -9,10 +10,9 @@ export default function Header() {
 
   return (
     <>
-    <div className='headerDiv'>
-        <div className='initial'>
-        <Link to='/'> <h1 className='initial'>DevDesk</h1> </Link>
-        </div>
+    <header>
+        
+        <Link to='/'><img className="logo" src={logo} /></Link>
       
         {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
             if (currentUser){
@@ -34,14 +34,14 @@ export default function Header() {
                 return (
                     <>
                     <nav className='notLoggedIn'>
-                        <NavLink className='navLink' exact to='/'>Home</NavLink>
-                        <NavLink className='navLink' to='/Login'>Login/Sign up</NavLink>
+                        <NavLink className='navLink' exact to='/Login'>Login</NavLink>
+                        <NavLink className='button' to='/Register'>Register</NavLink>
                     </nav>
                     </>
                 );
             }
         })()}
-    </div>
+    </header>
     </>
   );
 }
