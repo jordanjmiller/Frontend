@@ -11,6 +11,7 @@ export default function OpenTicketList() {
 
     useEffect(() => {
         axiosWithAuth().get('/tickets/open')
+        
         .then(res => {
             // console.log(res.data)
             setHelpRequests(res.data)
