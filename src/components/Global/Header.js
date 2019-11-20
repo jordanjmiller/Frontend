@@ -1,12 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-<<<<<<< HEAD:src/components/Global/Header.js
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-=======
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import logo from '../images/logo.png';
->>>>>>> f97717f8b1fcdfa8181e4e62d17098b0940ac882:src/components/Header.js
-
+import logo from '../../images/logo.png';
 
 export default function Header() {
     const { currentUser } = useContext(CurrentUserContext);
