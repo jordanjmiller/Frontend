@@ -181,7 +181,6 @@ header nav a {
 }
 header nav button {
   margin-left: 4rem;
-  width: 100px;
 }
 header nav .active {
   color: #BF0033;

@@ -31,7 +31,7 @@ export default function Header(props) {
                             <NavLink className='navLink' to='/Dashboard/Account'>Account</NavLink>
                             <NavLink className='navLink' to='/Dashboard/CreateTicket'>Create Ticket</NavLink>
                             <NavLink className='navLink' to='/Dashboard/Unassigned'>Dashboard</NavLink>
-                            <button onClick={logout}>Sign out</button>
+                            <button class="button" onClick={logout}>Sign out</button>
                             {/* Not sure what below is intended to link to */}
                             {/* <NavLink to='/'>Tickets</NavLink> */}
                         </nav>
