@@ -1,26 +1,34 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
+import Ticket from "./Ticket";
+import { axiosWithAuth } from "../../utils/axiosWithAuth";
+export default function TicketView(props) {
+  const [tickets, setTickets] = useState([{}]);
 
-export default function TicketView() {
+  useEffect(() => {
+    const ticketID = props.match.params.id;
+    axiosWithAuth()
+      .get(`/tickets/${ticketID}`)
+      .then(res => {
+        console.log(res.data);
+        setTickets(res.data);
+      });
+    // add error catch
+  }, []);
   return (
-    <div className="headerDiv">
-      <div className="initial">
-        <Link to="/">
-          {" "}
-          <h1 className="initial">DevDesk</h1>{" "}
-        </Link>
+    <div className="ticketContainer">
+      <div className="display">
+        <h2>tickets #{tickets[0].id}</h2>
+        <h2>{tickets[0].category}</h2>
+        {/* <nav>
+              <NavLink></NavLink>
+          </nav> */}
       </div>
-      <nav className="loggedIn">
-        <NavLink className="navLink" to="/Dashboard/Account">
-          Account
-        </NavLink>
-        <NavLink className="navLink" to="/Dashboard/ReviewTicket"> {/* // Need to make a Component for ReviewTicket */}
-          Review Ticket
-        </NavLink>
-      </nav>
+      <div className="show-tickets">
+        {tickets.map(ticket => {
+          return <Ticket ticket={ticket} />;
+        })}
+      </div>
     </div>
   );
 }
-
-
