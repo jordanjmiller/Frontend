@@ -5,7 +5,7 @@ import ClosedTicket from './ClosedTicket';
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
 export default function ClosedTicketList() {
-    const { searchTerm, filterByHelper, filterByStudent, filterByOpenClosed } = useContext(CurrentUserContext);
+    const { searchTerm, filterByHelperStudentBoth, filterByOpenClosed } = useContext(CurrentUserContext);
 
     const [closedTickets, setClosedTickets] = useState([]);
 
