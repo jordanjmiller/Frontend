@@ -1,3 +1,5 @@
+// need to add an alert if password is wrong, or error messages from server
+
 import React, { useContext, useState } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import styled from 'styled-components';
@@ -15,14 +17,14 @@ export default function Account() {
     const [showEditForm, setShowEditForm] = useState(false);
 
     // state for when the user edits their account details
-    const [editUserName, setEditUserName] = useState('');
-    const [editName, setEditName] = useState('');
-    const [editEmail, setEditEmail] = useState('');
-    const [editCohort, setEditCohort] = useState('');
+    const [editUserName, setEditUserName] = useState(currentUser.username);
+    const [editName, setEditName] = useState(currentUser.name);
+    const [editEmail, setEditEmail] = useState(currentUser.email);
+    const [editCohort, setEditCohort] = useState(currentUser.cohort);
     const [editHelper, setEditHelper] = useState(currentUser.helper);
     const [editStudent, setEditStudent] = useState(currentUser.student);
 
-    console.log(editHelper)
+    // console.log(editHelper)
     // user inputs this so it can be sent to the API in the update request
     const [inputPassword, setInputPassword] = useState('');
 
@@ -43,11 +45,12 @@ export default function Account() {
 
     const passwordChange = (e) => {
         setInputPassword(e.target.value)
-        console.log(inputPassword)
+        // console.log(inputPassword)
     }
 
     const handleSubmit = e => {
         e.preventDefault();
+        
         let userObj = { password: inputPassword }
         if (editUserName){
             userObj = {...userObj, username: editUserName}
@@ -62,13 +65,22 @@ export default function Account() {
             userObj = {...userObj, cohort: editCohort}
         }
 
-        console.log(editUserName)
-        console.log(userObj)
-        console.log(inputPassword)
+        // console.log(editUserName)
+        // console.log(userObj)
+        // console.log(inputPassword)
+        if (validateInputs()) {
         axiosWithAuth()
         .put("https://ddq.herokuapp.com/api/users/user", userObj)
+        .then(alert("Account update successful"))
+        .catch(err => {
+            console.log("Edit Account Catch Error: ", err.response.data.message);
+            alert(err.response.data.message);
+        })
         
     }
+}
+
+    // this isn't working 
 
     const toggleBool = e => {
         if (e.target.name === "helper") {
@@ -79,18 +91,40 @@ export default function Account() {
         }
       };
 
+    const validateInputs = () => {
+    if (editUserName === "") {
+        alert("Your username can't be empty.");
+        return false;
+    }
+    else if(!(/^[a-z][a-z0-9_]*$/i.test(editUserName))) {
+        alert("Username must start with a letter and may only contain a-z, _, or numbers.");
+        return false;
+    }
+    if (editName === "") {
+        alert("You must enter your name.");
+        return false;
+    }
+    if (editHelper === false && editStudent === false) {
+        alert("You must choose to enroll as a helper, student, or both.");
+        return false;
+    }
+    return true;
+    };
+
     
 
     return (
         <Div>
             <h1>Account details</h1>
 
-        {/* Show initially */}
+   
 
   
 
 {/* Show button */}
 <button onClick={() => setShowEditForm(!showEditForm)}>{showEditForm && 'Cancel'}{!showEditForm && 'Edit'}</button>
+
+     {/* Show initially */}
 
             {!showEditForm && <div> 
                 <p>User name: {currentUser.username}</p>
@@ -146,33 +180,7 @@ export default function Account() {
 
         
 
-    
 
-                
-                
-          
-
-            {/* <form>
-                <p>
-                    <label> Old password:
-                        <input type="text" />
-                    </label> 
-                </p>
-
-                <p>
-                    <label> New password:
-                        <input type="text" />
-                    </label>
-                </p>
-                
-                <p>
-                    <label> Retype new password:
-                        <input type="text" />
-                    </label>
-                </p>
-               
-                    <button>Submit</button>
-            </form> */}
         </Div>
     )
 }
