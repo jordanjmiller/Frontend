@@ -10,6 +10,8 @@ import LandingPage from './components/Global/LandingPage';
 import Login from './components/Global/Login';
 import LogOut from './components/Global/LogOut';
 import SignUpForm from './components/Global/SignUpForm';
+import Footer from './components/Global/Footer';
+import Credits from './components/Global/Credits';
 
 
 import Dashboard from './components/Dashboard/Dashboard.js'
@@ -58,6 +60,7 @@ function App() {
           <Route path='/' render={props => <Header {...props} />} />
           <Route exact path='/' render={props => <LandingPage {...props} />} />
           <Route exact path='/Login' render={props => <Login {...props} />} />
+          <Route exact path='/Credits' render={Credits} />
           {!loading && 
           <div>
             <Route exact path='/LogOut' render={props => <LogOut {...props} />} />
@@ -66,6 +69,7 @@ function App() {
             <PrivateRoute path='/Dashboard' component={Dashboard} />
           </div>
           }
+          <Footer />
         </div>
       </StyledLoader>
     </CurrentUserContext.Provider>
