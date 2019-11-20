@@ -297,9 +297,6 @@ footer {
   color: black;
   text-decoration: none;
 }
-.navLink:visited {
-  color: black;
-}
 .navLink:hover {
   color: red;
 }
@@ -352,17 +349,5 @@ td a {
   border: 1px solid black;
 }
 .active {
-  border: 2px solid red;
-}
-.headerDiv {
-  border: 1px solid pink;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-nav {
-  /* background-color: pink; */
-  width: 500px;
-  display: flex;
-  justify-content: space-evenly;
+  color: #BF0033;
 }
