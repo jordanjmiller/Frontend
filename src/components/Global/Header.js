@@ -6,7 +6,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 export default function Header(props) {
     const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
-    // console.log(currentUser);
+    // console.log('Header Current User', currentUser);
 
     const logout = () => {
         sessionStorage.removeItem('token');

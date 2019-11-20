@@ -49,10 +49,10 @@ const FormikCreateTicket = withFormik({
       .post("https://reqres.in/api/users/", values)
       .then(res => {
         setStatus(res.data);
-        console.log(res);
+        // console.log(res);
       })
       .catch(err => console.log(err.response));
   }
 })(CreateTicket);
 export default FormikCreateTicket;
-console.log("This is the HOC", FormikCreateTicket);
+// console.log("This is the HOC", FormikCreateTicket);

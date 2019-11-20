@@ -8,20 +8,21 @@ import CreateTicket from './CreateTicket.js';
 import OpenTicketList from './Unassigned/OpenTicketList.js';
 import UserTicketList from './Mine/UserTicketList.js';
 import ClosedTicketList from './Closed/ClosedTicketList.js';
-import TicketView from './TicketView';
+import ViewTicket from './ViewTicket.js';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 
 
 export default function Dashboard() {
-    const { searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, 
-        filterByStudent, setFilterByStudent, filterByOpenClosed, setFilterByOpenClosed, currentUser } = useContext(CurrentUserContext);
+    const { currentUser, searchType, setSearchType, searchTerm, setSearchTerm, 
+        filterByHelperStudentBoth, setFilterByHelperStudentBoth, 
+        filterByOpenClosedAll, setFilterByOpenClosedAll,  } = useContext(CurrentUserContext);
 
     return (
         <div className='dashboard'>
-            <CurrentUserContext.Provider value={{ currentUser, searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, 
-            filterByStudent, setFilterByStudent, filterByOpenClosed, setFilterByOpenClosed }}>
+            <CurrentUserContext.Provider value={{ currentUser, searchTerm, setSearchTerm, searchType, setSearchType, 
+                filterByHelperStudentBoth, setFilterByHelperStudentBoth, filterByOpenClosedAll, setFilterByOpenClosedAll }}>
                 <SidebarNav />
 
                 <Route exact path='/Dashboard/Account' component={Account} />
@@ -30,7 +31,7 @@ export default function Dashboard() {
                 <Route exact path='/Dashboard/Unassigned' component={OpenTicketList} />
                 <Route exact path='/Dashboard/Mine' component={UserTicketList} />
                 <Route exact path='/Dashboard/Resolved' component={ClosedTicketList} />
-                <Route exact path='/Dashboard/Tickets/:id' component={TicketView} />
+                <Route exact path='/Dashboard/Tickets/:id' component={ViewTicket} />
             </CurrentUserContext.Provider>
         </div>
     )

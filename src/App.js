@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Route } from 'react-router-dom';
 import { axiosWithAuth } from './utils/axiosWithAuth';
 import PrivateRoute from './utils/PrivateRoute';
@@ -24,10 +24,10 @@ function App() {
   const [currentUser, setCurrentUser] = useState('');
   const [loading, setLoading] = useState(true);
 
+  const [searchType, setSearchType] = useState('Category');
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterByHelper, setFilterByHelper] = useState(true);
-  const [filterByStudent, setFilterByStudent] = useState(true);
-  const [filterByOpenClosed, setFilterByOpenClosed] = useState(true);
+  const [filterByHelperStudentBoth, setFilterByHelperStudentBoth] = useState('Both');
+  const [filterByOpenClosedAll, setFilterByOpenClosedAll] = useState('All');
 
   useEffect(() => {
     //if currentUser is null, load data from server if you have a token. 
@@ -51,8 +51,8 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser, loading, setLoading,
-      searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, filterByStudent, setFilterByStudent,
-      filterByOpenClosed, setFilterByOpenClosed }}>
+      searchTerm, setSearchTerm, filterByHelperStudentBoth, setFilterByHelperStudentBoth,
+      filterByOpenClosedAll, setFilterByOpenClosedAll, searchType, setSearchType }}>
       <StyledLoader active={loading} spinner text='Loading...'>
         <div className='App'>
           <Route path='/' render={props => <Header {...props} />} />

@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Ticket from "./Ticket";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
-export default function TicketView(props) {
+
+
+
+
+export default function ViewTicket(props) {
   const [tickets, setTickets] = useState([{}]);
 
   useEffect(() => {
