@@ -179,6 +179,10 @@ header nav a {
     margin: 1.5rem 0;
   }
 }
+header nav button {
+  margin-left: 4rem;
+  width: 100px;
+}
 header nav .active {
   color: #BF0033;
 }
@@ -348,7 +352,7 @@ td a {
   border: 1px solid black;
 }
 .active {
-  border: 2px solid blue;
+  border: 2px solid red;
 }
 .headerDiv {
   border: 1px solid pink;
@@ -358,7 +362,7 @@ td a {
 }
 nav {
   /* background-color: pink; */
-  width: 400px;
+  width: 500px;
   display: flex;
   justify-content: space-evenly;
 }

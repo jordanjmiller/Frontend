@@ -1,35 +1,44 @@
 import React, {useEffect, useState, useContext} from 'react';
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
+import axios from 'axios';
 import MyTicket from './MyTicket';
 
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
-export default function UserTicketList() {
-    const { currentUser, searchTerm, filterByHelper, filterByStudent, filterByOpenClosed } = useContext(CurrentUserContext);
 
-    const [userOpenTickets, setUserOpenTickets] = useState([]);
-    const [userClosedTickets, setUserClosedTickets] = useState([]);
+
+export default function UserTicketList() {
+    const { currentUser, searchTerm, searchType, filterByHelperStudentBoth, filterByOpenClosedAll } = useContext(CurrentUserContext);
+
+    const [allUserTickets, setAllUserTickets] = useState([]);
 
     useEffect(() => {
-        axiosWithAuth().get('/tickets/open')
-        .then(res => {
-            // console.log(res.data)
-            setUserOpenTickets(res.data)
-        })
-        .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
-        alert(err.response.data.message)});
-        axiosWithAuth().get('/tickets/resolved')
-        .then(res => { 
-            // console.log(res.data)
-            setUserClosedTickets(res.data)
-        })
-        .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
-        alert(err.response.data.message)});
+        (async () => {
+            try{
+                const what = [
+                axiosWithAuth().get('https://ddq.herokuapp.com/api/tickets/students/student/open'),
+                axiosWithAuth().get(`https://ddq.herokuapp.com/api/tickets/students/student/resolved`),
+                axiosWithAuth().get('https://ddq.herokuapp.com/api/tickets/helpers/open'),
+                axiosWithAuth().get(`https://ddq.herokuapp.com/api/tickets/helpers/resolved`)];
+                
+                const mom = await axios.all(what);
+                    const hey = [];
+                for(let val of mom){
+                    if(Array.isArray(val.data)){
+                        for(let mom of val.data){
+                            hey.push(mom);
+                        }
+                    }
+                }
+                setAllUserTickets([...hey])
+                console.log(hey);
+            }catch(err){
+                console.log('CATCH ERROR: ', err);
+            }
+        })()
     }, []);
 
-    // console.log(helpRequests);
     return (
-        
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
          <h2>My tickets</h2>
             <table className='tickettable'>
@@ -42,35 +51,53 @@ export default function UserTicketList() {
                         <th>Link</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {userOpenTickets.map(request => {
-                        return (
-                            <tr key={request.id}>
-                                <MyTicket
-                                id={request.id}
-                                status={request.status}
-                                category={request.category}
-                                title={request.title}
-                                description={request.description}
-                                created_at={request.created_at}
-                                />
-                            </tr>
-                            )
-                        })}
-                        {userClosedTickets.map(req => {
-                        return (
-                            <tr key={req.id}>
-                                <MyTicket
-                                id={req.id}
-                                status={req.status}
-                                category={req.category}
-                                title={req.title}
-                                description={req.description}
-                                created_at={req.created_at}
-                                />
-                            </tr>
-                            )
-                        })}
+                <tbody>{allUserTickets && allUserTickets.map(ticket => {
+                        let shouldReturn = false;
+                        if (searchType === 'Category' && ticket.category.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true; 
+                        }
+                        else if (searchType === 'Student' && ticket.student_name.toLowerCase().includes(searchTerm.toLowerCase())){
+                                shouldReturn = true;
+                        }
+                        else if (searchType === 'Helper' && ticket.helper_name.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true;
+                        }
+                        else if (searchType === 'Title' && ticket.title.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true;
+                        }
+                        else if (searchType === 'Description' && ticket.description.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true;
+                        }
+                        else if (searchType === 'Answer' && ticket.answer.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true;
+                        }
+
+
+                        if (filterByOpenClosedAll === 'Closed' && ticket.status !== 'resolved')
+                        {
+                            shouldReturn = false;
+                        }
+                        else if (filterByOpenClosedAll === 'Open' && ticket.status === 'resolved')
+                        {
+                            shouldReturn = false;
+                        }
+
+                        if (filterByHelperStudentBoth === 'Student' && ticket.student_name !== currentUser.name)
+                        {
+                            shouldReturn = false;
+                        }
+                        else if (filterByHelperStudentBoth === 'Helper' && ticket.helper_name !== currentUser.name)
+                        {
+                            shouldReturn = false;
+                        }
+
+
+                        if (shouldReturn === true){
+                            return (
+                                <tr key={ticket.id}><MyTicket id={ticket.id} student_name={ticket.student_name} category={ticket.category} 
+                                title={ticket.title} description={ticket.description} created_at={ticket.created_at} /></tr> )
+                        }
+                })}
                 </tbody>
             </table> 
         </div>

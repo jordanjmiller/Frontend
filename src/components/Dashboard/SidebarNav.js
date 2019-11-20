@@ -4,34 +4,56 @@ import { NavLink } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 export default function SidebarNav() {
-    const { searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, 
-    filterByStudent, setFilterByStudent, filterByOpenClosed, setFilterByOpenClosed } = useContext(CurrentUserContext);
+    const { searchType, setSearchType, searchTerm, setSearchTerm, filterByHelperStudentBoth, setFilterByHelperStudentBoth, 
+        filterByOpenClosedAll, setFilterByOpenClosedAll } = useContext(CurrentUserContext);
 
     let fullWindowLocation = window.location.toString();
     let noBaseWindowLocation = fullWindowLocation.slice(21, fullWindowLocation.length);
     // console.log('sidebar props', fullWindowLocation);
     // console.log('sidebar props', noBaseWindowLocation);
+    //MOVE TO APP and also fix for deployed url. this is a hardcoded way to get route location without props based on url length. #hacks
+    //im dumb just load router prop from some component and set it to global state and pass around..
+
+
+    // console.log('sidebar props', searchType);
 
     const handleChange = e => {
           setSearchTerm(e.target.value);
-        console.log('SideBar Search Term:', searchTerm);
+        // console.log('SideBar Search Term:', searchTerm);
       };
     
       const toggleBool = e => {
-        if (e.target.name === "helper") {
-            setFilterByHelper(!filterByHelper);
-        } 
-        else if (e.target.name === "student") {
-            setFilterByStudent(!filterByStudent);
+        if (filterByHelperStudentBoth === 'All') {
+            setFilterByHelperStudentBoth('Student');
         }
-        else if (e.target.name === "openClosed") {
-            setFilterByOpenClosed(!filterByOpenClosed);
+        else if (filterByHelperStudentBoth === 'Student') {
+            setFilterByHelperStudentBoth('Helper');
+        }
+        else if (filterByHelperStudentBoth === 'Helper') {
+            setFilterByHelperStudentBoth('All');
         }
       };
+
+      const handleSelect = e => {
+        //   console.log(e.target.value);
+          setSearchType(e.target.value);
+      }
 
       const clearSearchTerm = () => {
           setSearchTerm('');
       };
+
+      const toggleButton = (e) => {
+        if (filterByOpenClosedAll === 'All') {
+            setFilterByOpenClosedAll('Open');
+        }
+        else if (filterByOpenClosedAll === 'Open') {
+            setFilterByOpenClosedAll('Closed');
+        }
+        else if (filterByOpenClosedAll === 'Closed') {
+            setFilterByOpenClosedAll('All');
+        }
+      }
 
 
     return (
@@ -39,71 +61,49 @@ export default function SidebarNav() {
             <nav className='sidebarNav'>
                 <NavLink className='navLink' to='/Dashboard/Unassigned'>Unassigned</NavLink> 
                 <NavLink className='navLink' to='/Dashboard/Mine'>Mine</NavLink>
-                <NavLink className='navLink' to='/Dashboard/Closed'>Closed</NavLink>
+                <NavLink className='navLink' to='/Dashboard/Resolved'>Resolved</NavLink>
             </nav>
 
             {/* only if at any of the three above routes display filter tools. */}
-            {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
-
-                if(noBaseWindowLocation === '/Dashboard/Unassigned' | noBaseWindowLocation === '/Dashboard/Mine' | noBaseWindowLocation === '/Dashboard/Closed')
-                {
-                    return (
-                        <div className='filterToolsDiv'>
-                            <label> Search by Category                  
-                            <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Category..." />
-                            </label>
-                            <br />
-                            <button onClick={clearSearchTerm}>Clear</button>
-                            <br />
-                            {/* remove helper checkbox if currentuser is not a helper */}
-                            <label> Helper
-                            <input name="helper" type="checkbox" checked={filterByHelper} onChange={toggleBool} />
-                            </label>
-                            <label> Student
-                            <input name="student" type="checkbox" checked={filterByStudent} onChange={toggleBool} />
-                            </label>
-                            <label> Open/Closed
-                            <input name="openClosed" type="checkbox" checked={filterByOpenClosed} onChange={toggleBool} />
-                            </label>
-                        </div>
-                    );
-                }
-            })()}
-        </div>
+                
+            <div className='filterToolsDiv'>
+                {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
+                        if(noBaseWindowLocation === '/Dashboard/Unassigned' | noBaseWindowLocation === '/Dashboard/Mine' | noBaseWindowLocation === '/Dashboard/Resolved')
+                        {
+                            return(
+                                <>
+                                <label> Search by:
+                                <select onChange={handleSelect} name="searchBy">
+                                    <option value="Category">Category</option>
+                                    <option value="Student">Student Name</option>
+                                    {noBaseWindowLocation !== 'Unassigned' && <option value="Helper">Helper Name</option>}
+                                    <option value="Title">Title</option>
+                                    <option value="Description">Description</option>
+                                    {noBaseWindowLocation !== 'Unassigned' && <option value="Answer">Answer</option>}
+                                </select>
+                                <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder={`${searchType}...`} />
+                                </label>
+                                <br />
+                                <button onClick={clearSearchTerm}>Clear</button>
+                                <br />
+                                {noBaseWindowLocation === '/Dashboard/Mine' &&
+                                        <>
+                                        <label> Helper/Student:
+                                        <br />
+                                        <button onClick={toggleBool}>{filterByHelperStudentBoth} Tickets</button>
+                                        </label>
+                                        <br />
+                                        <label> Display:
+                                        <br />
+                                        <button onClick={toggleButton}>{filterByOpenClosedAll} Tickets</button>
+                                        </label>
+                                        </>
+                                }
+                                </>
+                            );
+                        }
+                })()}
+            </div>;
+        </div>  
     )
 }
-
-
-
-
-//conditional rendering if needed for some reason but i dont think it is
-// {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
-// if (currentUser){
-//     if(currentUser.helper){
-//         return (
-//             <>
-//             <nav className='sidebarNav'>
-//                 <NavLink exact to='/'>Unassigned</NavLink> 
-//                 <NavLink to='/HelperDashboard'>Mine</NavLink>
-//                 <NavLink to='/StudentDashboard'>Closed</NavLink>
-//             </nav>
-//             </>
-//         );
-//     }
-//     else if(currentUser.student && !currentUser.helper){
-//         return (
-//             <>
-//             <nav className='sidebarNav'>
-//                 <NavLink exact to='/'> Home</NavLink> 
-//                 <NavLink to='/HelperDashboard'>Helper Dashboard</NavLink>
-//             </nav>
-//             </>
-//         );
-//     }
-// }
-// else{
-//     return (
-//         <h1>SideBarNav.js ELSE. How did you get here? Report bug please!</h1>
-//     );
-// }
-// })()}

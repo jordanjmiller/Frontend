@@ -4,9 +4,16 @@ import logo from '../../images/logo.png';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-export default function Header() {
-    const { currentUser } = useContext(CurrentUserContext);
-    // console.log(currentUser);
+export default function Header(props) {
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+    // console.log('Header Current User', currentUser);
+
+    const logout = () => {
+        sessionStorage.removeItem('token');
+        setCurrentUser('');
+        alert('Logged out successfully. Come back soon!');
+        props.history.push('/');
+    }
 
   return (
     <>
@@ -24,6 +31,7 @@ export default function Header() {
                             <NavLink className='navLink' to='/Dashboard/Account'>Account</NavLink>
                             <NavLink className='navLink' to='/Dashboard/CreateTicket'>Create Ticket</NavLink>
                             <NavLink className='navLink' to='/Dashboard/Unassigned'>Dashboard</NavLink>
+                            <button onClick={logout}>Sign out</button>
                             {/* Not sure what below is intended to link to */}
                             {/* <NavLink to='/'>Tickets</NavLink> */}
                         </nav>
