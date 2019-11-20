@@ -68,6 +68,9 @@ a {
 .button:hover {
   background-color: #880C23;
 }
+.button.active {
+  color: #fff;
+}
 .card-list {
   max-width: 1200px;
   margin: 3% auto 0;
