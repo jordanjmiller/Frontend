@@ -109,9 +109,10 @@ a {
   font-weight: 700;
 }
 header {
-  position: fixed;
+  position: sticky;
   right: 0;
   left: 0;
+  top: 0;
   z-index: 999;
   background-color: #fff;
   height: 75px;
@@ -121,7 +122,7 @@ header {
   flex-direction: row;
   flex-wrap: nowrap;
   padding: 0 40px;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid black;
 }
 @media (max-width: 440px) {
   header {
@@ -262,8 +263,13 @@ footer {
   /* bg color colorpicked from whimsical template */
   background-color: #c3cfd9;
   border: 1px solid black;
+  border-top: none;
   width: 15%;
   min-height: 100vh;
+}
+.filterToolsDiv {
+  position: sticky;
+  top: 300px;
 }
 .searchBox {
   border: 1px solid black;
@@ -271,6 +277,8 @@ footer {
 }
 .sidebarNav {
   /* border: 1px solid black; */
+  position: sticky;
+  top: 75px;
   display: flex;
   flex-direction: column;
   width: 100%;

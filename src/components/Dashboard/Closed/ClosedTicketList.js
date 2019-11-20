@@ -10,22 +10,23 @@ export default function ClosedTicketList() {
     const [closedTickets, setClosedTickets] = useState([]);
 
     useEffect(() => {
-        axiosWithAuth().get('/tickets/open') // this is just displaying open tickets right now, next to change to new closed ticket API endpoint after I get clarification on how to use it
+        axiosWithAuth().get('/tickets/resolved')
         .then(res => {
             // console.log(res.data)
             setClosedTickets(res.data)
-        });
-        // add error catch 
+        })
+        .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
+        alert(err.response.data.message)});
     }, []);
 
     // console.log(helpRequests);
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
+         <h2>Closed tickets</h2>
             <table className='tickettable'>
                 <thead>
                     <tr>
                         <th>Name</th>
-                        {/* <th>Status</th> */}
                         <th>Description</th>
                         <th>Subject</th>
                         <th>Age</th>
@@ -35,16 +36,15 @@ export default function ClosedTicketList() {
                 <tbody>
                     {closedTickets.map(request => {
                         return (
-                            <tr>
-                            <ClosedTicket
-                            key={request.id}
-                            id={request.id}
-                            student_name={request.student_name}
-                            category={request.category}
-                            title={request.title}
-                            description={request.description}
-                            created_at={request.created_at}
-                            />
+                            <tr key={request.id}>
+                                <ClosedTicket
+                                id={request.id}
+                                student_name={request.student_name}
+                                category={request.category}
+                                title={request.title}
+                                description={request.description}
+                                created_at={request.created_at}
+                                />
                             </tr>
                             )
                         })}

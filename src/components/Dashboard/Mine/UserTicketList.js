@@ -5,28 +5,37 @@ import MyTicket from './MyTicket';
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
 export default function UserTicketList() {
-    const { searchTerm, filterByHelper, filterByStudent, filterByOpenClosed } = useContext(CurrentUserContext);
+    const { currentUser, searchTerm, filterByHelper, filterByStudent, filterByOpenClosed } = useContext(CurrentUserContext);
 
-    const [userTickets, setUserTickets] = useState([]);
+    const [userOpenTickets, setUserOpenTickets] = useState([]);
+    const [userClosedTickets, setUserClosedTickets] = useState([]);
 
     useEffect(() => {
-        axiosWithAuth().get('/tickets/open') 
-        // this is just displaying open tickets right now, next to change to something dynamic like this: axiosWithAuth().get('/tickets/open/' + {id})
+        axiosWithAuth().get('/tickets/open')
         .then(res => {
             // console.log(res.data)
-            setUserTickets(res.data)
-        });
-        // add error catch 
+            setUserOpenTickets(res.data)
+        })
+        .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
+        alert(err.response.data.message)});
+        axiosWithAuth().get('/tickets/resolved')
+        .then(res => { 
+            // console.log(res.data)
+            setUserClosedTickets(res.data)
+        })
+        .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
+        alert(err.response.data.message)});
     }, []);
 
     // console.log(helpRequests);
     return (
+        
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
+         <h2>My tickets</h2>
             <table className='tickettable'>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        {/* <th>Status</th> */}
+                        <th>Status</th>
                         <th>Description</th>
                         <th>Subject</th>
                         <th>Age</th>
@@ -34,18 +43,31 @@ export default function UserTicketList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {userTickets.map(request => {
+                    {userOpenTickets.map(request => {
                         return (
-                            <tr>
-                            <MyTicket
-                            key={request.id}
-                            id={request.id}
-                            student_name={request.student_name}
-                            category={request.category}
-                            title={request.title}
-                            description={request.description}
-                            created_at={request.created_at}
-                            />
+                            <tr key={request.id}>
+                                <MyTicket
+                                id={request.id}
+                                status={request.status}
+                                category={request.category}
+                                title={request.title}
+                                description={request.description}
+                                created_at={request.created_at}
+                                />
+                            </tr>
+                            )
+                        })}
+                        {userClosedTickets.map(req => {
+                        return (
+                            <tr key={req.id}>
+                                <MyTicket
+                                id={req.id}
+                                status={req.status}
+                                category={req.category}
+                                title={req.title}
+                                description={req.description}
+                                created_at={req.created_at}
+                                />
                             </tr>
                             )
                         })}
