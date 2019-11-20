@@ -15,18 +15,19 @@ export default function OpenTicketList() {
         .then(res => {
             // console.log(res.data)
             setHelpRequests(res.data)
-        });
-        // add error catch 
+        })
+        .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
+        alert(err.response.data.message)});
     }, []);
 
     // console.log(helpRequests);
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
+         <h2>Unassigned tickets</h2>
             <table className='tickettable'>
                 <thead>
                     <tr>
                         <th>Name</th>
-                        {/* <th>Status</th> */}
                         <th>Description</th>
                         <th>Subject</th>
                         <th>Age</th>
@@ -36,9 +37,9 @@ export default function OpenTicketList() {
                 <tbody>
                     {helpRequests.map(request => {
                         return (
-                            <tr>
+                            <tr key={request.id}>
                             <OpenTicket 
-                            key={request.id}
+                            // key={request.id}
                             id={request.id}
                             student_name={request.student_name}
                             category={request.category}
