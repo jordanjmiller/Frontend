@@ -46,7 +46,7 @@ export default function Login(props) {
         );
     }
     return (
-        <div>
+        <div className="login-form">
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
                 <label>
