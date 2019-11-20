@@ -9,8 +9,8 @@ export default function SidebarNav() {
 
     let fullWindowLocation = window.location.toString();
     let noBaseWindowLocation = fullWindowLocation.slice(21, fullWindowLocation.length);
-    console.log('sidebar props', fullWindowLocation);
-    console.log('sidebar props', noBaseWindowLocation);
+    // console.log('sidebar props', fullWindowLocation);
+    // console.log('sidebar props', noBaseWindowLocation);
     //MOVE TO APP and also fix for deployed url. this is a hardcoded way to get route location without props based on url length. #hacks
     //im dumb just load router prop from some component and set it to global state and pass around..
 
@@ -85,8 +85,8 @@ export default function SidebarNav() {
                             <br />
                             <button onClick={clearSearchTerm}>Clear</button>
                             <br />
-
-                            {/* remove helper checkbox if currentuser is not a helper */}
+                            {/* REMOVE HELPER AND ANSWER FROM OPEN TICKET LIST OPTION */}
+                            {/* remove both below buttons if in open queue if */}
                             <label> Helper/Student:
                             <br />
                             <button onClick={toggleBool}>{filterByHelperStudentBoth}</button>
