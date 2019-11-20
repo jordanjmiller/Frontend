@@ -179,6 +179,10 @@ header nav a {
     margin: 1.5rem 0;
   }
 }
+header nav button {
+  margin-left: 4rem;
+  width: 100px;
+}
 header nav .active {
   color: #BF0033;
 }
@@ -293,9 +297,6 @@ footer {
   color: black;
   text-decoration: none;
 }
-.navLink:visited {
-  color: black;
-}
 .navLink:hover {
   color: red;
 }
@@ -348,17 +349,5 @@ td a {
   border: 1px solid black;
 }
 .active {
-  border: 2px solid blue;
-}
-.headerDiv {
-  border: 1px solid pink;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-nav {
-  /* background-color: pink; */
-  width: 400px;
-  display: flex;
-  justify-content: space-evenly;
+  color: #BF0033;
 }

@@ -12,6 +12,7 @@ import OpenTicket from './OpenTicket';
 import { CurrentUserContext } from "../../../contexts/CurrentUserContext.js";
 
 export default function OpenTicketList() {
+<<<<<<< HEAD
   const {
     searchTerm,
     filterByHelper,
@@ -20,6 +21,11 @@ export default function OpenTicketList() {
   } = useContext(CurrentUserContext);
 
   const [helpRequests, setHelpRequests] = useState([]);
+=======
+    const { searchTerm, searchType } = useContext(CurrentUserContext);
+
+    const [openTickets, setOpenTickets] = useState([]);
+>>>>>>> 8ffdbe37717f33061b0f00f0f241c22183f188f0
 
 <<<<<<< HEAD
   useEffect(() => {
@@ -75,7 +81,7 @@ export default function OpenTicketList() {
         
         .then(res => {
             // console.log(res.data)
-            setHelpRequests(res.data)
+            setOpenTickets(res.data)
         })
         .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
         alert(err.response.data.message)});
@@ -96,20 +102,31 @@ export default function OpenTicketList() {
                     </tr>
                 </thead>
                 <tbody>
-                    {helpRequests.map(request => {
-                        return (
-                            <tr key={request.id}>
-                            <OpenTicket 
-                            // key={request.id}
-                            id={request.id}
-                            student_name={request.student_name}
-                            category={request.category}
-                            title={request.title}
-                            description={request.description}
-                            created_at={request.created_at}
-                            />
-                            </tr>
-                            )
+                    {openTickets && openTickets.map(ticket => {
+                        let shouldReturn = false;
+                        if (searchType === 'Category' && ticket.category.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true; 
+                        }
+                        else if (searchType === 'Student' && ticket.student_name.toLowerCase().includes(searchTerm.toLowerCase())){
+                                shouldReturn = true;
+                        }
+                        else if (searchType === 'Helper' && ticket.helper_name.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true;
+                        }
+                        else if (searchType === 'Title' && ticket.title.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true;
+                        }
+                        else if (searchType === 'Description' && ticket.description.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true;
+                        }
+                        else if (searchType === 'Answer' && ticket.answer.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = true;
+                        }
+                        if (shouldReturn === true){
+                            return (
+                                <tr key={ticket.id}><OpenTicket id={ticket.id} student_name={ticket.student_name} category={ticket.category} 
+                                title={ticket.title} description={ticket.description} created_at={ticket.created_at} /></tr> )
+                        }
                         })}
                 </tbody>
             </table> 
