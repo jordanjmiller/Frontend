@@ -15,7 +15,7 @@ export default function ViewTicket(props) {
       .get(`/tickets/${ticketID}`)
       .then(res => {
         console.log('get ticket response: ', res.data);
-        setTicketFromServer(res.data);
+        setTicketFromServer(res.data.ticket_details);
       })
       .catch(err => {
         console.log("CATCH ERROR: ", err.response.data.message);
