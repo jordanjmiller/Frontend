@@ -37,6 +37,7 @@ body {
   font-family: 'Lato', sans-serif;
   color: #383651;
   font-size: 1.8rem;
+  background-color: #F6F7FB;
   line-height: 1.6;
 }
 h1 {
@@ -122,7 +123,7 @@ header {
   flex-direction: row;
   flex-wrap: nowrap;
   padding: 0 40px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #e6e6e6;
 }
 @media (max-width: 440px) {
   header {
