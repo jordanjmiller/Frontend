@@ -145,7 +145,7 @@ export default function SignUpForm(props) {
   };
 
   return (
-    <div>
+    <div className="sign-up-form">
       <h2>Sign up for an account</h2>
       <form onSubmit={handleSubmit}>
         <input name="username" onChange={handleChange} placeholder="username" />

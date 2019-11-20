@@ -62,7 +62,7 @@ function App() {
           <Route exact path='/Login' render={props => <Login {...props} />} />
           <Route exact path='/Credits' render={Credits} />
           {!loading && 
-          <div>
+          <div className="main-content">
             <Route exact path='/LogOut' render={props => <LogOut {...props} />} />
             <Route exact path='/Register' render={props => <SignUpForm {...props} />} />
 
