@@ -86,32 +86,30 @@ export default function CreateTicket() {
         </Div>
     )
 }
-<<<<<<< HEAD
-const FormikCreateTicket = withFormik({
-  mapPropsToValues({ name, subject, description }) {
-    return {
-      name: name || "",
-      subject: subject || "",
-      description: description || ""
-    };
-  },
-  validationSchema: Yup.object().shape({
-    name: Yup.string().required(),
-    subject: Yup.string().required(),
-    description: Yup.string().required()
-  }),
-  handleSubmit(values, { setStatus }) {
-    axios
-      .post("https://ddq.herokuapp.com/api/auth/createticket", values)
-      .then(res => {
-        setStatus(res.data);
-        console.log(res);
-      })
-      .catch(err => console.log(err.response));
-  }
-})(CreateTicket);
-export default FormikCreateTicket;
-=======
+// const FormikCreateTicket = withFormik({
+//   mapPropsToValues({ name, subject, description }) {
+//     return {
+//       name: name || "",
+//       subject: subject || "",
+//       description: description || ""
+//     };
+//   },
+//   validationSchema: Yup.object().shape({
+//     name: Yup.string().required(),
+//     subject: Yup.string().required(),
+//     description: Yup.string().required()
+//   }),
+//   handleSubmit(values, { setStatus }) {
+//     axios
+//       .post("https://ddq.herokuapp.com/api/auth/createticket", values)
+//       .then(res => {
+//         setStatus(res.data);
+//         console.log(res);
+//       })
+//       .catch(err => console.log(err.response));
+//   }
+// })(CreateTicket);
+// export default FormikCreateTicket;
 
 
                           //||||||||||||||
@@ -213,4 +211,3 @@ export default FormikCreateTicket;
 // })(CreateTicket);
 // export default FormikCreateTicket;
 // // console.log("This is the HOC", FormikCreateTicket);
->>>>>>> 8ffdbe37717f33061b0f00f0f241c22183f188f0
