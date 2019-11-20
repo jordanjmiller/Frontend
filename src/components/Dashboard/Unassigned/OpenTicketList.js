@@ -7,14 +7,14 @@ import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 export default function OpenTicketList() {
     const { searchTerm, filterByHelper, filterByStudent, filterByOpenClosed } = useContext(CurrentUserContext);
 
-    const [helpRequests, setHelpRequests] = useState([]);
+    const [openTickets, setOpenTickets] = useState([]);
 
     useEffect(() => {
         axiosWithAuth().get('/tickets/open')
         
         .then(res => {
             // console.log(res.data)
-            setHelpRequests(res.data)
+            setOpenTickets(res.data)
         })
         .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
         alert(err.response.data.message)});
@@ -34,12 +34,15 @@ export default function OpenTicketList() {
                         <th>Link</th>
                     </tr>
                 </thead>
+                
+                {/* searchterm/category- no toggles */}
+
+              
                 <tbody>
-                    {helpRequests.map(request => {
+                    {openTickets.map(request => {
                         return (
                             <tr key={request.id}>
                             <OpenTicket 
-                            // key={request.id}
                             id={request.id}
                             student_name={request.student_name}
                             category={request.category}
@@ -51,6 +54,8 @@ export default function OpenTicketList() {
                             )
                         })}
                 </tbody>
+
+
             </table> 
         </div>
     )

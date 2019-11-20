@@ -76,3 +76,28 @@ export default function UserTicketList() {
         </div>
     )
 }
+
+
+  {/* helper 
+                
+                open
+                closed
+                both open and closed
+                
+                */}
+
+                {/* student 
+                
+                open
+                closed
+                both
+                
+                */}
+
+                {/* both helper and student
+                
+                open
+                closed
+                both open and closed
+                
+                */}

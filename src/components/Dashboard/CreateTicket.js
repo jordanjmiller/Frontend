@@ -25,17 +25,19 @@ function CreateTicket({ values, errors, touched, status }) {
           name="description"
           placeholder="description"
         />
+        <Field type='file' name='images' multiple />
         <button>Submit!</button>
       </Form>
     </div>
   );
 }
 const FormikCreateTicket = withFormik({
-  mapPropsToValues({ name, subject, description }) {
+  mapPropsToValues({ category, title, description, images }) {
     return {
-      name: name || "",
-      subject: subject || "",
-      description: description || ""
+      name: category || "",
+      subject: title || "",
+      description: description || "",
+      images: images || null
     };
   },
   validationSchema: Yup.object().shape({
