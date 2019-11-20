@@ -1,14 +1,16 @@
 
 header {
-    position: fixed;
+    position: sticky;
     right: 0;
     left: 0;
+    top: 0;
     z-index: 999;
     background-color: #fff;
     height: 75px;
     .flex(space-between, center);
     padding: 0 40px;
-    border-bottom: 1px solid rgb(230, 230, 230);
+    // border-bottom: 1px solid rgb(230, 230, 230);
+    border-bottom: 1px solid black;
 
     @media @phone-sm {
         .flex(center, center, column);
@@ -51,6 +53,10 @@ header {
             @media @phone-sm {
                 margin: 1.5rem 0;
             }
+        }
+
+        .active{
+            color: @secondary-red;
         }
     }
 

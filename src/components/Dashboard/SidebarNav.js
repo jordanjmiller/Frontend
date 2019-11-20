@@ -48,11 +48,7 @@ export default function SidebarNav() {
                 if(noBaseWindowLocation === '/Dashboard/Unassigned' | noBaseWindowLocation === '/Dashboard/Mine' | noBaseWindowLocation === '/Dashboard/Closed')
                 {
                     return (
-                        <div>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
+                        <div className='filterToolsDiv'>
                             <label> Search by Category                  
                             <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Category..." />
                             </label>

@@ -7,11 +7,14 @@
     /* bg color colorpicked from whimsical template */
     background-color: #c3cfd9;
     border: 1px solid black;
+    border-top: none;
     width: 15%;
     min-height: 100vh;
-    // input{
-    //     width: 90%;
-    // }
+  }
+  
+  .filterToolsDiv{
+    position: sticky;
+    top: 300px;
   }
 
   .searchBox{
@@ -21,6 +24,8 @@
 
   .sidebarNav{
     /* border: 1px solid black; */
+    position: sticky;
+    top: 75px;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -45,3 +50,31 @@
   .helperDashboard{
     width: 85%;
   }
+
+  .tickettable {
+    width: 100%;
+    text-align: left;
+    padding: 2%;
+    border-collapse: collapse; 
+}
+
+.tickettable > thead {
+    color: #788896;
+    
+}
+
+tbody td, thead th {
+    padding: 2%;
+}
+
+tbody tr {
+    border-bottom: 1px solid #788896;
+}
+
+td.boldrows {
+    font-weight: 600;
+}
+
+td a {
+    text-decoration: none;
+}

@@ -11,6 +11,8 @@ Dependencies used:
 - react-loading-overlay
 - less
 - javascript-time-ago
+- formik
+- yup
 
 <!-- redux
 react-redux

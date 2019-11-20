@@ -41,12 +41,11 @@ const FormikCreateTicket = withFormik({
   validationSchema: Yup.object().shape({
     name: Yup.string().required(),
     subject: Yup.string().required(),
-     subject: Yup.string().required()
+    description: Yup.string().required()
   }),
   handleSubmit(values, { setStatus }) {
-    // values is our object with all our data on it
     axios
-      .post("https://reqres.in/api/users/", values)
+      .post("https://ddq.herokuapp.com/api/auth/createticket", values)
       .then(res => {
         setStatus(res.data);
         console.log(res);
@@ -55,4 +54,3 @@ const FormikCreateTicket = withFormik({
   }
 })(CreateTicket);
 export default FormikCreateTicket;
-console.log("This is the HOC", FormikCreateTicket);
