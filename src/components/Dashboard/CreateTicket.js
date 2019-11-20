@@ -2,6 +2,13 @@ import React, {useState} from 'react'
 import styled from 'styled-components';
 import {axiosWithAuth} from '../../utils/axiosWithAuth';
 
+const Div = styled.div `
+width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
 const Form = styled.form `
     display: flex;
     flex-direction: column;
@@ -10,6 +17,10 @@ const Form = styled.form `
     .input {
         max-width: 300px;
     }
+`
+const Video = styled.iframe `
+  min-width: 500px;
+  min-height: 300px;
 `
 //custom hook
 const useInput = initialState => {
@@ -24,6 +35,7 @@ const useInput = initialState => {
 
 export default function CreateTicket() {
     const [images, setImages] = useInput([]);
+    const [video, setVideo] = useInput(null);
     const [category, setCategory, handleCategory] = useInput('');
     const [title, setTitle, handleTitle] = useInput('');
     const [description, setDescription, handleDescription] = useInput('');
@@ -39,71 +51,41 @@ export default function CreateTicket() {
             }
         }
         
+        try{
         const ticket = await axiosWithAuth().post('https://ddq.herokuapp.com/api/tickets', ticketDetails);
-        // console.log(ticket);
-        const imagess  = await axiosWithAuth().post(`http://ddq.herokuapp.com/api/tickets/${ticket.data.id}/pictures`, imagesData, {open: true});
+    
+        if(images){
+          const urls  = await axiosWithAuth().post(`https://ddq.herokuapp.com/api/tickets/${ticket.data.id}/pictures/open`, imagesData);
+          console.log(urls);
+        }
 
+        if(video){
+          const videoData = new FormData();
+          videoData.append('video', video);
+          const url  = await axiosWithAuth().post(`https://ddq.herokuapp.com/api/tickets/${ticket.data.id}/video/open`, videoData);
+          console.log(url);  
+        }
+  
+        }catch(err){
+          console.log(err);
+        }
     }
 
     return (
-        <div>
+        <Div>
             <h1>This is CreateTicket.js</h1>
             <Form onSubmit={handleSubmit}>
                 <input className='input' placeholder='Category' onChange={e => handleCategory(e.target.value)} type='text' required/>
                 <input className='input' placeholder='Title' onChange={e => handleTitle(e.target.value)} type='text' required/>
                 <textarea className='input' placeholder='Description' onChange={e => handleDescription(e.target.value)} required/>
                 <label>Images: <input className='input' type='file' onChange={e => setImages(e.target.files)} multiple/></label>
+                <label>Video: <input className='input' type='file' onChange={e => setVideo(e.target.files[0])}/></label>
                 <button className='input' type='submit'>Submit</button>
             </Form>
-        </div>
+            <Video src="https://res.cloudinary.com/duoz4fpzs/video/upload/v1574258901/afs1lzqi3sejtbo8p5ka.mp4"></Video>
+        </Div>
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                           //||||||||||||||

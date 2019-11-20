@@ -5,7 +5,7 @@ import OpenTicket from './OpenTicket';
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
 export default function OpenTicketList() {
-    const { searchTerm, searchType, filterByOpenClosed } = useContext(CurrentUserContext);
+    const { searchTerm, searchType } = useContext(CurrentUserContext);
 
     const [openTickets, setOpenTickets] = useState([]);
 

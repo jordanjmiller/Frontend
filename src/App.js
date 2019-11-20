@@ -26,7 +26,7 @@ function App() {
 
   const [searchType, setSearchType] = useState('Category');
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterByHelperStudentBoth, setFilterByHelperStudentBoth] = useState('Both');
+  const [filterByHelperStudentBoth, setFilterByHelperStudentBoth] = useState('All');
   const [filterByOpenClosedAll, setFilterByOpenClosedAll] = useState('All');
 
   useEffect(() => {

@@ -19,23 +19,23 @@ export default function SidebarNav() {
 
     const handleChange = e => {
           setSearchTerm(e.target.value);
-        console.log('SideBar Search Term:', searchTerm);
+        // console.log('SideBar Search Term:', searchTerm);
       };
     
       const toggleBool = e => {
-        if (filterByHelperStudentBoth === 'Both') {
+        if (filterByHelperStudentBoth === 'All') {
             setFilterByHelperStudentBoth('Student');
         }
         else if (filterByHelperStudentBoth === 'Student') {
             setFilterByHelperStudentBoth('Helper');
         }
         else if (filterByHelperStudentBoth === 'Helper') {
-            setFilterByHelperStudentBoth('Both');
+            setFilterByHelperStudentBoth('All');
         }
       };
 
       const handleSelect = e => {
-          console.log(e.target.value);
+        //   console.log(e.target.value);
           setSearchType(e.target.value);
       }
 
@@ -65,41 +65,45 @@ export default function SidebarNav() {
             </nav>
 
             {/* only if at any of the three above routes display filter tools. */}
-            {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
-
-                if(noBaseWindowLocation === '/Dashboard/Unassigned' | noBaseWindowLocation === '/Dashboard/Mine' | noBaseWindowLocation === '/Dashboard/Closed')
-                {
-                    return (
-                        <div className='filterToolsDiv'>
-                            <label> Search by:
-                            <select onChange={handleSelect} name="searchBy">
-                                <option value="Category">Category</option>
-                                <option value="Student">Student Name</option>
-                                <option value="Helper">Helper Name</option>
-                                <option value="Title">Title</option>
-                                <option value="Description">Description</option>
-                                <option value="Answer">Answer</option>
-                            </select>
-                            <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder={`${searchType}...`} />
-                            </label>
-                            <br />
-                            <button onClick={clearSearchTerm}>Clear</button>
-                            <br />
-                            {/* REMOVE HELPER AND ANSWER FROM OPEN TICKET LIST OPTION */}
-                            {/* remove both below buttons if in open queue if */}
-                            <label> Helper/Student:
-                            <br />
-                            <button onClick={toggleBool}>{filterByHelperStudentBoth}</button>
-                            </label>
-                            <br />
-                            <label> Display:
-                            <br />
-                            <button onClick={toggleButton}>{filterByOpenClosedAll} Tickets</button>
-                            </label>
-                        </div>
-                    );
-                }
-            })()}
+                
+            <div className='filterToolsDiv'>
+                {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
+                        if(noBaseWindowLocation === '/Dashboard/Unassigned' | noBaseWindowLocation === '/Dashboard/Mine' | noBaseWindowLocation === '/Dashboard/Resolved')
+                        {
+                            return(
+                                <>
+                                <label> Search by:
+                                <select onChange={handleSelect} name="searchBy">
+                                    <option value="Category">Category</option>
+                                    <option value="Student">Student Name</option>
+                                    {noBaseWindowLocation !== 'Unassigned' && <option value="Helper">Helper Name</option>}
+                                    <option value="Title">Title</option>
+                                    <option value="Description">Description</option>
+                                    {noBaseWindowLocation !== 'Unassigned' && <option value="Answer">Answer</option>}
+                                </select>
+                                <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder={`${searchType}...`} />
+                                </label>
+                                <br />
+                                <button onClick={clearSearchTerm}>Clear</button>
+                                <br />
+                                {noBaseWindowLocation === '/Dashboard/Mine' &&
+                                        <>
+                                        <label> Helper/Student:
+                                        <br />
+                                        <button onClick={toggleBool}>{filterByHelperStudentBoth} Tickets</button>
+                                        </label>
+                                        <br />
+                                        <label> Display:
+                                        <br />
+                                        <button onClick={toggleButton}>{filterByOpenClosedAll} Tickets</button>
+                                        </label>
+                                        </>
+                                }
+                                </>
+                            );
+                        }
+                })()}
+            </div>;
         </div>  
     )
 }

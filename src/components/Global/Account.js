@@ -1,5 +1,12 @@
 import React, { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import styled from 'styled-components';
+
+const Div = styled.div `
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+`
 
 export default function Account() {
     const { currentUser } = useContext(CurrentUserContext);
@@ -7,7 +14,7 @@ export default function Account() {
     // console.log(currentUser);
 
     return (
-        <div>
+        <Div>
             <h1>Account details</h1>
             <p>Username: {currentUser.username}</p>
             <p>Helper? {currentUser.helper === true ? 'Yes' : 'No'}</p>
@@ -61,6 +68,6 @@ export default function Account() {
                
                     <button>Submit</button>
             </form>
-        </div>
+        </Div>
     )
 }
