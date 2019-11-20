@@ -12,7 +12,7 @@ export default function ClosedTicketList() {
     useEffect(() => {
         axiosWithAuth().get('/tickets/resolved')
         .then(res => {
-            // console.log(res.data)
+            console.log(res.data)
             setClosedTickets(res.data)
         })
         .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)

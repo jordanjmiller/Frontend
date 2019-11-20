@@ -20,8 +20,8 @@ export default function Dashboard() {
 
     return (
         <div className='dashboard'>
-            <CurrentUserContext.Provider value={{ searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, 
-            filterByStudent, setFilterByStudent, filterByOpenClosed, setFilterByOpenClosed, currentUser }}>
+            <CurrentUserContext.Provider value={{ currentUser, searchTerm, setSearchTerm, filterByHelper, setFilterByHelper, 
+            filterByStudent, setFilterByStudent, filterByOpenClosed, setFilterByOpenClosed }}>
                 <SidebarNav />
 
                 <Route exact path='/Dashboard/Account' component={Account} />
@@ -29,7 +29,7 @@ export default function Dashboard() {
 
                 <Route exact path='/Dashboard/Unassigned' component={OpenTicketList} />
                 <Route exact path='/Dashboard/Mine' component={UserTicketList} />
-                <Route exact path='/Dashboard/Closed' component={ClosedTicketList} />
+                <Route exact path='/Dashboard/Resolved' component={ClosedTicketList} />
                 <Route exact path='/Dashboard/Tickets/:id' component={TicketView} />
             </CurrentUserContext.Provider>
         </div>

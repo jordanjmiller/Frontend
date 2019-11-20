@@ -39,7 +39,7 @@ export default function SidebarNav() {
             <nav className='sidebarNav'>
                 <NavLink className='navLink' to='/Dashboard/Unassigned'>Unassigned</NavLink> 
                 <NavLink className='navLink' to='/Dashboard/Mine'>Mine</NavLink>
-                <NavLink className='navLink' to='/Dashboard/Closed'>Closed</NavLink>
+                <NavLink className='navLink' to='/Dashboard/Resolved'>Resolved</NavLink>
             </nav>
 
             {/* only if at any of the three above routes display filter tools. */}
