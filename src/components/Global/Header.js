@@ -18,22 +18,17 @@ export default function Header(props) {
   return (
     <>
     <header>
-        
         <Link to='/'><img className="logo" src={logo} /></Link>
-      
         {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
             if (currentUser){
                 return (
                     <>
                     <h4>Welcome {currentUser.name}!</h4>
                         <nav className='loggedIn'>
-                            {/* <NavLink className='navLink' exact to='/'> Home</NavLink> WS: Removed because the logo brings them home  */}
                             <NavLink className='navLink' to='/Dashboard/Account'>Account</NavLink>
                             <NavLink className='navLink' to='/Dashboard/CreateTicket'>Create Ticket</NavLink>
                             <NavLink className='navLink' to='/Dashboard/Unassigned'>Dashboard</NavLink>
                             <button className="button" onClick={logout}>Sign out</button>
-                            {/* Not sure what below is intended to link to */}
-                            {/* <NavLink to='/'>Tickets</NavLink> */}
                         </nav>
                     </>
                 );

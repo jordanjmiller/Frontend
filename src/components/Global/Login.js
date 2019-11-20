@@ -4,7 +4,7 @@ import axios from 'axios';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 export default function Login(props) {
-    const { setCurrentUser } = useContext(CurrentUserContext);
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
     const [userCredentials, setUserCredentials] = useState({username: '', password: ''});
     
     const handleChange = (e) => {
@@ -16,24 +16,35 @@ export default function Login(props) {
         e.preventDefault();
         e.target.reset();
         // console.log('Login.js handleSubmit userCredentials:', userCredentials);
-
         //send inputted user credentials and receive auth token and user object
         axios.post('https://ddq.herokuapp.com/api/auth/login', userCredentials)
         .then(res => {
             // console.log('axios: api/auth/login response: ', res);
             sessionStorage.setItem('token', res.data.token);
             setCurrentUser({...res.data.user});
-            
-            // alert(res.data.message);
-
             //redirect to open queue
             props.history.push('/Dashboard/Unassigned');
         })
-        .catch(err => {console.log('LOGIN CATCH ERROR: ', err.response.data.message)
+        .catch(err => {console.log('LOGIN CATCH ERROR: ', err.response.data.message);
         alert(err.response.data.message)});
         setUserCredentials({username: '', password: ''})
     }
 
+    const logout = () => {
+        sessionStorage.removeItem('token');
+        setCurrentUser('');
+        alert('Logged out successfully. Come back soon!');
+        props.history.push('/');
+    }
+
+    if (currentUser){
+        return (
+        <div>
+            <h2>You're already logged in!</h2>
+            <button className="button" onClick={logout}>Sign out</button>
+        </div>
+        );
+    }
     return (
         <div>
             <h1>Login</h1>

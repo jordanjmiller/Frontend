@@ -4,12 +4,12 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const { currentUser } = useContext(CurrentUserContext);
-
+    console.log(rest)
+    const path = rest.path;
   return (
     <Route
       {...rest}
       render={props => {
-        // console.log('current user:', currentUser);
         if (sessionStorage.getItem('token') && currentUser) {
           //render component if user is logged in and has a token
           return <Component {...props} />;
