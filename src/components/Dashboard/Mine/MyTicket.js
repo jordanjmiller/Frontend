@@ -6,8 +6,7 @@ import * as timeago from 'timeago.js';
 export default function MyTicket(props) {
     return (
         <>
-            <td className='boldrows'>{props.student_name}</td> 
-            {/* <td className='boldrows'>Status -- replace</td> */}
+            <td className='boldrows'>{props.status}</td>
             <td>{props.title}</td>
             <td className='boldrows'>{props.category}</td>
             <td>{timeago.format(props.created_at)}</td>
