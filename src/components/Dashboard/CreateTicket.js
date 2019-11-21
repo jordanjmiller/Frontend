@@ -29,7 +29,6 @@ const Button = styled.button `
     border: none;
     border-radius: 5px;
     text-decoration: none;
-
     padding: 1rem 2.5rem;
     text-decoration: none;
     font-weight: @bold-font-weight;
@@ -39,10 +38,38 @@ const Button = styled.button `
     &:hover {
         background-color: #880C23;
     }
+
 `
 const MarginDiv = styled.div `
     margin-bottom: 10px;
 `
+const Label = styled.label `
+    input[type = 'file'] {
+    // background-color: red;  
+
+        &::-webkit-file-upload-button {
+
+            font-size: 1.8rem;
+            background-color: #BF0033;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-weight: @bold-font-weight;
+            transition: 0.3s;
+            border: 0;
+
+            margin-bottom: 10px;
+            &:hover {
+                background-color: #880C23;
+            }
+        }
+        
+
+    }
+` 
 //custom hook
 const useInput = initialState => {
     const [value, setValue] = useState(initialState);
@@ -103,8 +130,8 @@ export default function CreateTicket() {
                 <input className='text-input' placeholder='Title' onChange={e => handleTitle(e.target.value)} type='text' required/>
                 </MarginDiv>
                 <textarea className='text-input' placeholder='Description' onChange={e => handleDescription(e.target.value)} required/>
-                <label>Images: <input className='input' type='file' onChange={e => setImages(e.target.files)} multiple/></label>
-                <label>Video: <input className='input' type='file' onChange={e => setVideo(e.target.files[0])}/></label>
+                <Label>Images: <input className='input' type='file' onChange={e => setImages(e.target.files)} multiple/></Label>
+                <Label>Video: <input className='input' type='file' onChange={e => setVideo(e.target.files[0])}/></Label>
                  <MarginDiv>
                 <Button className='input' type='submit'>Submit</Button>
                 </MarginDiv>
