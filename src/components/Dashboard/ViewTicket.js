@@ -1,21 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import Ticket from "./Ticket";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 
 export default function ViewTicket(props) {
   const { currentUser } = useContext(CurrentUserContext)
-  const [ticketFromServer, setTicketFromServer] = useState([{}]);
+  const [ticket, setTicket] = useState([{}]);
+  const ticketID = props.match.params.id;
 
   useEffect(() => {
-    const ticketID = props.match.params.id;
     axiosWithAuth()
       .get(`/tickets/${ticketID}`)
       .then(res => {
-        console.log('get ticket response: ', res.data);
-        setTicketFromServer(res.data.ticket_details);
+        console.log('getTicket res:', res.data);
+        setTicket(res.data.ticket_details);
       })
       .catch(err => {
         console.log("CATCH ERROR: ", err.response.data.message);
@@ -24,60 +23,121 @@ export default function ViewTicket(props) {
     // add error catch
   }, []);
 console.log('currentUser: ', currentUser);
-console.log(ticketFromServer)
-console.log(ticketFromServer[0].student_name)
-  if( currentUser.name === ticketFromServer.student_name){
+console.log(ticket)
+// console.log(ticket[0].student_name)
+  if( currentUser.name === ticket.student_name){
     // console.log(ticketFromServer[0].student_name)
   }
-  else if( currentUser.name === ticketFromServer.student_name){
+  else if( currentUser.name === ticket.student_name){
     // console.log(ticketFromServer[0].student_name)
   }
 
-  // useEffect(() => {
-  //   const ticketID = props.match.params.id;
-  //   axiosWithAuth()
-  //     .get(`/tickets/${ticketID}`)
-  //     .then(res => {
-  //       console.log(res.data);
 
-  //       setTickets(
-  //         res.data.find(ticket => {
-  //           return ticket.id === ticketID;
-  //         })
-  //       );
-  //     })
-  //     .catch(err => {
-  //       console.log("CATCH ERROR: ", err.response.data.message);
-  //       alert(err.response.data.message);
-  //     });
-  //   // add error catch
-  // }, []);
+  const closeTicket = () => {
+
+  };
 
   return (
-    <div className="ticketContainer">
-      <h1>Title: {ticketFromServer[0].title}</h1>
-     <h2>category: {ticketFromServer[0].category}</h2>
-    
-   
-     <div className="text-box">
-     <h3> Student {ticketFromServer[0].student_name} asked 
-     <p> {ticketFromServer[0].description}</p>
-     </h3>
-    <p> created_at {ticketFromServer[0].created_at}</p>
-     </div>
-    </div>  
+    <section className="ticketContainer">
+      {(()=>{
+        if (ticket){
+          return (
+          <>
+            <div className='ticketNav'>
+              <div className='ticketNavLeft'>
+                <div >
+                  <h2>Ticket #{ticketID}</h2>
+                  <p>{ticket.title}</p>
+                </div>
+                <p>{ticket.category}</p>
+              </div>
+              <nav className='ticketNavRight'>
+                <p>Flag for removal</p>
+                <p>Mark as solved</p>
+                <button className='closeTicket' onClick={closeTicket}>Claim/Release</button>
+              </nav>
+            </div>
+
+            {ticket.status === 'open' && 
+              <div className='topDiv'>
+                <p>{ticket.student_name} created a new help request.</p>
+                {/* insert timeago */}
+              </div> 
+            }
+            {ticket.status === 'assigned' && 
+              <>
+              {ticket.solution && 
+              <div className='topDiv'>
+              <p>{ticket.helper_name} has answered your question.</p>
+              {/* timeago here, answered at time variable does not exists*/}
+              </div> }
+              {!ticket.solution && 
+              <div className='topDiv'>
+              <p>{ticket.helper_name} has accepted your question and will be in touch shortly.</p>
+              {/* timeago here, assigned at time variable does not exists*/}
+              </div> }
+              </>
+            }
+            {ticket.status === 'resolved' && 
+              <div className='topDiv'>
+              </div> 
+            }
+            <div className='studentDiv'>
+              <p>Student {ticket.student_name} asked:</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE STUDENT DIV
+            OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
+            {ticket.status !== 'open' &&
+              <>
+              {ticket.solution && 
+              <div className='helperDiv'>
+              <p>Helper {ticket.helper_name} replied:</p>
+              <br />
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>}
+              <div answerContainer>
+              <div className='answerBox'>
+              <label> Write answer here
+               <input type='text'/>
+              </label>
+              </div>
+            <button>Submit</button>
+          </div>
+              </>
+            }
+            {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE HELPER DIV
+            OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
+          </>
+          );}})()}
+          
+          
+    </section>  
   );
   
 }
 
-//   "id": 10,
-//   "title": "Cake",
-//   "category": "food",
-//   "description": "If I don't have some cake soon, I might die.",
-//   "created_at": "2019-11-20T14:45:12.503Z",
-//   "open_video": null,
-//   "resolved_video": null,
-//   "student_name": "Stanley Hudson",
-//   "helper_name": "Andy Bernard",
-//   "status": "resolved",
-//   "resolved_at": "2019-11-20T14:45:12.527Z"
+// {
+//   "ticket_details": {
+//     "id": 2,
+//     "title": "Where is he?",
+//     "category": "lost cousin",
+//     "description": "I cannot find Mose",
+//     "created_at": "2019-11-20T14:45:12.503Z",
+//     "open_video": null,
+//     "resolved_video": null,
+//     "solution": null,
+//     "student_name": "Dwight Schrute",
+//     "helper_name": "Creed Bratton",
+//     "status": "assigned",
+//     "resolved_at": null
+//   },
+//   "open_pictures": [],
+//   "resolved_pictures": []
+// }
