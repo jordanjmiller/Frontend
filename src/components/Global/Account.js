@@ -11,6 +11,16 @@ const Div = styled.div `
     align-items: center;
 `
 
+const MarginButton = styled.button `
+    margin-top: 25px;
+`
+
+const PasswordDiv = styled.div `
+    margin-top: 50px;
+    font-style: italic;
+    color: #BF0033;
+`
+
 export default function Account() {
     const { currentUser } = useContext(CurrentUserContext);
 
@@ -23,10 +33,11 @@ export default function Account() {
     const [editCohort, setEditCohort] = useState(currentUser.cohort);
     const [editHelper, setEditHelper] = useState(currentUser.helper);
     const [editStudent, setEditStudent] = useState(currentUser.student);
+    const [newPassword, setNewPassword] = useState('');
 
     // console.log(editHelper)
     // user inputs this so it can be sent to the API in the update request
-    const [inputPassword, setInputPassword] = useState('');
+    const [verifyPassword, setVerifyPassword] = useState('');
 
     const handleChange = e => {
         if (e.target.name === 'username'){
@@ -41,17 +52,20 @@ export default function Account() {
         else if (e.target.name === 'cohort'){
             setEditCohort(e.target.value);
         }
+        else if (e.target.name === 'newPassword'){
+            setNewPassword(e.target.value);
+        }
       };
 
     const passwordChange = (e) => {
-        setInputPassword(e.target.value)
-        // console.log(inputPassword)
+        setVerifyPassword(e.target.value)
     }
 
     const handleSubmit = e => {
         e.preventDefault();
+        e.target.reset();
         
-        let userObj = { password: inputPassword }
+        let userObj = { password: verifyPassword }
         if (editUserName){
             userObj = {...userObj, username: editUserName}
         }
@@ -64,14 +78,20 @@ export default function Account() {
         if (editCohort){
             userObj = {...userObj, cohort: editCohort}
         }
+        if (newPassword){
+            userObj = {...userObj, newPassword: newPassword}
+        }
+        
 
         // console.log(editUserName)
         // console.log(userObj)
-        // console.log(inputPassword)
+        
         if (validateInputs()) {
         axiosWithAuth()
         .put("https://ddq.herokuapp.com/api/users/user", userObj)
-        .then(alert("Account update successful"))
+        .then(res => {
+            console.log(res);
+        })
         .catch(err => {
             console.log("Edit Account Catch Error: ", err.response.data.message);
             alert(err.response.data.message);
@@ -82,15 +102,40 @@ export default function Account() {
 
     // this isn't working 
 
-    const toggleBool = e => {
-        if (e.target.name === "helper") {
-          setEditHelper(!currentUser.helper);
+    // const toggleBool = e => {
+    //     if (e.target.name === "helper") {
+    //       setEditHelper(!currentUser.helper);
           
-        } else if (e.target.name === "student") {
-          setEditStudent(!currentUser.student);
-        }
-      };
+    //     } else if (e.target.name === "student") {
+    //       setEditStudent(!currentUser.student);
+    //     }
+    //   };
 
+    const isValidPassword = password => {
+    if (password === "") {
+        alert("You must enter a password.");
+        return false;
+    }
+    if (password.length < 5 || password.length > 20) {
+        alert("Password cannot be less than 5 or greater than 20 characters");
+        return false;
+    }
+    if (!/(!|@|#|\$|&|\*|%|^)/.test(password)) {
+        alert("Password must contain at least one special character");
+        return false;
+    }
+    if (!/([A-Z])/.test(password)) {
+        alert("Password must contain at least one capitalized letter");
+        return false;
+    }
+    if (!/([0-9])/.test(password)) {
+        alert("Password must contain at least one number");
+        return false;
+    }
+    return true;
+    };
+
+      
     const validateInputs = () => {
     if (editUserName === "") {
         alert("Your username can't be empty.");
@@ -104,10 +149,14 @@ export default function Account() {
         alert("You must enter your name.");
         return false;
     }
-    if (editHelper === false && editStudent === false) {
-        alert("You must choose to enroll as a helper, student, or both.");
-        return false;
-    }
+    // if (editHelper === false && editStudent === false) {
+    //     alert("You must choose to enroll as a helper, student, or both.");
+    // //     return false;
+    // }
+    // if (!isValidPassword(newPassword)) {
+    //     return false;
+    //   }
+    
     return true;
     };
 
@@ -115,70 +164,72 @@ export default function Account() {
 
     return (
         <Div>
-            <h1>Account details</h1>
+        
 
    
 
   
 
-{/* Show button */}
-<button onClick={() => setShowEditForm(!showEditForm)}>{showEditForm && 'Cancel'}{!showEditForm && 'Edit'}</button>
+
 
      {/* Show initially */}
 
             {!showEditForm && <div> 
-                <p>User name: {currentUser.username}</p>
-                <p>Name: {currentUser.name}</p>
-                <p>Email: {currentUser.email !== null ? currentUser.email : 'None'} </p>
-                <p>Cohort: {currentUser.cohort !== null ? currentUser.cohort : 'Unknown'} </p>
-                <br /><br />
-                <p>Helper? {currentUser.helper === true ? 'Yes' : 'No'}</p>
-                <p>Student? {currentUser.student === true ? 'Yes' : 'No'}</p>
+                <p><h3 className="bold">Username:</h3> {currentUser.username}</p>
+                <p><h3 className="bold">Name:</h3> {currentUser.name}</p>
+                <p><h3 className="bold">Email:</h3> {currentUser.email !== null ? currentUser.email : 'None'} </p>
+                <p><h3 className="bold">Cohort:</h3> {currentUser.cohort !== null ? currentUser.cohort : 'Unknown'} </p>
+                {/* <p>Helper? {currentUser.helper === true ? 'Yes' : 'No'}</p>
+                <p>Student? {currentUser.student === true ? 'Yes' : 'No'}</p> */}
 
             </div>}
 
 
         {/* Show on button click */}
             {showEditForm && <form onSubmit={handleSubmit}>
-            
-            <label>User name:
-            <input name="username" onChange={handleChange} placeholder={currentUser.username} type="text"/> 
+
+            <label><h3 className="bold">Username:</h3>
+            <input className="text-input" name="username" onChange={handleChange} placeholder={currentUser.username} type="text"/> 
         </label>
-        <br /><br />
-            <label>Name:
-                <input name="name" onChange={handleChange} placeholder={currentUser.name} />
+       
+            <label><h3 className="bold">Name:</h3>
+                <input className="text-input" name="name" onChange={handleChange} placeholder={currentUser.name} />
             </label>
 
-            <br /><br />
+          
 
-            <label> Email:
-                <input name="email" type="email" onChange={handleChange} placeholder={currentUser.email !== null ? currentUser.email : ''} />
+            <label><h3 className="bold">Email:</h3>
+                <input className="text-input" name="email" type="email" onChange={handleChange} placeholder={currentUser.email !== null ? currentUser.email : ''} />
             </label> 
-            <br /><br />
-            <label> Cohort:
-                <input name="cohort" type="text" onChange={handleChange} placeholder={currentUser.cohort !== null ? currentUser.cohort : ''} />
+           
+            <label><h3 className="bold">Cohort:</h3>
+                <input className="text-input" name="cohort" type="text" onChange={handleChange} placeholder={currentUser.cohort !== null ? currentUser.cohort : ''} />
             </label>
-            <br /><br />
+         
 
-            <label> Helper
+            {/* <label> Helper
                      <input name="helper" type="checkbox" onChange={toggleBool} />
                 </label>
                 <label> Student
                     <input name="student" type="checkbox" checked={currentUser.student} onChange={toggleBool} />
-                </label>
-                <br /><br />
-                <br /><br />
-            <br /><br />
+                </label> */}
+              
+                <label><h3 className="bold">New password:</h3>
+            <input className="text-input" name="newPassword" onChange={handleChange} placeholder='' type="text"/> 
+        </label>
+           <PasswordDiv>
                 <label>
-                    Re-enter password:
-                    <input type='password' name='password' onChange={passwordChange} placeholder='password'/>
+                    <p>Re-enter password to save changes:</p>
+                    <input className="text-input" type='password' name='password' onChange={passwordChange} />
                 </label>
+            </PasswordDiv> 
                 <br /><br />
-                <button type="submit">Submit changes</button>
+                <button className="button" type="submit">Submit changes</button>
 
             </form> }
 
-        
+        {/* Show button */}
+<MarginButton className="button" onClick={() => setShowEditForm(!showEditForm)}>{showEditForm && 'Cancel'}{!showEditForm && 'Edit'}</MarginButton>
 
 
         </Div>

@@ -2,20 +2,15 @@ import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import unclaimed from '../../images/unclaimed.png'
+import mine from '../../images/mine.png'
+import closed from '../../images/closed.png'
 
-export default function SidebarNav() {
+export default function SidebarNav(props) {
     const { searchType, setSearchType, searchTerm, setSearchTerm, filterByHelperStudentBoth, setFilterByHelperStudentBoth, 
         filterByOpenClosedAll, setFilterByOpenClosedAll } = useContext(CurrentUserContext);
 
-    let fullWindowLocation = window.location.toString();
-    let noBaseWindowLocation = fullWindowLocation.slice(21, fullWindowLocation.length);
-    // console.log('sidebar props', fullWindowLocation);
-    // console.log('sidebar props', noBaseWindowLocation);
-    //MOVE TO APP and also fix for deployed url. this is a hardcoded way to get route location without props based on url length. #hacks
-    //im dumb just load router prop from some component and set it to global state and pass around..
-
-
-    // console.log('sidebar props', searchType);
+        // console.log('SideBarNav', props.props.location.pathname);
 
     const handleChange = e => {
           setSearchTerm(e.target.value);
@@ -59,34 +54,47 @@ export default function SidebarNav() {
     return (
         <div className='sidebarDiv'>
             <nav className='sidebarNav'>
+            <div>
+                <img src={unclaimed} alt="Unclaimed tickets" />
                 <NavLink className='navLink' to='/Dashboard/Unassigned'>Unassigned</NavLink> 
+            </div>
+            <div>
+                <img src={mine} alt="My tickets" />
                 <NavLink className='navLink' to='/Dashboard/Mine'>Mine</NavLink>
+            </div>
+            <div>
+                <img src={closed} alt="Closed tickets" />
                 <NavLink className='navLink' to='/Dashboard/Resolved'>Resolved</NavLink>
+            </div>
             </nav>
 
             {/* only if at any of the three above routes display filter tools. */}
                 
             <div className='filterToolsDiv'>
                 {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
-                        if(noBaseWindowLocation === '/Dashboard/Unassigned' | noBaseWindowLocation === '/Dashboard/Mine' | noBaseWindowLocation === '/Dashboard/Resolved')
+                        if(props.props.location.pathname === '/Dashboard/Unassigned' | props.props.location.pathname === '/Dashboard/Mine' | props.props.location.pathname === '/Dashboard/Resolved')
                         {
                             return(
                                 <>
-                                <label> Search by:
-                                <select onChange={handleSelect} name="searchBy">
-                                    <option value="Category">Category</option>
-                                    <option value="Student">Student Name</option>
-                                    {noBaseWindowLocation !== 'Unassigned' && <option value="Helper">Helper Name</option>}
-                                    <option value="Title">Title</option>
-                                    <option value="Description">Description</option>
-                                    {noBaseWindowLocation !== 'Unassigned' && <option value="Answer">Answer</option>}
-                                </select>
-                                <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder={`${searchType}...`} />
-                                </label>
-                                <br />
-                                <button onClick={clearSearchTerm}>Clear</button>
-                                <br />
-                                {noBaseWindowLocation === '/Dashboard/Mine' &&
+                                    <p> Filter by:</p>
+                                    <div className="select">
+                                        {/* <label for="select-box"> */}
+                                        <select id="select-box" onChange={handleSelect} name="searchBy">
+                                            <option value="Category">Category</option>
+                                            <option value="Student">Student Name</option>
+                                            {props.props.location.pathname !== '/Dashboard/Unassigned' && <option value="Helper">Helper Name</option>}
+                                            <option value="Title">Title</option>
+                                            <option value="Description">Description</option>
+                                            {props.props.location.pathname !== '/Dashboard/Unassigned' && <option value="Answer">Answer</option>}
+                                        </select>
+                                    </div>
+                                    <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Filter" />
+                                    {/* was {`${searchType}...`} */}
+                                    {/* </label> */}
+                                    <br />
+                                    <button className="button" onClick={clearSearchTerm}>Clear</button>
+                                    <br />
+                                    {props.location === '/Dashboard/Mine' &&
                                         <>
                                         <label> Helper/Student:
                                         <br />
@@ -98,12 +106,12 @@ export default function SidebarNav() {
                                         <button onClick={toggleButton}>{filterByOpenClosedAll} Tickets</button>
                                         </label>
                                         </>
-                                }
+                                    }
                                 </>
                             );
                         }
                 })()}
-            </div>;
+            </div>
         </div>  
     )
 }

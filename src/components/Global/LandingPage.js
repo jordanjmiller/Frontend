@@ -11,7 +11,7 @@ export default function LandingPage() {
             <div className="cta">
                 <h1>Get support, fast.</h1>
                 <p>Problem? We're here to help. Get a ticket in and our team of helpers will get you back on track.</p>
-                <Link className="button" to='/Dashboard'>Submit a Ticket</Link>
+                <Link className="button" to='/Login'>Submit a Ticket</Link>
             </div>
         </section>
 

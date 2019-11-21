@@ -22,7 +22,7 @@ const StyledLoader = styled(LoadingOverlay)`
     min-height: 100vh;
 `;
 
-function App() {
+function App(props) {
   const [currentUser, setCurrentUser] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -62,11 +62,11 @@ function App() {
           <Route exact path='/Login' render={props => <Login {...props} />} />
           <Route exact path='/Credits' render={Credits} />
           {!loading && 
-          <div>
+          <div className="main-content">
             <Route exact path='/LogOut' render={props => <LogOut {...props} />} />
             <Route exact path='/Register' render={props => <SignUpForm {...props} />} />
 
-            <PrivateRoute path='/Dashboard' component={Dashboard} />
+            <PrivateRoute path='/Dashboard' component={Dashboard} props={props} />
           </div>
           }
           <Footer />
