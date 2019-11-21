@@ -31,7 +31,6 @@ const Button = styled.button `
     text-decoration: none;
 `
 const MarginDiv = styled.div `
-    margin-top: 10px;
     margin-bottom: 10px;
 `
 //custom hook
@@ -90,7 +89,9 @@ export default function CreateTicket() {
             <MarginDiv>
                 <input className='text-input' placeholder='Category' onChange={e => handleCategory(e.target.value)} type='text' required/>
                 </MarginDiv>
+                <MarginDiv>
                 <input className='text-input' placeholder='Title' onChange={e => handleTitle(e.target.value)} type='text' required/>
+                </MarginDiv>
                 <textarea className='text-input' placeholder='Description' onChange={e => handleDescription(e.target.value)} required/>
                 <label>Images: <input className='input' type='file' onChange={e => setImages(e.target.files)} multiple/></label>
                 <label>Video: <input className='input' type='file' onChange={e => setVideo(e.target.files[0])}/></label>

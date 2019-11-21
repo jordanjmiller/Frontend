@@ -84,8 +84,11 @@ export default function SidebarNav() {
                         {
                             return(
                                 <>
-                                <label> Search by:
-                                <select onChange={handleSelect} name="searchBy">
+                                
+                                <p> Filter by:</p>
+                                <div className="select">
+                                {/* <label for="select-box"> */}
+                                <select id="select-box" onChange={handleSelect} name="searchBy">
                                     <option value="Category">Category</option>
                                     <option value="Student">Student Name</option>
                                     {noBaseWindowLocation !== 'Unassigned' && <option value="Helper">Helper Name</option>}
@@ -93,8 +96,10 @@ export default function SidebarNav() {
                                     <option value="Description">Description</option>
                                     {noBaseWindowLocation !== 'Unassigned' && <option value="Answer">Answer</option>}
                                 </select>
-                                <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder={`${searchType}...`} />
-                                </label>
+                                </div>
+                                <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Filter" />
+                                {/* was {`${searchType}...`} */}
+                                {/* </label> */}
                                 <br />
                                 <button className="button" onClick={clearSearchTerm}>Clear</button>
                                 <br />
@@ -111,6 +116,7 @@ export default function SidebarNav() {
                                         </label>
                                         </>
                                 }
+                             
                                 </>
                             );
                         }
