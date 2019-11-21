@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import styled from 'styled-components';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import styled from "styled-components";

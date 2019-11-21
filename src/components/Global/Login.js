@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import styled from 'styled-components';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import styled from "styled-components";
