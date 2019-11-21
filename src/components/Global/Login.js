@@ -13,6 +13,18 @@ const LoginForm = styled.div `
         .card {
             width: 50%;
             margin-top: 40px;
+            padding: 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+
+            label {
+                display: block;
+                padding-bottom: 25px;
+            }
         }
     `
 
@@ -65,14 +77,12 @@ export default function Login(props) {
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <label>
-                        Username:
-                        <input name='username' onChange={handleChange} placeholder='username'/>
+                        <input class="text-input" placeholder="Username" name='username' onChange={handleChange} placeholder='username'/>
                     </label>
                     <label>
-                        Password:
-                        <input type='password' name='password' onChange={handleChange} placeholder='password'/>
+                        <input class="text-input" placeholder="Password" type='password' name='password' onChange={handleChange} placeholder='password'/>
                     </label>
-                    <button type='submit'>Login</button>
+                    <button className="button fullwidth" type='submit'>Login</button>
                 </form>
 
                 <br />

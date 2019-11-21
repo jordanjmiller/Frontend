@@ -164,7 +164,7 @@ export default function Account() {
 
     return (
         <Div>
-            <h1>Account details</h1>
+        
 
    
 

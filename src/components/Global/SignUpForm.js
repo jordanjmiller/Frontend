@@ -1,6 +1,41 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
+import styled from 'styled-components';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+
+const SignUpWrap = styled.div `
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+
+        .card {
+            width: 50%;
+            margin-top: 40px;
+            padding: 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+
+          input:not([type=checkbox]) {
+            margin-bottom: 15px;
+          }
+
+          label {
+            display: block;
+          }
+
+          .checkbox-group {
+            width: 360px;
+            display: flex;
+            justify-content: space-around;
+          }
+            
+        }
+    `
 
 export default function SignUpForm(props) {
   const { setCurrentUser } = useContext(CurrentUserContext);
@@ -145,28 +180,27 @@ export default function SignUpForm(props) {
   };
 
   return (
-    <div className="sign-up-form">
-      <h2>Sign up for an account</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="username" onChange={handleChange} placeholder="username" />
-        <br />
-        <input name="password" type="password" onChange={handleChange} placeholder="password" />
-        <br />
-        <input name="name" onChange={handleChange} placeholder="name" />
-        <br />
-        <input name="email" type="email" onChange={handleChange} placeholder="email" />
-        <br />
-        <input name="cohort" type="text" onChange={handleChange} placeholder="cohort" />
-        <br />
-        <label> Helper
-          <input name="helper" type="checkbox" onChange={toggleBool} />
-        </label>
-        <label> Student
-          <input name="student" type="checkbox" onChange={toggleBool} />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <SignUpWrap className="sign-up-form">
+      <div className="card">
+        <h2>Sign up for an account</h2>
+        <form onSubmit={handleSubmit}>
+          <input className="text-input" name="username" onChange={handleChange} placeholder="username" />
+          <input className="text-input" name="password" type="password" onChange={handleChange} placeholder="password" />
+          <input className="text-input" name="name" onChange={handleChange} placeholder="name" />
+          <input className="text-input" name="email" type="email" onChange={handleChange} placeholder="email" />
+          <input className="text-input" name="cohort" type="text" onChange={handleChange} placeholder="cohort" />
+          
+          <div className="checkbox-group">
+            <label> Helper&nbsp;
+              <input name="helper" type="checkbox" onChange={toggleBool} />
+            </label>
+            <label> Student&nbsp;
+              <input name="student" type="checkbox" onChange={toggleBool} />
+            </label>
+          </div>
+          <button className="button fullwidth" type="submit">Submit</button>
+        </form>
+      </div>
+    </SignUpWrap>
   );
 }

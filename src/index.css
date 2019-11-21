@@ -230,6 +230,16 @@ footer {
   align-items: flex-start;
   margin-left: 20%;
 }
+.sidebarNav img {
+  padding-right: 15px;
+}
+.sidebarNav div {
+  margin-top: 20px;
+}
+.sidebarNav .active {
+  border-bottom: 4px solid #BF0033;
+  padding-bottom: 5px;
+}
 .filterToolsDiv {
   width: 90%;
 }
@@ -313,7 +323,7 @@ header + section:first-of-type {
   background-color: #c3cfd9;
   border: 1px solid black;
   border-top: none;
-  width: 15%;
+  width: 20%;
   min-height: 100vh;
 }
 .filterToolsDiv {
@@ -341,9 +351,11 @@ header + section:first-of-type {
 .navLink {
   color: black;
   text-decoration: none;
+  line-height: 24px;
+  font-size: 2rem;
 }
 .navLink:hover {
-  color: red;
+  color: #BF0033;
 }
 .helperDashboard {
   width: 85%;
@@ -392,7 +404,4 @@ td a {
 /* debugging classes */
 .initial {
   border: 1px solid black;
-}
-.active {
-  color: #BF0033;
 }

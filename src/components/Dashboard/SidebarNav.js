@@ -2,6 +2,9 @@ import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import unclaimed from '../../images/unclaimed.png'
+import mine from '../../images/mine.png'
+import closed from '../../images/closed.png'
 
 export default function SidebarNav() {
     const { searchType, setSearchType, searchTerm, setSearchTerm, filterByHelperStudentBoth, setFilterByHelperStudentBoth, 
@@ -59,9 +62,18 @@ export default function SidebarNav() {
     return (
         <div className='sidebarDiv'>
             <nav className='sidebarNav'>
+            <div>
+                <img src={unclaimed} alt="Unclaimed tickets" />
                 <NavLink className='navLink' to='/Dashboard/Unassigned'>Unassigned</NavLink> 
+            </div>
+            <div>
+                <img src={mine} alt="My tickets" />
                 <NavLink className='navLink' to='/Dashboard/Mine'>Mine</NavLink>
+            </div>
+            <div>
+                <img src={closed} alt="Closed tickets" />
                 <NavLink className='navLink' to='/Dashboard/Resolved'>Resolved</NavLink>
+            </div>
             </nav>
 
             {/* only if at any of the three above routes display filter tools. */}
