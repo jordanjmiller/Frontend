@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
-import Ticket from "./Ticket";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -8,13 +7,13 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 export default function ViewTicket(props) {
   const { currentUser } = useContext(CurrentUserContext)
   const [ticket, setTicket] = useState([{}]);
+  const ticketID = props.match.params.id;
 
   useEffect(() => {
-    const ticketID = props.match.params.id;
     axiosWithAuth()
       .get(`/tickets/${ticketID}`)
       .then(res => {
-        console.log('get ticket response: ', res.data);
+        console.log('getTicket res:', res.data);
         setTicket(res.data.ticket_details);
       })
       .catch(err => {
@@ -34,10 +33,92 @@ console.log(ticket)
   }
 
 
-  return (
-    <div className="ticketContainer">
+  const closeTicket = () => {
 
-    </div>  
+  };
+
+  return (
+    <section className="ticketContainer">
+      {(()=>{
+        if (ticket){
+          return (
+          <>
+            <div className='ticketNav'>
+              <div className='ticketNavLeft'>
+                <div >
+                  <h2>Ticket #{ticketID}</h2>
+                  <p>{ticket.title}</p>
+                </div>
+                <p>{ticket.category}</p>
+              </div>
+              <nav className='ticketNavRight'>
+                <p>Flag for removal</p>
+                <p>Mark as solved</p>
+                <button className='closeTicket' onClick={closeTicket}>Claim/Release</button>
+              </nav>
+            </div>
+
+            {ticket.status === 'open' && 
+              <div className='topDiv'>
+                <p>{ticket.student_name} created a new help request.</p>
+                {/* insert timeago */}
+              </div> 
+            }
+            {ticket.status === 'assigned' && 
+              <>
+              {ticket.solution && 
+              <div className='topDiv'>
+              <p>{ticket.helper_name} has answered your question.</p>
+              {/* timeago here, answered at time variable does not exists*/}
+              </div> }
+              {!ticket.solution && 
+              <div className='topDiv'>
+              <p>{ticket.helper_name} has accepted your question and will be in touch shortly.</p>
+              {/* timeago here, assigned at time variable does not exists*/}
+              </div> }
+              </>
+            }
+            {ticket.status === 'resolved' && 
+              <div className='topDiv'>
+              </div> 
+            }
+            <div className='studentDiv'>
+              <p>Student {ticket.student_name} asked:</p>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE STUDENT DIV
+            OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
+            {ticket.status !== 'open' &&
+              <>
+              {ticket.solution && 
+              <div className='helperDiv'>
+              <p>Helper {ticket.helper_name} replied:</p>
+              <br />
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
+dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>}
+              <div answerContainer>
+              <div className='answerBox'>
+              <label> Write answer here
+               <input type='text'/>
+              </label>
+              </div>
+            <button>Submit</button>
+          </div>
+              </>
+            }
+            {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE HELPER DIV
+            OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
+          </>
+          );}})()}
+          
+          
+    </section>  
   );
   
 }

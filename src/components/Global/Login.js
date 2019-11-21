@@ -61,10 +61,10 @@ export default function Login(props) {
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
                         <label>
-                            <input class="text-input" placeholder="Username" name='username' onChange={handleChange} />
+                            <input className="text-input" placeholder="Username" name='username' onChange={handleChange} />
                         </label>
                         <label>
-                            <input class="text-input" placeholder="Password" type='password' name='password' onChange={handleChange} />
+                            <input className="text-input" placeholder="Password" type='password' name='password' onChange={handleChange} />
                         </label>
                         <button className="button fullwidth" type='submit'>Login</button>
                     </form>
@@ -84,7 +84,7 @@ const StyledLoader = styled(LoadingOverlay)`
     min-height: 100vh;
     width:100%;
 `;
-const LoginForm = styled.div `
+const LoginForm = styled.div`
         width: 100%;
         display: flex;
         justify-content: center;
