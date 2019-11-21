@@ -4,15 +4,14 @@ import process1 from '../../images/process1.jpg';
 import process2 from '../../images/process2.jpg';
 import process3 from '../../images/process3.jpg';
 
-export default function LandingPage(props) {
-    console.log(`landingpageprops`, props);
+export default function LandingPage() {
     return (
         <div className="container">
         <section className="main-hero">
             <div className="cta">
                 <h1>Get support, fast.</h1>
                 <p>Problem? We're here to help. Get a ticket in and our team of helpers will get you back on track.</p>
-                <Link className="button" to='/Dashboard'>Submit a Ticket</Link>
+                <Link className="button" to='/Login'>Submit a Ticket</Link>
             </div>
         </section>
 
