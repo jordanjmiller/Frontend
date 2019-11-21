@@ -5,14 +5,21 @@ import MyTicket from './MyTicket';
 
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
 
-
+import styled from "styled-components";
+import LoadingOverlay from "react-loading-overlay";
+const StyledLoader = styled(LoadingOverlay)`
+    min-height: 100vh;
+    width:100%;
+`;
 
 export default function UserTicketList() {
-    const { currentUser, searchTerm, searchType, filterByHelperStudentBoth, filterByOpenClosedAll } = useContext(CurrentUserContext);
+    const { currentUser, searchTerm, searchType, filterByHelperStudentBoth, filterByOpenClosedAll} = useContext(CurrentUserContext);
 
     const [allUserTickets, setAllUserTickets] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
         (async () => {
             try{
                 const what = [
@@ -30,10 +37,12 @@ export default function UserTicketList() {
                         }
                     }
                 }
+                setLoading(false);
                 setAllUserTickets([...hey])
-                console.log(hey);
+                // console.log(hey);
             }catch(err){
                 console.log('CATCH ERROR: ', err);
+                setLoading(false);
             }
         })()
     }, []);
@@ -41,6 +50,7 @@ export default function UserTicketList() {
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
          <h2>My tickets</h2>
+        <StyledLoader active={loading} spinner text='Loading...'>
             <table className='tickettable'>
                 <thead>
                     <tr>
@@ -100,6 +110,7 @@ export default function UserTicketList() {
                 })}
                 </tbody>
             </table> 
+      </StyledLoader>   
         </div>
     )
 }

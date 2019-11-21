@@ -17,12 +17,13 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 export default function Dashboard() {
     const { currentUser, searchType, setSearchType, searchTerm, setSearchTerm, 
         filterByHelperStudentBoth, setFilterByHelperStudentBoth, 
-        filterByOpenClosedAll, setFilterByOpenClosedAll,  } = useContext(CurrentUserContext);
+        filterByOpenClosedAll, setFilterByOpenClosedAll, loading, setLoading} = useContext(CurrentUserContext);
 
     return (
         <div className='dashboard'>
             <CurrentUserContext.Provider value={{ currentUser, searchTerm, setSearchTerm, searchType, setSearchType, 
-                filterByHelperStudentBoth, setFilterByHelperStudentBoth, filterByOpenClosedAll, setFilterByOpenClosedAll }}>
+                filterByHelperStudentBoth, setFilterByHelperStudentBoth, filterByOpenClosedAll, setFilterByOpenClosedAll,
+                loading, setLoading }}>
                 <SidebarNav />
 
                 <Route exact path='/Dashboard/Account' component={Account} />

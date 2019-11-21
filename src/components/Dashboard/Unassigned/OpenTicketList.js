@@ -4,19 +4,30 @@ import OpenTicket from './OpenTicket';
 
 import { CurrentUserContext } from "../../../contexts/CurrentUserContext.js";
 
+import styled from "styled-components";
+import LoadingOverlay from "react-loading-overlay";
+const StyledLoader = styled(LoadingOverlay)`
+    min-height: 100vh;
+    width:100%;
+`;
+
 export default function OpenTicketList() {
     const { searchTerm, searchType } = useContext(CurrentUserContext);
 
     const [openTickets, setOpenTickets] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true);
         axiosWithAuth().get('/tickets/open')
         
         .then(res => {
             // console.log(res.data)
             setOpenTickets(res.data)
+            setLoading(false);
         })
-        .catch(err => {console.log('CATCH ERROR: ', err.response.data.message)
+        .catch(err => {console.log('CATCH ERROR: ', err.response.data.message);
+        setLoading(false);
         alert(err.response.data.message)});
     }, []);
 
@@ -24,6 +35,7 @@ export default function OpenTicketList() {
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
          <h2>Unassigned tickets</h2>
+        <StyledLoader active={loading} spinner text='Loading...'>
             <table className='tickettable'>
                 <thead>
                     <tr>
@@ -63,6 +75,7 @@ export default function OpenTicketList() {
                         })}
                 </tbody>
             </table> 
+      </StyledLoader>
         </div>
     )
 }

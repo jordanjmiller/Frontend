@@ -2,7 +2,14 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
+import styled from "styled-components";
+import LoadingOverlay from "react-loading-overlay";
+const StyledLoader = styled(LoadingOverlay)`
+    min-height: 100vh;
+    width:100%;
+`;
 export default function SignUpForm(props) {
+  const [loading, setLoading] = useState('');
   const { setCurrentUser } = useContext(CurrentUserContext);
   const [newUser, setNewUser] = useState({
     username: "",
@@ -45,6 +52,7 @@ export default function SignUpForm(props) {
     console.log('newUser: ', newUser);
     if (validateInputs()) {
       // console.log('SignUpForm.js validateInputs returned true');
+        setLoading(true);
       axios
         .post("https://ddq.herokuapp.com/api/auth/register", newUser)
         .then(res => {
@@ -63,15 +71,18 @@ export default function SignUpForm(props) {
               // console.log('Decoded token', decode(res.data.token));
 
               //redirect to open queue
+            setLoading(false);
               props.history.push('/Dashboard/Unassigned');
             })
             .catch(err => {
               console.log("SignUp Login Catch Error: ", err.response.data.message);
+              setLoading(false);
               alert(err.response.data.message);
             });
         })
         .catch(err => {
           console.log("SignUp Catch Error: ", err.response.data.message);
+          setLoading(false);
           alert(err.response.data.message);
         });
     // console.log(newUser);
@@ -145,28 +156,30 @@ export default function SignUpForm(props) {
   };
 
   return (
-    <div className="sign-up-form">
-      <h2>Sign up for an account</h2>
-      <form onSubmit={handleSubmit}>
-        <input name="username" onChange={handleChange} placeholder="username" />
-        <br />
-        <input name="password" type="password" onChange={handleChange} placeholder="password" />
-        <br />
-        <input name="name" onChange={handleChange} placeholder="name" />
-        <br />
-        <input name="email" type="email" onChange={handleChange} placeholder="email" />
-        <br />
-        <input name="cohort" type="text" onChange={handleChange} placeholder="cohort" />
-        <br />
-        <label> Helper
-          <input name="helper" type="checkbox" onChange={toggleBool} />
-        </label>
-        <label> Student
-          <input name="student" type="checkbox" onChange={toggleBool} />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <StyledLoader active={loading} spinner text='Loading...'>
+      <div className="sign-up-form">
+        <h2>Sign up for an account</h2>
+        <form onSubmit={handleSubmit}>
+          <input name="username" onChange={handleChange} placeholder="username" />
+          <br />
+          <input name="password" type="password" onChange={handleChange} placeholder="password" />
+          <br />
+          <input name="name" onChange={handleChange} placeholder="name" />
+          <br />
+          <input name="email" type="email" onChange={handleChange} placeholder="email" />
+          <br />
+          <input name="cohort" type="text" onChange={handleChange} placeholder="cohort" />
+          <br />
+          <label> Helper
+            <input name="helper" type="checkbox" onChange={toggleBool} />
+          </label>
+          <label> Student
+            <input name="student" type="checkbox" onChange={toggleBool} />
+          </label>
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </StyledLoader>   
   );
 }
