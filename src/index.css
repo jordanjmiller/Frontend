@@ -55,7 +55,12 @@ a {
 }
 .login-form,
 .sign-up-form {
-  height: calc(100vh - 225px);
+  height: calc(100vh);
+  background-color: #383651;
+}
+.login-form .text-input,
+.sign-up-form .text-input {
+  border: 1px solid #c1bfdf;
 }
 .bold {
   font-weight: 700;
