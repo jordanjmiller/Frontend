@@ -23,7 +23,8 @@ const Video = styled.iframe `
   min-height: 300px;
 `
 const Button = styled.button `
-    font-size: 1.3rem;
+    font-size: 2.3rem;
+    box-shadow: 0 10px 48px -6px rgba(0, 0, 0, 0.2);
 `
 //custom hook
 const useInput = initialState => {
@@ -83,7 +84,7 @@ export default function CreateTicket() {
                 <textarea className='input' placeholder='Description' onChange={e => handleDescription(e.target.value)} required/>
                 <label>Images: <input className='input' type='file' onChange={e => setImages(e.target.files)} multiple/></label>
                 <label>Video: <input className='input' type='file' onChange={e => setVideo(e.target.files[0])}/></label>
-                <button className='input' type='submit'>Submit</button>
+                <Button className='input' type='submit'>Submit</Button>
             </Form>
             <Video src="https://res.cloudinary.com/duoz4fpzs/video/upload/v1574258901/afs1lzqi3sejtbo8p5ka.mp4"></Video>
         </Div>

@@ -11,6 +11,16 @@ const Div = styled.div `
     align-items: center;
 `
 
+const MarginButton = styled.button `
+    margin-top: 25px;
+`
+
+const PasswordDiv = styled.div `
+    margin-top: 50px;
+    font-style: italic;
+    color: #BF0033;
+`
+
 export default function Account() {
     const { currentUser } = useContext(CurrentUserContext);
 
@@ -179,21 +189,21 @@ export default function Account() {
             {showEditForm && <form onSubmit={handleSubmit}>
 
             <label><h3 className="bold">Username:</h3>
-            <input name="username" onChange={handleChange} placeholder={currentUser.username} type="text"/> 
+            <input className="text-input" name="username" onChange={handleChange} placeholder={currentUser.username} type="text"/> 
         </label>
        
             <label><h3 className="bold">Name:</h3>
-                <input name="name" onChange={handleChange} placeholder={currentUser.name} />
+                <input className="text-input" name="name" onChange={handleChange} placeholder={currentUser.name} />
             </label>
 
           
 
             <label><h3 className="bold">Email:</h3>
-                <input name="email" type="email" onChange={handleChange} placeholder={currentUser.email !== null ? currentUser.email : ''} />
+                <input className="text-input" name="email" type="email" onChange={handleChange} placeholder={currentUser.email !== null ? currentUser.email : ''} />
             </label> 
            
             <label><h3 className="bold">Cohort:</h3>
-                <input name="cohort" type="text" onChange={handleChange} placeholder={currentUser.cohort !== null ? currentUser.cohort : ''} />
+                <input className="text-input" name="cohort" type="text" onChange={handleChange} placeholder={currentUser.cohort !== null ? currentUser.cohort : ''} />
             </label>
          
 
@@ -205,20 +215,21 @@ export default function Account() {
                 </label> */}
               
                 <label><h3 className="bold">New password:</h3>
-            <input name="newPassword" onChange={handleChange} placeholder='' type="text"/> 
+            <input className="text-input" name="newPassword" onChange={handleChange} placeholder='' type="text"/> 
         </label>
-           
+           <PasswordDiv>
                 <label>
                     <p>Re-enter password to save changes:</p>
-                    <input type='password' name='password' onChange={passwordChange} placeholder='password'/>
+                    <input className="text-input" type='password' name='password' onChange={passwordChange} />
                 </label>
+            </PasswordDiv> 
                 <br /><br />
                 <button className="button" type="submit">Submit changes</button>
 
             </form> }
 
         {/* Show button */}
-<button className="button" onClick={() => setShowEditForm(!showEditForm)}>{showEditForm && 'Cancel'}{!showEditForm && 'Edit'}</button>
+<MarginButton className="button" onClick={() => setShowEditForm(!showEditForm)}>{showEditForm && 'Cancel'}{!showEditForm && 'Edit'}</MarginButton>
 
 
         </Div>
