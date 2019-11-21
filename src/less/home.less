@@ -57,3 +57,62 @@
         text-align: center;
     }
 }
+
+.slackbot {
+    .flex(@align: center, @direction: column);
+    background-color: @main-blue;
+    padding: 5% 7%;
+
+    &>h2 {
+        color: @off-white;
+        text-align: center;
+        padding-bottom: 3rem;
+
+        @media @tablet {
+            padding-bottom: 0.5rem;;
+        }
+
+    }
+
+    .slackbot-row {
+        .flex(space-around, center);
+        max-width: 1200px;
+
+        @media @tablet {
+            .flex(@align: center, @direction: column);
+        }
+
+        h2 {
+            color: @off-white;
+            font-size: 6rem;
+            text-align: center;
+            margin-right: 5%;
+
+            span {
+                color: #fada29;
+            }
+
+            @media @tablet-lg {
+                font-size: 5rem;
+            }
+
+            @media @tablet {
+                margin-top: 0;
+            }
+        }
+
+        img {
+            max-width: 600px;
+            border-radius: 5rem;
+
+            @media @tablet-lg {
+                max-width: 400px;
+            }
+
+            @media @tablet {
+                width: 400px;
+                max-width: 95%;
+            }
+        }
+    }
+}

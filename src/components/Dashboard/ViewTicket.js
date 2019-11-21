@@ -2,37 +2,48 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import * as timeago from 'timeago.js';
 
+import styled from "styled-components";
+import LoadingOverlay from "react-loading-overlay";
+const StyledLoader = styled(LoadingOverlay)`
+    min-height: 100vh;
+    width:100%;
+`;
 
 export default function ViewTicket(props) {
   const { currentUser } = useContext(CurrentUserContext)
-  const [ticket, setTicket] = useState([{}]);
+  const [loading, setLoading] = useState('');
+  const [ticket, setTicket] = useState('')
+  const [helperAnswer, setHelperAnswer] = useState('');
   const ticketID = props.match.params.id;
+  
+  console.log('currentUser: ', currentUser);
+  console.log(ticket);
 
   useEffect(() => {
+    setLoading(true);
     axiosWithAuth()
       .get(`/tickets/${ticketID}`)
       .then(res => {
         console.log('getTicket res:', res.data);
+        setLoading(false);
         setTicket(res.data.ticket_details);
       })
       .catch(err => {
         console.log("CATCH ERROR: ", err.response.data.message);
+        setLoading(false);
         alert(err.response.data.message);
       });
-    // add error catch
   }, []);
-console.log('currentUser: ', currentUser);
-console.log(ticket)
-// console.log(ticket[0].student_name)
-  if( currentUser.name === ticket.student_name){
-    // console.log(ticketFromServer[0].student_name)
-  }
-  else if( currentUser.name === ticket.student_name){
-    // console.log(ticketFromServer[0].student_name)
+
+  const handleInput = (e) => {
+    setHelperAnswer(e.target.value);
+    console.log(helperAnswer);
   }
 
   const answerTicket = () => {
+    console.log('answerTicket() firing. answer: ')
     
   }
 
@@ -44,6 +55,8 @@ console.log(ticket)
   };
 
   return (
+
+    <StyledLoader active={loading} spinner text='Loading...'>
     <section className="ticketContainer">
       {(()=>{
         if (ticket){
@@ -51,12 +64,8 @@ console.log(ticket)
           <>
             <div className='ticketNav'>
               <div className='ticketNavLeft'>
-                <div >
-                  <h2>Ticket #{ticketID}</h2>
-                  <p>{ticket.title}</p>
-                </div>
-                <p>{ticket.category}</p>
-              </div>
+                <div><h2>TICKET #{ticketID}</h2></div>      
+              </div> 
               <nav className='ticketNavRight'>
 
 {/* Code below only displays if user is a helper */}
@@ -65,82 +74,100 @@ console.log(ticket)
                 {/* Claim renders if ticket is unassigned, unclaim if assigned */}
                     {ticket.status === 'unassigned' && 
                     <>
-                    <p>Claim</p>  
+                    <NavLink className='navLinkInternal' to='#'>Claim</NavLink>  
                     </>}
              
                     {ticket.status === 'assigned' && 
                     <>
-                    <p>Unclaim</p>  
+                    <NavLink className='navLinkInternal' to='#'>Unclaim</NavLink>  
                     </>}
                   
                 </>
                 }
-                
-
-                <p>Delete</p>
+                <NavLink className='navLinkInternal' to='#'>Delete</NavLink>
                 {/* Code below only displays if ticket is open */}
                 {ticket.status === 'open' && 
-                  <button className='closeTicket' onClick={resolveTicket}>Mark closed</button>
+                  <button className='button' onClick={resolveTicket}>Mark closed</button>
                 }
               </nav>
             </div>
 
-            {ticket.status === 'open' && 
+{/* Status div */}
+            <div className='statusDiv'>
+              
+              <div>Category: {ticket.category.toUpperCase()}</div>
+              <div>Subject: {ticket.title.toUpperCase()}</div>
+              <p>Current status: {ticket.status.toUpperCase()}</p> 
+                
+            </div> 
+          
+          {/* Top div */}
+
+            {/* {ticket.status === 'open' && 
               <div className='topDiv'>
-                <p>Status: {ticket.status} : {ticket.student_name} created a new help request.</p>
-                {/* insert timeago */}
+                <p>{ticket.student_name} created a new help request.</p>
+                <p>{timeago.format(ticket.created_at)}</p>
+                <br /><br /><br />
               </div> 
-            }
+            } */}
+
             {ticket.status === 'assigned' && 
               <>
               {ticket.solution && 
               <div className='topDiv'>
-              <p>Status: {ticket.status} : {ticket.helper_name} has answered your question.</p>
+              {/* <p>Status: {ticket.status} : </p>  */}
+              <p> {ticket.helper_name} has answered your question.</p>
               {/* timeago here, answered at time variable does not exists*/}
               </div> }
               {!ticket.solution && 
               <div className='topDiv'>
-              <p>Status: {ticket.status} : {ticket.helper_name} has accepted your question and will be in touch shortly.</p>
+              <p> {ticket.helper_name} has accepted your question and will be in touch shortly.</p>
               {/* timeago here, assigned at time variable does not exists*/}
               </div> }
               </>
             }
+
             {ticket.status === 'resolved' && 
               <div className='topDiv'>
-              <p>Status: {ticket.status}</p>
+              {/* <p>Status: {ticket.status}</p> */}
               </div> 
               // remove mark closed button if closed
             }
+
+{/* End Top div */}
+            
+{/* Start student question div  */}
+
             <div className='studentDiv'>
               <p>Student {ticket.student_name} asked:</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p>{timeago.format(ticket.created_at)}</p>
+              <p>{ticket.description}</p>
             </div>
             {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE STUDENT DIV
             OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
+
+{/* End student question div  */}
+{/* Start helper response div  */}
+
             {ticket.status !== 'open' &&
               <>
               {ticket.solution && 
               <div className='helperDiv'>
               <p>Helper {ticket.helper_name} replied:</p>
-              <br />
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <p>{timeago.format(ticket.resolved_at)}</p>
+              <p>{ticket.solution}</p>
               </div>}
 
 {/* Answer box displays only if user is a helper */}
+
               {currentUser.helper && 
               <div className='answerContainer'>
                   <div className='answerBox'>
                   <label> Write answer here
-                  <input type='text'/>
+                  <input type='text' onChange={handleInput} />
                   </label>
                   </div>
-                  <button>Submit</button>
+                  <button onClick={answerTicket}>Submit Answer</button>
               </div>}
 
               </>
@@ -152,9 +179,19 @@ sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           
           
     </section>  
+    </StyledLoader>
   );
   
 }
+
+
+
+// {(()=>{
+//   if (true){
+
+//   }
+// })()}
+
 
 // {
 //   "ticket_details": {

@@ -65,6 +65,13 @@ a {
 .bold {
   font-weight: 700;
 }
+.navLinkInternal {
+  color: black;
+  line-height: 20px;
+  font-size: 2rem;
+  border-bottom: black 1px dotted;
+  padding-bottom: 4px;
+}
 .button {
   background-color: #BF0033;
   color: #fff;
@@ -337,6 +344,76 @@ footer {
 .process h2 {
   text-align: center;
 }
+.slackbot {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  background-color: #233D6E;
+  padding: 5% 7%;
+}
+.slackbot > h2 {
+  color: #F6F7FB;
+  text-align: center;
+  padding-bottom: 3rem;
+}
+@media (max-width: 800px) {
+  .slackbot > h2 {
+    padding-bottom: 0.5rem;
+  }
+}
+.slackbot .slackbot-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  max-width: 1200px;
+}
+@media (max-width: 800px) {
+  .slackbot .slackbot-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+}
+.slackbot .slackbot-row h2 {
+  color: #F6F7FB;
+  font-size: 6rem;
+  text-align: center;
+  margin-right: 5%;
+}
+.slackbot .slackbot-row h2 span {
+  color: #fada29;
+}
+@media (max-width: 970px) {
+  .slackbot .slackbot-row h2 {
+    font-size: 5rem;
+  }
+}
+@media (max-width: 800px) {
+  .slackbot .slackbot-row h2 {
+    margin-top: 0;
+  }
+}
+.slackbot .slackbot-row img {
+  max-width: 600px;
+  border-radius: 5rem;
+}
+@media (max-width: 970px) {
+  .slackbot .slackbot-row img {
+    max-width: 400px;
+  }
+}
+@media (max-width: 800px) {
+  .slackbot .slackbot-row img {
+    width: 400px;
+    max-width: 95%;
+  }
+}
 header + section:first-of-type {
   padding-top: 75px;
 }
@@ -439,36 +516,27 @@ th {
   border: 1px solid black;
 }
 .ticketContainer {
-  border: 1px solid black;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
   padding: 20px;
 }
 .ticketNav {
-  border: 1px solid blue;
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 .ticketNavLeft {
-  border: 1px solid blue;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid pink;
-  width: 55%;
+  width: 50%;
   height: 100px;
 }
 .ticketNavLeft div {
   display: flex;
-  align-items: center;
-}
-.ticketNavLeft h2 {
-  margin-right: 60px;
 }
 .ticketNavRight {
-  border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -492,4 +560,8 @@ th {
   border: 1px solid black;
   width: 100%;
   height: 300px;
+}
+.statusDiv {
+  display: flex;
+  flex-direction: column;
 }

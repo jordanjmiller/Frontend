@@ -50,6 +50,15 @@ export default function LandingPage() {
                 </div>
             </div>
         </section>
+
+        <section class="slackbot">
+            
+            <h2>Crazy busy? Just use Slack.</h2>
+            <div class="slackbot-row">
+                <h2>Open a ticket with <span>/ticket</span></h2>
+                <img src="images/slackbot-form.jpg" alt="Slackbot form" />
+            </div>
+        </section>
         </div>
            
     )

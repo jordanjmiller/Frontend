@@ -33,6 +33,33 @@ const Button = styled.button `
 const MarginDiv = styled.div `
     margin-bottom: 10px;
 `
+const Label = styled.label `
+    input[type = 'file'] {
+    // background-color: red;  
+
+        &::-webkit-file-upload-button {
+
+            font-size: 1.8rem;
+            background-color: #BF0033;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-weight: @bold-font-weight;
+            transition: 0.3s;
+            border: 0;
+
+            margin-bottom: 10px;
+            &:hover {
+                background-color: #880C23;
+            }
+        }
+        
+
+    }
+` 
 //custom hook
 const useInput = initialState => {
     const [value, setValue] = useState(initialState);
