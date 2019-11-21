@@ -84,7 +84,7 @@ export default function SidebarNav() {
                                 <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder={`${searchType}...`} />
                                 </label>
                                 <br />
-                                <button onClick={clearSearchTerm}>Clear</button>
+                                <button className="button" onClick={clearSearchTerm}>Clear</button>
                                 <br />
                                 {noBaseWindowLocation === '/Dashboard/Mine' &&
                                         <>
@@ -103,7 +103,7 @@ export default function SidebarNav() {
                             );
                         }
                 })()}
-            </div>;
+            </div>
         </div>  
     )
 }

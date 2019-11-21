@@ -1,7 +1,15 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+
+const LoginForm = styled.div `
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    `
 
 export default function Login(props) {
     const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -45,25 +53,30 @@ export default function Login(props) {
         </div>
         );
     }
-    return (
-        <div className="login-form">
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username:
-                    <input name='username' onChange={handleChange} placeholder='username'/>
-                </label>
-                <label>
-                    Password:
-                    <input type='password' name='password' onChange={handleChange} placeholder='password'/>
-                </label>
-                <button type='submit'>Login</button>
-            </form>
 
-            <br />
-            <p>New here?</p>
-            <Link to='/Register'>Register an account</Link>
-        </div>
+    return (
+        <LoginForm>
+            <div className="login-form">
+                <div className="card">
+                    <h1>Login</h1>
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Username:
+                            <input name='username' onChange={handleChange} placeholder='username'/>
+                        </label>
+                        <label>
+                            Password:
+                            <input type='password' name='password' onChange={handleChange} placeholder='password'/>
+                        </label>
+                        <button type='submit'>Login</button>
+                    </form>
+
+                    <br />
+                    <p>New here?</p>
+                    <Link to='/Register'>Register an account</Link>
+                </div>
+            </div>
+        </LoginForm>
     )
 }
 

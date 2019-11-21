@@ -21,7 +21,6 @@ export default function ClosedTicketList() {
 
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
-         <h2>Closed tickets</h2>
             <table className='tickettable'>
                 <thead>
                     <tr>

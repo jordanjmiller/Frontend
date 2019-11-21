@@ -160,17 +160,15 @@ export default function Account() {
 
   
 
-{/* Show button */}
-<button onClick={() => setShowEditForm(!showEditForm)}>{showEditForm && 'Cancel'}{!showEditForm && 'Edit'}</button>
+
 
      {/* Show initially */}
 
             {!showEditForm && <div> 
-                <p>User name: {currentUser.username}</p>
-                <p>Name: {currentUser.name}</p>
-                <p>Email: {currentUser.email !== null ? currentUser.email : 'None'} </p>
-                <p>Cohort: {currentUser.cohort !== null ? currentUser.cohort : 'Unknown'} </p>
-                <br /><br />
+                <p><h3 className="bold">Username:</h3> {currentUser.username}</p>
+                <p><h3 className="bold">Name:</h3> {currentUser.name}</p>
+                <p><h3 className="bold">Email:</h3> {currentUser.email !== null ? currentUser.email : 'None'} </p>
+                <p><h3 className="bold">Cohort:</h3> {currentUser.cohort !== null ? currentUser.cohort : 'Unknown'} </p>
                 {/* <p>Helper? {currentUser.helper === true ? 'Yes' : 'No'}</p>
                 <p>Student? {currentUser.student === true ? 'Yes' : 'No'}</p> */}
 
@@ -179,28 +177,25 @@ export default function Account() {
 
         {/* Show on button click */}
             {showEditForm && <form onSubmit={handleSubmit}>
-            
-        
-        <br /><br />
 
-            <label>User name:
+            <label><h3 className="bold">Username:</h3>
             <input name="username" onChange={handleChange} placeholder={currentUser.username} type="text"/> 
         </label>
-        <br /><br />
-            <label>Name:
+       
+            <label><h3 className="bold">Name:</h3>
                 <input name="name" onChange={handleChange} placeholder={currentUser.name} />
             </label>
 
-            <br /><br />
+          
 
-            <label> Email:
+            <label><h3 className="bold">Email:</h3>
                 <input name="email" type="email" onChange={handleChange} placeholder={currentUser.email !== null ? currentUser.email : ''} />
             </label> 
-            <br /><br />
-            <label> Cohort:
+           
+            <label><h3 className="bold">Cohort:</h3>
                 <input name="cohort" type="text" onChange={handleChange} placeholder={currentUser.cohort !== null ? currentUser.cohort : ''} />
             </label>
-            <br /><br />
+         
 
             {/* <label> Helper
                      <input name="helper" type="checkbox" onChange={toggleBool} />
@@ -208,22 +203,22 @@ export default function Account() {
                 <label> Student
                     <input name="student" type="checkbox" checked={currentUser.student} onChange={toggleBool} />
                 </label> */}
-                <br /><br />
-                <label>New password:
+              
+                <label><h3 className="bold">New password:</h3>
             <input name="newPassword" onChange={handleChange} placeholder='' type="text"/> 
         </label>
-                <br /><br />
-            <br /><br />
+           
                 <label>
-                    Re-enter password:
+                    <p>Re-enter password to save changes:</p>
                     <input type='password' name='password' onChange={passwordChange} placeholder='password'/>
                 </label>
                 <br /><br />
-                <button type="submit">Submit changes</button>
+                <button className="button" type="submit">Submit changes</button>
 
             </form> }
 
-        
+        {/* Show button */}
+<button className="button" onClick={() => setShowEditForm(!showEditForm)}>{showEditForm && 'Cancel'}{!showEditForm && 'Edit'}</button>
 
 
         </Div>

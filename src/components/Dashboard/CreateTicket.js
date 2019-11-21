@@ -22,6 +22,9 @@ const Video = styled.iframe `
   min-width: 500px;
   min-height: 300px;
 `
+const Button = styled.button `
+    font-size: 1.3rem;
+`
 //custom hook
 const useInput = initialState => {
     const [value, setValue] = useState(initialState);
@@ -73,7 +76,7 @@ export default function CreateTicket() {
 
     return (
         <Div>
-            <h1>This is CreateTicket.js</h1>
+            <h1> Creat a Ticket</h1>
             <Form onSubmit={handleSubmit}>
                 <input className='input' placeholder='Category' onChange={e => handleCategory(e.target.value)} type='text' required/>
                 <input className='input' placeholder='Title' onChange={e => handleTitle(e.target.value)} type='text' required/>
