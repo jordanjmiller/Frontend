@@ -40,7 +40,7 @@ export default function UserTicketList() {
 
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
-         <h2>My tickets</h2>
+    
             <table className='tickettable'>
                 <thead>
                     <tr>
