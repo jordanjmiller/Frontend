@@ -32,9 +32,15 @@ console.log(ticket)
     // console.log(ticketFromServer[0].student_name)
   }
 
+  const answerTicket = () => {
+    
+  }
 
-  const closeTicket = () => {
+  const resolveTicket = () => {
+    console.log('ResolveTicket() ticket.solution: ', ticket.solution)
+    if (ticket.solution !== ''){
 
+    }
   };
 
   return (
@@ -52,15 +58,36 @@ console.log(ticket)
                 <p>{ticket.category}</p>
               </div>
               <nav className='ticketNavRight'>
-                <p>Flag for removal</p>
-                <p>Mark as solved</p>
-                <button className='closeTicket' onClick={closeTicket}>Claim/Release</button>
+
+{/* Code below only displays if user is a helper */}
+                {currentUser.helper && 
+                <>
+                {/* Claim renders if ticket is unassigned, unclaim if assigned */}
+                    {ticket.status === 'unassigned' && 
+                    <>
+                    <p>Claim</p>  
+                    </>}
+             
+                    {ticket.status === 'assigned' && 
+                    <>
+                    <p>Unclaim</p>  
+                    </>}
+                  
+                </>
+                }
+                
+
+                <p>Delete</p>
+                {/* Code below only displays if ticket is open */}
+                {ticket.status === 'open' && 
+                  <button className='closeTicket' onClick={resolveTicket}>Mark closed</button>
+                }
               </nav>
             </div>
 
             {ticket.status === 'open' && 
               <div className='topDiv'>
-                <p>{ticket.student_name} created a new help request.</p>
+                <p>Status: {ticket.status} : {ticket.student_name} created a new help request.</p>
                 {/* insert timeago */}
               </div> 
             }
@@ -68,19 +95,21 @@ console.log(ticket)
               <>
               {ticket.solution && 
               <div className='topDiv'>
-              <p>{ticket.helper_name} has answered your question.</p>
+              <p>Status: {ticket.status} : {ticket.helper_name} has answered your question.</p>
               {/* timeago here, answered at time variable does not exists*/}
               </div> }
               {!ticket.solution && 
               <div className='topDiv'>
-              <p>{ticket.helper_name} has accepted your question and will be in touch shortly.</p>
+              <p>Status: {ticket.status} : {ticket.helper_name} has accepted your question and will be in touch shortly.</p>
               {/* timeago here, assigned at time variable does not exists*/}
               </div> }
               </>
             }
             {ticket.status === 'resolved' && 
               <div className='topDiv'>
+              <p>Status: {ticket.status}</p>
               </div> 
+              // remove mark closed button if closed
             }
             <div className='studentDiv'>
               <p>Student {ticket.student_name} asked:</p>
@@ -102,14 +131,18 @@ Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliqu
 dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
 sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
               </div>}
-              <div answerContainer>
-              <div className='answerBox'>
-              <label> Write answer here
-               <input type='text'/>
-              </label>
-              </div>
-            <button>Submit</button>
-          </div>
+
+{/* Answer box displays only if user is a helper */}
+              {currentUser.helper && 
+              <div className='answerContainer'>
+                  <div className='answerBox'>
+                  <label> Write answer here
+                  <input type='text'/>
+                  </label>
+                  </div>
+                  <button>Submit</button>
+              </div>}
+
               </>
             }
             {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE HELPER DIV

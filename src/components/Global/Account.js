@@ -164,14 +164,6 @@ export default function Account() {
 
     return (
         <Div>
-        
-
-   
-
-  
-
-
-
      {/* Show initially */}
 
             {!showEditForm && <div> 

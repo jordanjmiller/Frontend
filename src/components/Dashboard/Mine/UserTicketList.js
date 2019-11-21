@@ -49,7 +49,7 @@ export default function UserTicketList() {
 
     return (
          <div className='helperDashboard'> {/* some styling is set in app.js to render dashboard correctly */}
-         <h2>My tickets</h2>
+         {/* <h2>My tickets</h2> */}
         <StyledLoader active={loading} spinner text='Loading...'>
             <table className='tickettable'>
                 <thead>
