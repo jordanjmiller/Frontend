@@ -5,33 +5,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay";
-const StyledLoader = styled(LoadingOverlay)`
-    min-height: 100vh;
-    width:100%;
-`;
-const LoginForm = styled.div `
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: start;
 
-        .card {
-            width: 50%;
-            margin-top: 40px;
-            padding: 5%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        form {
-
-            label {
-                display: block;
-                padding-bottom: 25px;
-            }
-        }
-    `;
 
 export default function Login(props) {
     const [loading, setLoading] = useState('');
@@ -87,10 +61,10 @@ export default function Login(props) {
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
                         <label>
-                            <input class="text-input" placeholder="Username" name='username' onChange={handleChange} placeholder='username'/>
+                            <input className="text-input" placeholder="Username" name='username' onChange={handleChange} />
                         </label>
                         <label>
-                            <input class="text-input" placeholder="Password" type='password' name='password' onChange={handleChange} placeholder='password'/>
+                            <input className="text-input" placeholder="Password" type='password' name='password' onChange={handleChange} />
                         </label>
                         <button className="button fullwidth" type='submit'>Login</button>
                     </form>
@@ -104,4 +78,35 @@ export default function Login(props) {
     )
 }
 
-{/* // new endpoint /api/util/username send username in body, returns true if in use, false if not */}
+//styled components
+
+const StyledLoader = styled(LoadingOverlay)`
+    min-height: 100vh;
+    width:100%;
+`;
+const LoginForm = styled.div`
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+
+        .card {
+            border: 1px solid black;
+            border-radius: 15px;
+            width: 50%;
+            margin-top: 40px;
+            padding: 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+
+            label {
+                border: 1px solid black;
+                display: block;
+                margin-bottom: 25px;
+            }
+        }
+    `;

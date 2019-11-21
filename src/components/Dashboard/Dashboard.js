@@ -18,9 +18,7 @@ export default function Dashboard(props) {
     const { currentUser, searchType, setSearchType, searchTerm, setSearchTerm, 
         filterByHelperStudentBoth, setFilterByHelperStudentBoth, 
         filterByOpenClosedAll, setFilterByOpenClosedAll, loading, setLoading} = useContext(CurrentUserContext);
-
-        console.log(props);
-
+        
     return (
         <div className='dashboard'>
             <CurrentUserContext.Provider value={{ currentUser, searchTerm, setSearchTerm, searchType, setSearchType, 

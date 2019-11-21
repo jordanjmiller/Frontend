@@ -12,7 +12,7 @@ const StyledLoader = styled(LoadingOverlay)`
 `;
 
 export default function OpenTicketList() {
-    const { searchTerm, searchType } = useContext(CurrentUserContext);
+    const { currentUser, searchTerm, searchType } = useContext(CurrentUserContext);
 
     const [openTickets, setOpenTickets] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -40,8 +40,9 @@ export default function OpenTicketList() {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Description</th>
                         <th>Subject</th>
+                        <th>Title</th>
+                        <th>Description</th>
                         <th>Age</th>
                         <th>Link</th>
                     </tr>
@@ -69,9 +70,10 @@ export default function OpenTicketList() {
                         }
                         if (shouldReturn === true){
                             return (
-                                <tr key={ticket.id}><OpenTicket id={ticket.id} student_name={ticket.student_name} category={ticket.category} 
+                                <tr key={ticket.id}><OpenTicket id={ticket.id} currentUser={currentUser} student_name={ticket.student_name} category={ticket.category} 
                                 title={ticket.title} description={ticket.description} created_at={ticket.created_at} /></tr> )
                         }
+                        else{return null}
                         })}
                 </tbody>
             </table> 

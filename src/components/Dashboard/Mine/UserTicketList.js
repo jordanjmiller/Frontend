@@ -55,13 +55,15 @@ export default function UserTicketList() {
                 <thead>
                     <tr>
                         <th>Status</th>
-                        <th>Description</th>
+                        <th>User</th>
                         <th>Subject</th>
+                        <th>Description</th>
                         <th>Age</th>
                         <th>Link</th>
                     </tr>
                 </thead>
                 <tbody>{allUserTickets && allUserTickets.map(ticket => {
+                    console.log('buggy part', ticket)
                         let shouldReturn = false;
                         if (searchType === 'Category' && ticket.category.toLowerCase().includes(searchTerm.toLowerCase())){
                             shouldReturn = true; 
@@ -78,10 +80,9 @@ export default function UserTicketList() {
                         else if (searchType === 'Description' && ticket.description.toLowerCase().includes(searchTerm.toLowerCase())){
                             shouldReturn = true;
                         }
-                        else if (searchType === 'Answer' && ticket.answer.toLowerCase().includes(searchTerm.toLowerCase())){
+                        else if (searchType === 'Solution' && ticket.solution.toLowerCase().includes(searchTerm.toLowerCase())){
                             shouldReturn = true;
                         }
-
 
                         if (filterByOpenClosedAll === 'Closed' && ticket.status !== 'resolved')
                         {
@@ -100,13 +101,12 @@ export default function UserTicketList() {
                         {
                             shouldReturn = false;
                         }
-
-
                         if (shouldReturn === true){
                             return (
-                                <tr key={ticket.id}><MyTicket id={ticket.id} student_name={ticket.student_name} category={ticket.category} 
-                                title={ticket.title} description={ticket.description} created_at={ticket.created_at} /></tr> )
+                                <tr key={ticket.id}><MyTicket id={ticket.id} currentUser={currentUser} student_name={ticket.student_name} category={ticket.category} 
+                                title={ticket.title} description={ticket.description} status={ticket.status} created_at={ticket.created_at} /></tr> )
                         }
+                        else{return null}
                 })}
                 </tbody>
             </table> 

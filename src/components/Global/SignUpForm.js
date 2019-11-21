@@ -4,55 +4,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay";
-const StyledLoader = styled(LoadingOverlay)`
-    min-height: 100vh;
-    width:100%;
-`;
-const SignUpWrap = styled.div `
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: start;
-
-        .card {
-            width: 50%;
-            margin-top: 40px;
-            padding: 5%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        form {
-
-          width: 360px;
-
-          input:not([type=checkbox]) {
-            margin-bottom: 15px;
-          }
-
-          label {
-            display: block;
-          }
-
-          .checkbox-group {
-            display: flex;
-            justify-content: center;
-            margin-top: 5px;
-            margin-bottom: 20px;
-
-            label {
-              padding-right: 1.5rem;
-              font-weight: 700;
-            }
-
-            input[type=checkbox] {
-              
-            }
-          }
-            
-        }
-    `
 
 export default function SignUpForm(props) {
   const [loading, setLoading] = useState('');
@@ -229,3 +180,99 @@ export default function SignUpForm(props) {
     </StyledLoader>
   );
 }
+
+//Styled Components
+
+const StyledLoader = styled(LoadingOverlay)`
+    min-height: 100vh;
+    width:100%;
+`;
+const SignUpWrap = styled.div `
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+
+        .card {
+            width: 50%;
+            margin-top: 40px;
+            padding: 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+
+          width: 360px;
+
+          input:not([type=checkbox]) {
+            margin-bottom: 15px;
+          }
+
+          label {
+            display: block;
+          }
+
+          .checkbox-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 5px;
+            margin-bottom: 20px;
+
+            label {
+              padding-right: 1.5rem;
+              font-weight: 700;
+            }
+
+            input[type=checkbox] {
+              
+            }
+          }
+            
+        }
+    `
+
+
+
+
+// const StyledLoader = styled(LoadingOverlay)`
+//     min-height: 100vh;
+//     width:100%;
+// `;
+// const SignUpWrap = styled.div `
+//         width: 100%;
+//         display: flex;
+//         justify-content: center;
+//         align-items: start;
+
+//         .card {
+//             border: 1px solid black;
+//             border-radius: 15px;
+//             width: 50%;
+//             margin-top: 40px;
+//             padding: 5%;
+//             display: flex;
+//             flex-direction: column;
+//             align-items: center;
+//         }
+
+//         form {
+
+//           input:not([type=checkbox]) {
+//             border: 1px solid black;
+//             margin-bottom: 15px;
+//           }
+
+//           label {
+//             display: block;
+//           }
+
+//           .checkbox-group {
+//             width: 360px;
+//             display: flex;
+//             justify-content: space-around;
+//           }
+            
+//         }
+//     `

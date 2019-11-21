@@ -85,7 +85,7 @@ export default function SidebarNav(props) {
                                             {props.props.location.pathname !== '/Dashboard/Unassigned' && <option value="Helper">Helper Name</option>}
                                             <option value="Title">Title</option>
                                             <option value="Description">Description</option>
-                                            {props.props.location.pathname !== '/Dashboard/Unassigned' && <option value="Answer">Answer</option>}
+                                            {props.props.location.pathname !== '/Dashboard/Unassigned' && <option value="Solution">Solution</option>}
                                         </select>
                                     </div>
                                     <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Filter" />
