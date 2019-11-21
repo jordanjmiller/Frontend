@@ -21,7 +21,7 @@ export default function ClosedTicketList() {
         setLoading(true);
         axiosWithAuth().get('/tickets/resolved')
         .then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             setClosedTickets(res.data)
             setLoading(false);
         })

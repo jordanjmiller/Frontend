@@ -87,10 +87,10 @@ export default function Login(props) {
                     <h1>Login</h1>
                     <form onSubmit={handleSubmit}>
                         <label>
-                            <input class="text-input" placeholder="Username" name='username' onChange={handleChange} placeholder='username'/>
+                            <input class="text-input" placeholder="Username" name='username' onChange={handleChange} />
                         </label>
                         <label>
-                            <input class="text-input" placeholder="Password" type='password' name='password' onChange={handleChange} placeholder='password'/>
+                            <input class="text-input" placeholder="Password" type='password' name='password' onChange={handleChange} />
                         </label>
                         <button className="button fullwidth" type='submit'>Login</button>
                     </form>
@@ -103,5 +103,3 @@ export default function Login(props) {
         </StyledLoader>   
     )
 }
-
-{/* // new endpoint /api/util/username send username in body, returns true if in use, false if not */}
