@@ -25,6 +25,8 @@ const SignUpWrap = styled.div `
 
         form {
 
+          width: 360px;
+
           input:not([type=checkbox]) {
             margin-bottom: 15px;
           }
@@ -34,9 +36,19 @@ const SignUpWrap = styled.div `
           }
 
           .checkbox-group {
-            width: 360px;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
+            margin-top: 5px;
+            margin-bottom: 20px;
+
+            label {
+              padding-right: 1.5rem;
+              font-weight: 700;
+            }
+
+            input[type=checkbox] {
+              
+            }
           }
             
         }
@@ -193,7 +205,7 @@ export default function SignUpForm(props) {
     <StyledLoader active={loading} spinner text='Loading...'>
       <SignUpWrap className="sign-up-form">
         <div className="card">
-          <h2>Sign up for an account</h2>
+          <h1>Sign up for an account</h1>
           <form onSubmit={handleSubmit}>
             <input className="text-input" name="username" onChange={handleChange} placeholder="username" />
             <input className="text-input" name="password" type="password" onChange={handleChange} placeholder="password" />
@@ -202,12 +214,13 @@ export default function SignUpForm(props) {
             <input className="text-input" name="cohort" type="text" onChange={handleChange} placeholder="cohort" />
             
             <div className="checkbox-group">
-              <label> Helper&nbsp;
-                <input name="helper" type="checkbox" onChange={toggleBool} />
-              </label>
-              <label> Student&nbsp;
+            <label> I'm a Student&nbsp;
                 <input name="student" type="checkbox" onChange={toggleBool} />
               </label>
+              <label> I'm a Helper&nbsp;
+                <input name="helper" type="checkbox" onChange={toggleBool} />
+              </label>
+              
             </div>
             <button className="button fullwidth" type="submit">Submit</button>
           </form>
