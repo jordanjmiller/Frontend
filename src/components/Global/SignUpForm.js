@@ -156,7 +156,7 @@ export default function SignUpForm(props) {
     <StyledLoader active={loading} spinner text='Loading...'>
       <SignUpWrap className="sign-up-form">
         <div className="card">
-          <h1>Sign up for an account</h1>
+          <h1>Sign up</h1>
           <form onSubmit={handleSubmit}>
             <input className="text-input" name="username" onChange={handleChange} placeholder="username" />
             <input className="text-input" name="password" type="password" onChange={handleChange} placeholder="password" />
