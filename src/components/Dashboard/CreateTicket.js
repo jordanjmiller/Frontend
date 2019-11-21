@@ -23,12 +23,22 @@ const Video = styled.iframe `
   min-height: 300px;
 `
 const Button = styled.button `
-    font-size: 2rem;
+    font-size: 1.8rem;
     background-color: #BF0033;
     color: white;
     border: none;
     border-radius: 5px;
     text-decoration: none;
+
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    font-weight: @bold-font-weight;
+    transition: 0.3s;
+    border: 0;
+    
+    &:hover {
+        background-color: #880C23;
+    }
 `
 const MarginDiv = styled.div `
     margin-bottom: 10px;

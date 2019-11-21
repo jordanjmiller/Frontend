@@ -93,8 +93,8 @@ export default function Account() {
             console.log(res);
         })
         .catch(err => {
-            console.log("Edit Account Catch Error: ", err.response.data.message);
-            alert(err.response.data.message);
+            // console.log("Edit Account Catch Error: ", err.response.data.message);
+            // alert(err.response.data.message);
         })
         
     }
