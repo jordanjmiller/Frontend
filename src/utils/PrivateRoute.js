@@ -3,9 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { currentUser } = useContext(CurrentUserContext);
-    console.log(rest)
-    const path = rest.path;
+  const { currentUser } = useContext(CurrentUserContext);
   return (
     <Route
       {...rest}

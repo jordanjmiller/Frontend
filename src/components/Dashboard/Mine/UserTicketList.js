@@ -72,7 +72,6 @@ export default function UserTicketList() {
                             shouldReturn = true;
                         }
 
-
                         if (filterByOpenClosedAll === 'Closed' && ticket.status !== 'resolved')
                         {
                             shouldReturn = false;
@@ -90,13 +89,12 @@ export default function UserTicketList() {
                         {
                             shouldReturn = false;
                         }
-
-
                         if (shouldReturn === true){
                             return (
                                 <tr key={ticket.id}><MyTicket id={ticket.id} student_name={ticket.student_name} category={ticket.category} 
                                 title={ticket.title} description={ticket.description} created_at={ticket.created_at} /></tr> )
                         }
+                        else{return null}
                 })}
                 </tbody>
             </table> 

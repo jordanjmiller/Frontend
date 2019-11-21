@@ -26,7 +26,7 @@ export default function Footer() {
                     <div className="card-body">
                         <h3>Mark King</h3>
                         <p>Backend Developer</p>
-                        <a className="card-link" target="_blank" href="https://github.com/markpkng">Github</a>
+                        <a className="card-link" target="_blank" rel="noopener noreferrer" href="https://github.com/markpkng">Github</a>
                     </div>
                 </div>
 
@@ -36,7 +36,7 @@ export default function Footer() {
                     <div className="card-body">
                         <h3>Jordan Miller</h3>
                         <p>React Developer<br/>(React II)</p>
-                        <a className="card-link" target="_blank" href="https://github.com/jordanjmiller">Github</a>
+                        <a className="card-link" target="_blank" rel="noopener noreferrer" href="https://github.com/jordanjmiller">Github</a>
                     </div>
                 </div>
 
@@ -46,7 +46,7 @@ export default function Footer() {
                     <div className="card-body">
                         <h3>Nolan Picini</h3>
                         <p>UI Developer</p>
-                        <a className="card-link" target="_blank" href="https://github.com/NolanPic">Github</a>
+                        <a className="card-link" target="_blank" rel="noopener noreferrer" href="https://github.com/NolanPic">Github</a>
                     </div>
                 </div>
 
@@ -56,7 +56,7 @@ export default function Footer() {
                     <div className="card-body">
                         <h3>George Raymond</h3>
                         <p>React Developer<br/>(React I)</p>
-                        <a className="card-link" target="_blank" href="https://github.com/GeorgeRaymond98">Github</a>
+                        <a className="card-link" target="_blank" rel="noopener noreferrer" href="https://github.com/GeorgeRaymond98">Github</a>
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@ export default function Footer() {
                     <div className="card-body">
                         <h3>William Sulinski</h3>
                         <p>React Developer<br/>(React I)</p>
-                        <a className="card-link" target="_blank" href="https://github.com/wsu718">Github</a>
+                        <a className="card-link" target="_blank" rel="noopener noreferrer" href="https://github.com/wsu718">Github</a>
                     </div>
                 </div>
             </div>

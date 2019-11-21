@@ -57,6 +57,7 @@ export default function ClosedTicketList() {
                             <tr key={ticket.id}><ClosedTicket id={ticket.id} student_name={ticket.student_name} category={ticket.category} 
                             title={ticket.title} description={ticket.description} created_at={ticket.created_at} /></tr> )
                     }
+                    else{return null}
                     })}
                 </tbody>
             </table> 

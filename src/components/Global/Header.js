@@ -18,7 +18,7 @@ export default function Header(props) {
   return (
     <>
     <header>
-        <Link to='/'><img className="logo" src={logo} /></Link>
+        <Link to='/'><img className="logo" src={logo} alt='Lambda Logo'/></Link>
         {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
             if (currentUser){
                 return (
