@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import OpenTicket from './OpenTicket';
 
-import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
+import { CurrentUserContext } from "../../../contexts/CurrentUserContext.js";
 
 export default function OpenTicketList() {
     const { searchTerm, searchType } = useContext(CurrentUserContext);
