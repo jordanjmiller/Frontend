@@ -2,6 +2,9 @@ import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom';
 
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
+import unclaimed from '../../images/unclaimed.png'
+import mine from '../../images/mine.png'
+import closed from '../../images/closed.png'
 
 export default function SidebarNav() {
     const { searchType, setSearchType, searchTerm, setSearchTerm, filterByHelperStudentBoth, setFilterByHelperStudentBoth, 
@@ -59,9 +62,18 @@ export default function SidebarNav() {
     return (
         <div className='sidebarDiv'>
             <nav className='sidebarNav'>
+            <div>
+                <img src={unclaimed} alt="Unclaimed tickets" />
                 <NavLink className='navLink' to='/Dashboard/Unassigned'>Unassigned</NavLink> 
+            </div>
+            <div>
+                <img src={mine} alt="My tickets" />
                 <NavLink className='navLink' to='/Dashboard/Mine'>Mine</NavLink>
+            </div>
+            <div>
+                <img src={closed} alt="Closed tickets" />
                 <NavLink className='navLink' to='/Dashboard/Resolved'>Resolved</NavLink>
+            </div>
             </nav>
 
             {/* only if at any of the three above routes display filter tools. */}
@@ -72,8 +84,11 @@ export default function SidebarNav() {
                         {
                             return(
                                 <>
-                                <label> Search by:
-                                <select onChange={handleSelect} name="searchBy">
+                                
+                                <p> Filter by:</p>
+                                <div className="select">
+                                {/* <label for="select-box"> */}
+                                <select id="select-box" onChange={handleSelect} name="searchBy">
                                     <option value="Category">Category</option>
                                     <option value="Student">Student Name</option>
                                     {noBaseWindowLocation !== 'Unassigned' && <option value="Helper">Helper Name</option>}
@@ -81,10 +96,12 @@ export default function SidebarNav() {
                                     <option value="Description">Description</option>
                                     {noBaseWindowLocation !== 'Unassigned' && <option value="Answer">Answer</option>}
                                 </select>
-                                <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder={`${searchType}...`} />
-                                </label>
+                                </div>
+                                <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Filter" />
+                                {/* was {`${searchType}...`} */}
+                                {/* </label> */}
                                 <br />
-                                <button onClick={clearSearchTerm}>Clear</button>
+                                <button className="button" onClick={clearSearchTerm}>Clear</button>
                                 <br />
                                 {noBaseWindowLocation === '/Dashboard/Mine' &&
                                         <>
@@ -99,11 +116,12 @@ export default function SidebarNav() {
                                         </label>
                                         </>
                                 }
+                             
                                 </>
                             );
                         }
                 })()}
-            </div>;
+            </div>
         </div>  
     )
 }
