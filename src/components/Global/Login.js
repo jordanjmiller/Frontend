@@ -85,28 +85,25 @@ const StyledLoader = styled(LoadingOverlay)`
     width:100%;
 `;
 const LoginForm = styled.div`
-        width: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    .card {
+        width: 50%;
+        margin-top: 40px;
+        padding: 5%;
         display: flex;
-        justify-content: center;
-        align-items: start;
+        flex-direction: column;
+        align-items: center;
+    }
 
-        .card {
-            border: 1px solid black;
-            border-radius: 15px;
-            width: 50%;
-            margin-top: 40px;
-            padding: 5%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+    form {
+
+        label {
+            display: block;
+            padding-bottom: 25px;
         }
-
-        form {
-
-            label {
-                border: 1px solid black;
-                display: block;
-                margin-bottom: 25px;
-            }
-        }
-    `;
+    }
+`;
