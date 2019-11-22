@@ -3,7 +3,7 @@ Build Week: Lambda DevDesk
 Server deployed at: https://ddq.herokuapp.com/api
 Server Documentation: https://documenter.getpostman.com/view/9136579/SW7aY7up?version=latest#intro
 
-App deployed at: lambdadevdesk.now.sh
+App deployed at: https://lambdadevdesk.now.sh
 
 Dependencies used:
 - jwt-decode
