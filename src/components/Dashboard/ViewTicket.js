@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as timeago from 'timeago.js';
+import placeholder1 from '../../images/placeholder1.jpeg';
+import placeholder2 from '../../images/placeholder2.png';
 
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay";
@@ -42,15 +43,39 @@ export default function ViewTicket(props) {
     console.log(helperAnswer);
   }
 
-  const answerTicket = () => {
+  const updateAnswer = () => {
     console.log('answerTicket() firing. answer: ')
-    
+    // setLoading(true);
+    // axiosWithAuth()
+    //   .get(`/tickets/${ticketID}`)
+    //   .then(res => {
+    //     console.log('getTicket res:', res.data);
+    //     setLoading(false);
+    //     setTicket(res.data.ticket_details);
+    //   })
+    //   .catch(err => {
+    //     console.log("CATCH ERROR: ", err.response.data.message);
+    //     setLoading(false);
+    //     alert(err.response.data.message);
+    //   });
   }
 
   const resolveTicket = () => {
     console.log('ResolveTicket() ticket.solution: ', ticket.solution)
     if (ticket.solution !== ''){
-
+        setLoading(true);
+        axiosWithAuth()
+          .post(`/tickets/${ticketID}/resolve`)
+          .then(res => {
+            console.log('resolveTicket res:', res.data);
+            setLoading(false);
+            setTicket(res.data.ticket_details);
+          })
+          .catch(err => {
+            console.log("CATCH ERROR: ", err.response.data.message);
+            setLoading(false);
+            alert(err.response.data.message);
+          });
     }
   };
 
@@ -61,6 +86,7 @@ export default function ViewTicket(props) {
       {(()=>{
         if (ticket){
           return (
+            
           <>
             <div className='ticketNav'>
               <div className='ticketNavLeft'>
@@ -69,35 +95,40 @@ export default function ViewTicket(props) {
               <nav className='ticketNavRight'>
 
 {/* Code below only displays if user is a helper */}
+
+                <button className='navLinkInternal button'>Delete</button>
+               
                 {currentUser.helper && 
                 <>
-                {/* Claim renders if ticket is unassigned, unclaim if assigned */}
-                    {ticket.status === 'unassigned' && 
+  
+                    {ticket.helper_name === null && 
                     <>
-                    <NavLink className='navLinkInternal' to='#'>Claim</NavLink>  
+                    <button className='button' to='#'>Claim</button>  
                     </>}
              
-                    {ticket.status === 'assigned' && 
+                    {ticket.status === currentUser.username && 
                     <>
-                    <NavLink className='navLinkInternal' to='#'>Unclaim</NavLink>  
+                    <button className='button' to='#'>Unclaim</button>  
                     </>}
                   
                 </>
                 }
-                <NavLink className='navLinkInternal' to='#'>Delete</NavLink>
-                {/* Code below only displays if ticket is open */}
-                {ticket.status === 'open' && 
-                  <button className='button' onClick={resolveTicket}>Mark closed</button>
-                }
+                
+                
               </nav>
             </div>
+
+
 
 {/* Status div */}
             <div className='statusDiv'>
               
-              <div>Category: {ticket.category.toUpperCase()}</div>
-              <div>Subject: {ticket.title.toUpperCase()}</div>
-              <p>Current status: {ticket.status.toUpperCase()}</p> 
+              <div className='statusBox'><h3>Category:</h3> <p>{ticket.category.toUpperCase()}</p></div>
+              <div className='statusBox'><h3>Current status:</h3> <p>{ticket.status.toUpperCase()}</p></div>
+              <div className='statusBox'><h3>Helper:</h3><img className="photo" src={placeholder1} alt='Student image'/></div>
+              <div className='statusBox'><h3>Student:</h3><img className="photo" src={placeholder2} alt='Placeholder image'/></div>
+              
+             
                 
             </div> 
           
@@ -121,7 +152,7 @@ export default function ViewTicket(props) {
               </div> }
               {!ticket.solution && 
               <div className='topDiv'>
-              <p> {ticket.helper_name} has accepted your question and will be in touch shortly.</p>
+              <p> {ticket.helper_name.toUpperCase()} has accepted your question and will be in touch shortly.</p>
               {/* timeago here, assigned at time variable does not exists*/}
               </div> }
               </>
@@ -139,8 +170,11 @@ export default function ViewTicket(props) {
 {/* Start student question div  */}
 
             <div className='studentDiv'>
-              <p>Student {ticket.student_name} asked:</p>
-              <p>{timeago.format(ticket.created_at)}</p>
+              <div className='studentDivHeader'>
+                <div><p>Student {ticket.student_name} asked:</p></div>
+                <div className='secondDiv'><p>{timeago.format(ticket.created_at)}</p></div>
+              </div>
+              <div><p>{ticket.title}</p></div>
               <p>{ticket.description}</p>
             </div>
             {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE STUDENT DIV
@@ -149,11 +183,13 @@ export default function ViewTicket(props) {
 {/* End student question div  */}
 {/* Start helper response div  */}
 
-            {ticket.status !== 'open' &&
+{/* commented this out: {ticket.status !== 'open' && */}
+
+            {ticket.status &&
               <>
               {ticket.solution && 
               <div className='helperDiv'>
-              <p>Helper {ticket.helper_name} replied:</p>
+              <div>Helper {ticket.helper_name} replied:</div>
               <p>{timeago.format(ticket.resolved_at)}</p>
               <p>{ticket.solution}</p>
               </div>}
@@ -163,22 +199,23 @@ export default function ViewTicket(props) {
               {currentUser.helper && 
               <div className='answerContainer'>
                   <div className='answerBox'>
-                  <label> Write answer here
-                  <input type='text' onChange={handleInput} />
-                  </label>
+                  <h3>Write answer here:</h3>
+                  <textarea onChange={handleInput}></textarea>
+                  {/* <input type='text' placeholder="" onChange={handleInput} /> */}
+                  
                   </div>
-                  <button onClick={answerTicket}>Submit Answer</button>
+                  <button className="button" onClick={updateAnswer}>Submit Answer</button>
               </div>}
-
+              
               </>
             }
             {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE HELPER DIV
             OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
           </>
           );}})()}
-          
-          
+   
     </section>  
+  
     </StyledLoader>
   );
   

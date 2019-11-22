@@ -45,24 +45,26 @@ export default function ClosedTicketList() {
                     </tr>
                 </thead>
                 <tbody>{closedTickets && closedTickets.map(ticket => {
-                    let shouldReturn = false;
-                    if (searchType === 'Category' && ticket.category.toLowerCase().includes(searchTerm.toLowerCase())){
-                        shouldReturn = true; 
-                    }
-                    else if (searchType === 'Student' && ticket.student_name.toLowerCase().includes(searchTerm.toLowerCase())){
-                            shouldReturn = true;
-                    }
-                    else if (searchType === 'Helper' && ticket.helper_name.toLowerCase().includes(searchTerm.toLowerCase())){
-                        shouldReturn = true;
-                    }
-                    else if (searchType === 'Title' && ticket.title.toLowerCase().includes(searchTerm.toLowerCase())){
-                        shouldReturn = true;
-                    }
-                    else if (searchType === 'Description' && ticket.description.toLowerCase().includes(searchTerm.toLowerCase())){
-                        shouldReturn = true;
-                    }
-                    else if (searchType === 'Answer' && ticket.answer.toLowerCase().includes(searchTerm.toLowerCase())){
-                        shouldReturn = true;
+                    let shouldReturn = true;
+                    if(searchTerm){
+                        if (searchType === 'Category' && ticket.category && !ticket.category.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = false; 
+                        }
+                        else if (searchType === 'Student' && ticket.student_name && !ticket.student_name.toLowerCase().includes(searchTerm.toLowerCase())){
+                                shouldReturn = false;
+                        }
+                        else if (searchType === 'Helper' && ticket.helper_name && !ticket.helper_name.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = false;
+                        }
+                        else if (searchType === 'Title' && ticket.title && !ticket.title.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = false;
+                        }
+                        else if (searchType === 'Description' && ticket.description && !ticket.description.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = false;
+                        }
+                        else if (searchType === 'Solution' && ticket.solution && !ticket.solution.toLowerCase().includes(searchTerm.toLowerCase())){
+                            shouldReturn = false;
+                        }
                     }
                     if (shouldReturn === true){
                         return (

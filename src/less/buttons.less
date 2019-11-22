@@ -7,12 +7,23 @@
     font-weight: @bold-font-weight;
     transition: 0.3s;
     border: 0;
+    cursor: pointer;
 
     &:hover {
         background-color: @main-red;
     }
 }
 
+.button-outlined {
+    background-color: #fff;
+    color: @off-black;
+    border: 2px solid @secondary-red;
+
+    &:hover {
+        background-color: @off-white;
+    }
+}
+ 
 .button.fullwidth {
     width: 100%;
 }

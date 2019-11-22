@@ -8,7 +8,7 @@ export default function MyTicket(props) {
 
     let curUser = '';
     let secondUser = 'FIX ME Myticket.js';
-    console.log(props)
+    // console.log(props)
     if (props.status === 'open'){
         curUser = props.currentUser.name;
     }

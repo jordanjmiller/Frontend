@@ -80,9 +80,18 @@ a {
   font-weight: 700;
   transition: 0.3s;
   border: 0;
+  cursor: pointer;
 }
 .button:hover {
   background-color: #880C23;
+}
+.button-outlined {
+  background-color: #fff;
+  color: #14131C;
+  border: 2px solid #BF0033;
+}
+.button-outlined:hover {
+  background-color: #F6F7FB;
 }
 .button.fullwidth {
   width: 100%;
@@ -520,6 +529,8 @@ th {
   display: flex;
   flex-flow: column wrap;
   padding: 20px;
+  text-align: left;
+  padding-left: 6%;
 }
 .ticketNav {
   display: flex;
@@ -547,21 +558,87 @@ th {
   height: 40px;
 }
 .topDiv {
-  border: 1px solid black;
+  border: 1px solid #C3CFD9;
   width: 100%;
   height: 75px;
+  margin-top: 5%;
+}
+.topDiv p {
+  padding-left: 3%;
+  font-weight: 700;
 }
 .studentDiv {
-  border: 1px solid black;
+  border: 1px solid #C3CFD9;
+  width: 100%;
+  height: 300px;
+  margin-top: 7%;
+}
+.studentDiv p {
+  padding-left: 7%;
+}
+.helperDiv {
+  border: 1px solid #C3CFD9;
   width: 100%;
   height: 300px;
 }
-.helperDiv {
-  border: 1px solid black;
-  width: 100%;
-  height: 300px;
+.helperDiv p {
+  padding-left: 7%;
+}
+.helperDiv div {
+  padding-left: 3%;
+  margin-top: 2%;
+  font-weight: 700;
 }
 .statusDiv {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+}
+.statusDiv div {
+  align-items: baseline;
+}
+.statusBox {
+  width: 30%;
+}
+.studentDivHeader {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+.studentDivHeader div {
+  width: 50%;
+}
+.studentDivHeader .secondDiv {
+  width: 50%;
+  text-align: right;
+  margin-right: 5%;
+}
+.answerBox textarea {
+  width: 100%;
+  height: 200px;
+  border: 1px C3CFD9 solid;
+  margin-bottom: 20px;
+}
+.photo {
+  height: 75px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 4px;
+  clip-path: circle(50%);
+  margin-left: 5%;
+}
+.photo div {
+  margin-left: 5%;
+}
+.photo2 {
+  height: 75px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 4px;
+  clip-path: circle(50%);
+  margin-left: 5%;
+}
+.stacked {
+  margin-left: -20%;
 }

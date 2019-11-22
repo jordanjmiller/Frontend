@@ -6,6 +6,34 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay";
 
+const StyledLoader = styled(LoadingOverlay)`
+    min-height: 100vh;
+    width:100%;
+`;
+const LoginForm = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    .card {
+        width: 50%;
+        margin-top: 40px;
+        padding: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    form {
+
+        label {
+            display: block;
+            padding-bottom: 25px;
+        }
+    }
+`;
+
 
 export default function Login(props) {
     const [loading, setLoading] = useState('');
@@ -80,30 +108,4 @@ export default function Login(props) {
 
 //styled components
 
-const StyledLoader = styled(LoadingOverlay)`
-    min-height: 100vh;
-    width:100%;
-`;
-const LoginForm = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: start;
 
-    .card {
-        width: 50%;
-        margin-top: 40px;
-        padding: 5%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    form {
-
-        label {
-            display: block;
-            padding-bottom: 25px;
-        }
-    }
-`;

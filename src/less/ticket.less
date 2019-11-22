@@ -5,6 +5,8 @@
     display: flex;
     flex-flow: column wrap;
     padding: 20px;
+    text-align: left;
+    padding-left: 6%;
   }
   .ticketNav{
     
@@ -38,26 +40,111 @@
     }
   }
   .topDiv{
-    border: 1px solid black;
+    border: 1px solid #C3CFD9;
     width: 100%;
     height: 75px;
+    margin-top: 5%;
+
+    p {
+        padding-left: 3%;
+        font-weight: 700;
+        
+    }
+
   }
   .studentDiv{
-    border: 1px solid black;
+    border: 1px solid #C3CFD9;
     width: 100%;
     height: 300px;
+    margin-top: 7%;
+
+    p {
+        padding-left: 7%;
+        
+    }
+    
   }
   .helperDiv{
-    border: 1px solid black;
+    border: 1px solid #C3CFD9;
     width: 100%;
     height: 300px;
+    p {
+        padding-left: 7%;
+        
+    }
+
+    div {
+        padding-left: 3%;
+        margin-top: 2%;
+        font-weight: 700;
+    }
+
   }
 
   .statusDiv {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       div {
-          
+          align-items: baseline;
       }
+  
+
+
   }
   
+.statusBox {
+    width: 30%;
+}
+
+.studentDivHeader {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    div {
+        width: 50%;
+    }
+    .secondDiv {
+        width: 50%;
+        text-align: right;
+        margin-right: 5%;
+    }
+
+}
+
+.answerBox {
+
+textarea {
+
+ width: 100%;
+height: 200px;
+border: 1px C3CFD9 solid;
+margin-bottom: 20px;
+}   
+}
+
+.photo {
+  height: 75px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 4px;
+  clip-path: circle(50%);
+  margin-left: 5%;
+  div {
+    margin-left: 5%;
+  }
+}
+
+.photo2 {
+  height: 75px;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 4px;
+  clip-path: circle(50%);
+  margin-left: 5%;
+}
+
+.stacked {
+  margin-left: -20%;
+}

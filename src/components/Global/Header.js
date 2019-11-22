@@ -28,7 +28,7 @@ export default function Header(props) {
                             <NavLink className='navLink' to='/Dashboard/Account'>Account</NavLink>
                             <NavLink className='navLink' to='/Dashboard/CreateTicket'>Create Ticket</NavLink>
                             <NavLink className='navLink' to='/Dashboard/Unassigned'>Dashboard</NavLink>
-                            <button className="button" onClick={logout}>Sign out</button>
+                            <button className="button button-outlined" onClick={logout}>Sign out</button>
                         </nav>
                     </>
                 );

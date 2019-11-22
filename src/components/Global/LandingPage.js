@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import process1 from '../../images/process1.jpg';
 import process2 from '../../images/process2.jpg';
 import process3 from '../../images/process3.jpg';
+import slackbotform from '../../images/slackbotform.jpg';
 
 export default function LandingPage() {
     return (
@@ -51,12 +52,12 @@ export default function LandingPage() {
             </div>
         </section>
 
-        <section class="slackbot">
+        <section className="slackbot">
             
             <h2>Crazy busy? Just use Slack.</h2>
-            <div class="slackbot-row">
+            <div className="slackbot-row">
                 <h2>Open a ticket with <span>/ticket</span></h2>
-                <img src="images/slackbot-form.jpg" alt="Slackbot form" />
+                <img src={slackbotform} alt="Slackbot form" />
             </div>
         </section>
         </div>

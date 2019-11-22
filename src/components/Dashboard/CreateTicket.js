@@ -18,17 +18,22 @@ const Form = styled.form `
         max-width: 300px;
     }
 `
-const Video = styled.iframe `
-  min-width: 500px;
-  min-height: 300px;
-`
 const Button = styled.button `
-    font-size: 2rem;
+    font-size: 1.8rem;
     background-color: #BF0033;
     color: white;
     border: none;
     border-radius: 5px;
     text-decoration: none;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    font-weight: @bold-font-weight;
+    transition: 0.3s;
+    border: 0;
+
+    &:hover {
+        background-color: #880C23;
+    }
 `
 const MarginDiv = styled.div `
     margin-bottom: 10px;
@@ -38,7 +43,7 @@ const Label = styled.label `
     // background-color: red;  
 
         &::-webkit-file-upload-button {
-
+            // margin-left: 3rem;
             font-size: 1.8rem;
             background-color: #BF0033;
             color: white;
@@ -51,7 +56,8 @@ const Label = styled.label `
             transition: 0.3s;
             border: 0;
 
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            margin-top:15px;
             &:hover {
                 background-color: #880C23;
             }
@@ -120,40 +126,16 @@ export default function CreateTicket() {
                 <input className='text-input' placeholder='Title' onChange={e => handleTitle(e.target.value)} type='text' required/>
                 </MarginDiv>
                 <textarea className='text-input' placeholder='Description' onChange={e => handleDescription(e.target.value)} required/>
-                <label>Images: <input className='input' type='file' onChange={e => setImages(e.target.files)} multiple/></label>
-                <label>Video: <input className='input' type='file' onChange={e => setVideo(e.target.files[0])}/></label>
+                <Label>Images: <input className='input' type='file' onChange={e => setImages(e.target.files)} multiple/></Label>
+                <Label>Video: <input className='input' type='file' onChange={e => setVideo(e.target.files[0])}/></Label>
                  <MarginDiv>
                 <Button className='input' type='submit'>Submit</Button>
                 </MarginDiv>
             </Form>
-            <Video src="https://res.cloudinary.com/duoz4fpzs/video/upload/v1574258901/afs1lzqi3sejtbo8p5ka.mp4"></Video>
         </Div>
     )
 }
-// const FormikCreateTicket = withFormik({
-//   mapPropsToValues({ name, subject, description }) {
-//     return {
-//       name: name || "",
-//       subject: subject || "",
-//       description: description || ""
-//     };
-//   },
-//   validationSchema: Yup.object().shape({
-//     name: Yup.string().required(),
-//     subject: Yup.string().required(),
-//     description: Yup.string().required()
-//   }),
-//   handleSubmit(values, { setStatus }) {
-//     axios
-//       .post("https://ddq.herokuapp.com/api/auth/createticket", values)
-//       .then(res => {
-//         setStatus(res.data);
-//         console.log(res);
-//       })
-//       .catch(err => console.log(err.response));
-//   }
-// })(CreateTicket);
-// export default FormikCreateTicket;
+
 
 
                           //||||||||||||||
@@ -175,11 +157,11 @@ export default function CreateTicket() {
                           //||||||||||||||
                           //||||||||||||||
                           //||||||||||||||
-            //v v v v v v v George was here v v v v v v v v v v
+            //v v v v v v v Raymond was here v v v v v v v v v v
        // v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v 
-            // v v v v v v vGeorge was here v v v v v v v v v v
+            // v v v v v v v Raymond was here v v v v v v v v v v
                    //   v v v v v v v v v v v v v v v v 
-                       //  v George was here v v v v
+                       //  v Raymond was here v v v v
                              //v v v v v v 
                                 // v v 
 
@@ -255,3 +237,29 @@ export default function CreateTicket() {
 // })(CreateTicket);
 // export default FormikCreateTicket;
 // // console.log("This is the HOC", FormikCreateTicket);
+
+
+// const FormikCreateTicket = withFormik({
+//   mapPropsToValues({ name, subject, description }) {
+//     return {
+//       name: name || "",
+//       subject: subject || "",
+//       description: description || ""
+//     };
+//   },
+//   validationSchema: Yup.object().shape({
+//     name: Yup.string().required(),
+//     subject: Yup.string().required(),
+//     description: Yup.string().required()
+//   }),
+//   handleSubmit(values, { setStatus }) {
+//     axios
+//       .post("https://ddq.herokuapp.com/api/auth/createticket", values)
+//       .then(res => {
+//         setStatus(res.data);
+//         console.log(res);
+//       })
+//       .catch(err => console.log(err.response));
+//   }
+// })(CreateTicket);
+// export default FormikCreateTicket;

@@ -94,7 +94,7 @@ export default function SidebarNav(props) {
                                     <br />
                                     <button className="button" onClick={clearSearchTerm}>Clear</button>
                                     <br />
-                                    {props.location === '/Dashboard/Mine' &&
+                                    {props.props.location.pathname === '/Dashboard/Mine' &&
                                         <>
                                         <label> Helper/Student:
                                         <br />
