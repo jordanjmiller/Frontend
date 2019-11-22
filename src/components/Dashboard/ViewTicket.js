@@ -4,6 +4,8 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as timeago from 'timeago.js';
 import placeholder1 from '../../images/placeholder1.jpeg';
 import placeholder2 from '../../images/placeholder2.png';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPencilAlt, faUserCircle, faCamera} from "@fortawesome/free-solid-svg-icons";
 
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay";
@@ -12,12 +14,30 @@ const StyledLoader = styled(LoadingOverlay)`
     width:100%;
 `;
 
+const Fa = styled(FontAwesomeIcon) `
+  width: 65px !important;
+  height: 65px;
+`
+
+const ImagesDiv = styled.div `
+  display: flex;
+  justify-content: spaced-evenly
+`
+
+const Image = styled.img `
+  max-width: 400px;
+`
+
 export default function ViewTicket(props) {
   const { currentUser } = useContext(CurrentUserContext)
   const [loading, setLoading] = useState('');
   const [ticket, setTicket] = useState('')
   const [helperAnswer, setHelperAnswer] = useState('');
   const ticketID = props.match.params.id;
+  const [openPictures, setOpenPictures] = useState([]);
+  const [resolvedPictures, setResolvedPictures] = useState([]);
+  const [openVideo, setOpenVideo] = useState(null);
+  const [resolvedVideo, setResolvedVideo] = useState(null);
   
   console.log('currentUser: ', currentUser);
   console.log(ticket);
@@ -30,6 +50,10 @@ export default function ViewTicket(props) {
         console.log('getTicket res:', res.data);
         setLoading(false);
         setTicket(res.data.ticket_details);
+        setOpenPictures(res.data.open_pictures);
+        setResolvedPictures(res.data.resolved_pictures);
+        setOpenVideo(res.data.ticket_details.open_video);
+        setResolvedVideo(res.data.ticket_details.resolved_video);
       })
       .catch(err => {
         console.log("CATCH ERROR: ", err.response.data.message);
@@ -128,8 +152,10 @@ export default function ViewTicket(props) {
               
               <div className='statusBox'><h3>Category:</h3> <p>{ticket.category.toUpperCase()}</p></div>
               <div className='statusBox'><h3>Current status:</h3> <p>{ticket.status.toUpperCase()}</p></div>
-              <div className='statusBox'><h3>Expert:</h3><img className="photo" src={placeholder1} alt='Expert image'/></div>
-              <div className='statusBox'><h3>Student:</h3><img className="photo" src={placeholder2} alt='Student image'/></div>
+              {ticket.helper_image && <div className='statusBox'><h3>Expert:</h3><img className="photo" src={ticket.helper_image} alt='Expert image'/></div>}
+              {ticket.student_image && <div className='statusBox'><h3>Student:</h3><img className="photo" src={ticket.student_image} alt='Student image'/></div>}
+              {!ticket.helper_image && <div className='statusBox'><h3>Expert:</h3><Fa icon={faUserCircle}/></div>}
+              {!ticket.student_image && <div className='statusBox'><h3>Student:</h3><Fa icon={faUserCircle}/></div>}
               
              
                 
@@ -177,9 +203,12 @@ export default function ViewTicket(props) {
                 <div><p>Student {ticket.student_name} asked:</p></div>
                 <div className='secondDiv'><p>{timeago.format(ticket.created_at)}</p></div>
               </div>
-              <div><p>{ticket.title}</p></div>
-              <p>{ticket.description}</p>
+              <div><p>Title: {ticket.title}</p></div>
+              <p>Description: {ticket.description}</p>
+              {openPictures.length > 0 && openPictures.map(image => <Image key={image} src={image}/>)}
+              {openVideo && <iframe src={openVideo}/>}
             </div>
+
             {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE STUDENT DIV
             OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
 
@@ -214,6 +243,8 @@ export default function ViewTicket(props) {
             }
             {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE HELPER DIV
             OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
+            {resolvedPictures.length > 0 && openPictures.map(image => <Image key={image} src={image}/>)}
+            {resolvedVideo && <iframe src={resolvedVideo} />}
           </>
           );}})()}
    

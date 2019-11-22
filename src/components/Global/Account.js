@@ -57,39 +57,36 @@ const DefaultProfile = styled(FontAwesomeIcon) `
     position: absolute;
     width: 200px !important;
     height: 200px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     background: white;
 
 
-    &:hover {
-        opacity: 0.2;
+    ${props => props.edit && `
+        &:hover {
+                cursor: pointer;
+                opacity: 0.2;
+        }
+    `
     }
 `
-const shouldEditPic =  true ? (styled.div `
-            position: absolute;
-            border-radius: 50%;
-            width: 200px;
-            height: 200px;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
 
-            &:hover {
+const ProfileImg = styled.div`
+    position: absolute;
+    /* border-radius: 50%; */
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+        
+    ${props => props.edit && `
+        &:hover {
+                cursor: pointer;
                 opacity: 0.2;
-            }
-        `)
-    :
-     (styled.div `
-        position: absolute;
-        border-radius: 50%;
-        width: 200px;
-        height: 200px;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: 50% 50%;
-    `)
-
-const ProfileImg = test;
+        }
+    `
+    }
+`
 const ProfileWrapper = styled.div `
     width: 200px;
     height: 200px;
@@ -97,11 +94,10 @@ const ProfileWrapper = styled.div `
 `
 
 const ProfileFilter = styled.div `
-    cursor: pointer;
     font-family: 'Patua One', sans-serif;
     width: 200px;
     height: 200px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     display: flex;
     font-size: 3.5rem;
     align-items: center;
@@ -203,17 +199,6 @@ export default function Account() {
         }
     }
 
-    // // this isn't working 
-
-    // // const toggleBool = e => {
-    // //     if (e.target.name === "helper") {
-    // //       setEditHelper(!currentUser.helper);
-          
-    // //     } else if (e.target.name === "student") {
-    // //       setEditStudent(!currentUser.student);
-    // //     }
-    // //   };
-
     const isValidPassword = password => {
         if (password === "") {
             alert("You must enter a password.");
@@ -252,10 +237,7 @@ export default function Account() {
             alert("You must enter your name.");
             return false;
     }
-    // if (editHelper === false && editStudent === false) {
-    //     alert("You must choose to enroll as a helper, student, or both.");
-    // //     return false;
-    // }
+
     // if (!isValidPassword(newPassword)) {
     //     return false;
     //   }
@@ -270,7 +252,6 @@ export default function Account() {
         <Div className='card'> 
     <StyledLoader active={loading} spinner text='Uploading...'> 
             {!showEditForm && <>
-                {currentUser.profile_picture && 
                     <ProOuter>
                         <ProfileWrapper>
                             {currentUser.profile_picture ? (
@@ -279,22 +260,21 @@ export default function Account() {
                                     Edit
                                     <FontAwesomeIcon icon={faCamera} className='fa-1x'/>
                                 </div>
-                                <ProfileImg className='edit' style={{backgroundImage: `url('${currentUser.profile_picture}')`}}/>
+                                <ProfileImg edit={false} style={{backgroundImage: `url('${currentUser.profile_picture}')`}}/>
                             </ProfileFilter>) : (
                             <ProfileFilter>
                                 <div className='editPicture'>
                                     Edit
                                     <FontAwesomeIcon icon={faCamera} className='fa-1x'/>
                                 </div>
-                                <DefaultProfile icon={faUserCircle}/>
+                                <DefaultProfile edit={false} icon={faUserCircle}/>
                             </ProfileFilter>)}
                         </ProfileWrapper>
-                    </ProOuter>}
+                    </ProOuter>
                 <p className> <h3 className="bold">Username:</h3> {currentUser.username}</p>
                 <p><h3 className="bold">Name:</h3> {currentUser.name}</p>
                 <p><h3 className="bold">Email:</h3> {currentUser.email !== null ? currentUser.email : 'None'} </p>
                 <p><h3 className="bold">Cohort:</h3> {currentUser.cohort !== null ? currentUser.cohort : 'Unknown'} </p>
-
             </>}
 
 
@@ -308,14 +288,15 @@ export default function Account() {
                             Edit
                             <FontAwesomeIcon icon={faCamera} className='fa-1x'/>
                         </div>
-                        <ProfileImg className='edit' style={{backgroundImage: `url('${currentUser.profile_picture}')`}}/>
+                        <ProfileImg  edit={true} style={{backgroundImage: `url('${currentUser.profile_picture}')`}}/>
                     </ProfileFilter>) : (
                     <ProfileFilter>
                         <div className='editPicture'>
                             Edit
                             <FontAwesomeIcon icon={faCamera} className='fa-1x'/>
                         </div>
-                        <DefaultProfile icon={faUserCircle}/>
+                        
+                        <DefaultProfile edit={true} icon={faUserCircle}/>
                     </ProfileFilter>)}</label>
                 </ProfileWrapper>
             </ProOuter>

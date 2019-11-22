@@ -68,12 +68,12 @@ export default function SidebarNav(props) {
             </div>
             </nav>
 
-            {/* only if at any of the three above routes display filter tools. */}
+            
                 
             <div className='filterToolsDiv'>
                 {(()=>{ //immediately invoked function to allow javascript inside JSX. syntax: {(()=>{})()}
                         if(props.props.location.pathname === '/Dashboard/Unassigned' | props.props.location.pathname === '/Dashboard/Mine' | props.props.location.pathname === '/Dashboard/Resolved')
-                        {
+                        {   //only if at any of the three above routes display filter tools.
                             return(
                                 <>
                                     <p> Filter by:</p>
@@ -95,7 +95,7 @@ export default function SidebarNav(props) {
                                     {props.props.location.pathname === '/Dashboard/Mine' &&
                                         <>
                                         <label> Helper/Student:
-                                        <button className="button" onClick={toggleBool}>{filterByHelperStudentBoth} Tickets</button>
+                                        <button className="button" onClick={toggleBool}>{filterByHelperStudentBoth}</button>
                                         </label>
                                         <br />
                                         <label> Status:

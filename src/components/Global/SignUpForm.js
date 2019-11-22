@@ -12,8 +12,8 @@ export default function SignUpForm(props) {
     username: "",
     password: "",
     name: "",
-    helper: false,
-    student: false,
+    helper: true,
+    student: true,
   });
   
   const [newUserEmail, setNewUserEmail] = useState('');
@@ -34,14 +34,14 @@ export default function SignUpForm(props) {
     // console.log(newUser);
   };
 
-  const toggleBool = e => {
-    // console.log('e.target.name: ', e.target.name);
-    if (e.target.name === "helper") {
-      setNewUser({ ...newUser, helper: !newUser.helper });
-    } else if (e.target.name === "student") {
-      setNewUser({ ...newUser, student: !newUser.student });
-    }
-  };
+  // const toggleBool = e => {
+  //   // console.log('e.target.name: ', e.target.name);
+  //   if (e.target.name === "helper") {
+  //     setNewUser({ ...newUser, helper: !newUser.helper });
+  //   } else if (e.target.name === "student") {
+  //     setNewUser({ ...newUser, student: !newUser.student });
+  //   }
+  // };
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -163,7 +163,7 @@ export default function SignUpForm(props) {
             <input className="text-input" name="name" onChange={handleChange} placeholder="name" />
             <input className="text-input" name="email" type="email" onChange={handleChange} placeholder="email" />
             <input className="text-input" name="cohort" type="text" onChange={handleChange} placeholder="cohort" />
-            
+{/*             
             <div className="checkbox-group">
             <label> I'm a Student&nbsp;
                 <input name="student" type="checkbox" onChange={toggleBool} />
@@ -172,7 +172,8 @@ export default function SignUpForm(props) {
                 <input name="helper" type="checkbox" onChange={toggleBool} />
               </label>
               
-            </div>
+            </div> */}
+            
             <button className="button fullwidth" type="submit">Submit</button>
           </form>
         </div>
