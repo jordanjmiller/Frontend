@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import axios from 'axios';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPencilAlt, faUserCircle, faCamera} from "@fortawesome/free-solid-svg-icons";
+import {faPencilAlt, faUserCircle, faCamera, faImages, faFileVideo} from "@fortawesome/free-solid-svg-icons";
 import LoadingOverlay from "react-loading-overlay";
 
 const StyledLoader = styled(LoadingOverlay)`

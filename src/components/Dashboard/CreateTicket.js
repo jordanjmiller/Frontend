@@ -123,7 +123,7 @@ const useInput = initialState => {
     return [value, setValue, handleChange];
 }
 
-export default function CreateTicket() {
+export default function CreateTicket(props) {
     const [loading, setLoading] = useState('');
     const [images, setImages] = useInput([]);
     const [video, setVideo] = useInput(null);
@@ -158,9 +158,9 @@ export default function CreateTicket() {
           const url  = await axiosWithAuth().post(`https://ddq.herokuapp.com/api/tickets/${ticket.data.id}/video/open`, videoData);
           console.log(url);  
         }
-
-        
         setLoading(false);
+        console.log(ticket.data.id);
+        props.history.push(`/Dashboard/Tickets/${ticket.data.id}`);
         }catch(err){
             setLoading(false);
             console.log(err.response.data.message);

@@ -2,10 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as timeago from 'timeago.js';
-import placeholder1 from '../../images/placeholder1.jpeg';
-import placeholder2 from '../../images/placeholder2.png';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPencilAlt, faUserCircle, faCamera} from "@fortawesome/free-solid-svg-icons";
+import {faPencilAlt, faUserCircle, faCamera, faImages, faFileVideo} from "@fortawesome/free-solid-svg-icons";
 
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay";
@@ -14,9 +12,18 @@ const StyledLoader = styled(LoadingOverlay)`
     width:100%;
 `;
 
-const Fa = styled(FontAwesomeIcon) `
-  width: 65px !important;
-  height: 65px;
+const InputDiv = styled.div `
+    width: 100%
+    display: flex;
+    justify-content: space-around;
+    
+`
+const FileInput = styled.input `
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
 `
 
 const ImagesDiv = styled.div `
@@ -28,20 +35,44 @@ const Image = styled.img `
   max-width: 400px;
 `
 
+const Fa = styled(FontAwesomeIcon)`
+    width: 60px !important;
+    height: 60px;
+
+    &:hover {
+        opacity: 0.5;
+        cursor: pointer;
+    }
+`
+
+const FileDiv = styled.div `
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+`
+
 export default function ViewTicket(props) {
   const { currentUser } = useContext(CurrentUserContext)
   const [loading, setLoading] = useState('');
   const [ticket, setTicket] = useState('')
   const [helperAnswer, setHelperAnswer] = useState('');
-  const ticketID = props.match.params.id;
   const [openPictures, setOpenPictures] = useState([]);
   const [resolvedPictures, setResolvedPictures] = useState([]);
   const [openVideo, setOpenVideo] = useState(null);
   const [resolvedVideo, setResolvedVideo] = useState(null);
+  const [studentPicture, setStudentPicture] = useState(null);
+  const [helperPicture, setHelperPicture] = useState(null);
+  const [images, setImages] = useState(null);
+  const [video, setVideo] = useState(null);
+  const ticketID = props.match.params.id;
   
+  console.log('PROPSSSSSSSSSSSSSSSSSSSSSSSSS',props)
   console.log('currentUser: ', currentUser);
   console.log(ticket);
 
+  // get ticket by props.match.params.ID
   useEffect(() => {
     setLoading(true);
     axiosWithAuth()
@@ -49,6 +80,7 @@ export default function ViewTicket(props) {
       .then(res => {
         console.log('getTicket res:', res.data);
         setLoading(false);
+        // setImages(res.data.resolved)
         setTicket(res.data.ticket_details);
         setOpenPictures(res.data.open_pictures);
         setResolvedPictures(res.data.resolved_pictures);
@@ -56,9 +88,10 @@ export default function ViewTicket(props) {
         setResolvedVideo(res.data.ticket_details.resolved_video);
       })
       .catch(err => {
-        console.log("CATCH ERROR: ", err.response.data.message);
+        console.log("CATCH ERROR: ", err.response.data.message, '');
         setLoading(false);
         alert(err.response.data.message);
+        props.history.push('/Dashboard/Unassigned');
       });
   }, []);
 
@@ -67,33 +100,88 @@ export default function ViewTicket(props) {
     console.log(helperAnswer);
   }
 
-  const updateAnswer = () => {
-    console.log('answerTicket() firing. answer: ')
-    // setLoading(true);
-    // axiosWithAuth()
-    //   .get(`/tickets/${ticketID}`)
-    //   .then(res => {
-    //     console.log('getTicket res:', res.data);
-    //     setLoading(false);
-    //     setTicket(res.data.ticket_details);
-    //   })
-    //   .catch(err => {
-    //     console.log("CATCH ERROR: ", err.response.data.message);
-    //     setLoading(false);
-    //     alert(err.response.data.message);
-    //   });
-  }
-
-  const resolveTicket = () => {
-    console.log('ResolveTicket() ticket.solution: ', ticket.solution)
-    if (ticket.solution !== ''){
+  const updateQuestion = () => {
+    console.log('updateQuestion() firing. ')
+    if (currentUser.name === ticket.student_name && helperAnswer !== null){
         setLoading(true);
         axiosWithAuth()
-          .post(`/tickets/${ticketID}/resolve`)
+          .put(`/tickets/${ticketID}`, helperAnswer)
+          .then(res => {
+            console.log('updateQuestion res:', res.data);
+            setLoading(false);
+            setTicket(res.data.ticket_details);
+          })
+          .catch(err => {
+            console.log("updateQuestion CATCH ERROR: ", err.response.data.message);
+            setLoading(false);
+            alert(err.response.data.message);
+          });
+    }
+    else {
+      alert('Only the creator may modify the question.');
+    }
+
+  }
+
+  const updateAnswer = () => {
+    console.log('updateAnswer() firing. ')
+    // PUT /resolved/:id
+    console.log('updateQuestion() firing. ')
+    if ((currentUser.name === ticket.student_name || currentUser.name === ticket.teacher_name) && helperAnswer !== ''){
+        setLoading(true);
+        axiosWithAuth()
+          .put(`/tickets/${ticketID}`, helperAnswer)
+          .then(res => {
+            console.log('updateQuestion res:', res.data);
+            setLoading(false);
+            setTicket(res.data.ticket_details);
+          })
+          .catch(err => {
+            console.log("updateQuestion CATCH ERROR: ", err.response.data.message);
+            setLoading(false);
+            alert(err.response.data.message);
+          });
+    }
+    else {
+      alert('You must be the creator or helper assigned and updated text cannot be null.');
+    }
+  }
+
+  const deleteTicket = () => {
+    // need to figure out a confirm button!
+    console.log('deleteTicket() firing. Say goodbye to Hollywood')
+    if (currentUser.name === ticket.student_name)
+    {
+        setLoading(true);
+        axiosWithAuth()
+          .delete(`/tickets/${ticketID}`)
+          .then(res => {
+            console.log('deleteTicket res:', res.data);
+            setLoading(false);
+            alert('Ticket deleted successfully. Sending you back to your dashboard...');
+            props.history.push('/Dashboard/Unassigned');
+          })
+          .catch(err => {
+            console.log("viewTicket.js deleteTicket() CATCH ERROR: ", err.response.data.message);
+            setLoading(false);
+            alert(err.response.data.message);
+          });
+    }
+    else {
+      alert('Only the creator of a ticket may close it.');
+    }
+  };
+
+  const resolveTicket = () => {
+    console.log('ResolveTicket() ticket.solution: ', {solution: helperAnswer})
+    if (helperAnswer !== ''){
+        setLoading(true);
+        axiosWithAuth()
+          .post(`/tickets/${ticketID}/resolve`, {solution: helperAnswer})
           .then(res => {
             console.log('resolveTicket res:', res.data);
             setLoading(false);
-            setTicket(res.data.ticket_details);
+            setTicket(res.data[0]);
           })
           .catch(err => {
             console.log("CATCH ERROR: ", err.response.data.message);
@@ -106,6 +194,64 @@ export default function ViewTicket(props) {
     }
   };
 
+  const claimTicket = () => {
+    console.log('claimTicket() firing', ticket.helper_name)
+    if (currentUser.name !== ticket.student_name && ticket.status === 'open'){
+        setLoading(true);
+        axiosWithAuth()
+          .post(`/tickets/${ticketID}/help`)
+          .then(res => {
+            console.log('claimTicket res:', res.data.ticket_details);
+            setLoading(false);
+            setTicket(res.data.ticket_details);
+          })
+          .catch(err => {
+            console.log("claimTicket CATCH ERROR: ", err.response.data.message);
+            setLoading(false);
+            alert(err.response.data.message);
+          });
+    }
+    else {
+      alert("You can't claim your own ticket.");
+    }
+  }
+
+  const releaseTicket = () => {
+    console.log('releaseTicket() firing')
+    if (ticket.helper_name === currentUser.name && ticket.status === 'assigned'){
+        setLoading(true);
+        axiosWithAuth()
+          .delete(`/tickets/${ticketID}/queue`)
+          .then(res => {
+            console.log('releaseTicket res:', res.data);
+            axiosWithAuth()
+              .get(`/tickets/${ticketID}`)
+              .then(res => {
+                console.log('getTicket res:', res.data);
+                setLoading(false);
+                setTicket(res.data.ticket_details);
+                setOpenPictures(res.data.open_pictures);
+                setResolvedPictures(res.data.resolved_pictures);
+                setOpenVideo(res.data.ticket_details.open_video);
+                setResolvedVideo(res.data.ticket_details.resolved_video);
+              })
+              .catch(err => {
+                console.log("CATCH ERROR: ", err.response.data.message);
+                setLoading(false);
+                alert(err.response.data.message);
+              });
+          })
+          .catch(err => {
+            console.log("CATCH ERROR: ", err.response.data.message);
+            setLoading(false);
+            alert(err.response.data.message);
+          });
+    }
+    else {
+      alert('You may only release a ticket that you are assigned to.');
+    }
+  }
+
   return (
 
     <StyledLoader active={loading} spinner text='Loading...'>
@@ -113,69 +259,34 @@ export default function ViewTicket(props) {
       {(()=>{
         if (ticket){
           return (
-            
           <>
             <div className='ticketNav'>
               <div className='ticketNavLeft'>
                 <div><h2>TICKET #{ticketID}</h2></div>      
               </div> 
               <nav className='ticketNavRight'>
-
-{/* Code below only displays if user is a helper */}
-
-                <button className='navLinkInternal button'>Delete</button>
-               
-                {currentUser.helper && 
-                <>
-  
-                    {ticket.helper_name === null && 
-                    <>
-                    <button className='button' to='#'>Claim</button>  
-                    </>}
-             
-                    {ticket.status === currentUser.username && 
-                    <>
-                    <button className='button' to='#'>Unclaim</button>  
-                    </>}
-                  
-                </>
-                }
-                
-                
+                {ticket.student_name === currentUser.name && <button className='navLinkInternal button' onClick={deleteTicket}>Delete</button>}
+                {ticket.student_name !== currentUser.name && ticket.helper_name === null && <button className='button' onClick={claimTicket}>Claim</button>}
+                {ticket.helper_name === currentUser.name &&  <button className='button' onClick={releaseTicket}>Release</button>}
               </nav>
             </div>
 
-
-
 {/* Status div */}
             <div className='statusDiv'>
-              
               <div className='statusBox'><h3>Category:</h3> <p>{ticket.category.toUpperCase()}</p></div>
               <div className='statusBox'><h3>Current status:</h3> <p>{ticket.status.toUpperCase()}</p></div>
               {ticket.helper_image && <div className='statusBox'><h3>Expert:</h3><img className="photo" src={ticket.helper_image} alt='Expert image'/></div>}
               {ticket.student_image && <div className='statusBox'><h3>Student:</h3><img className="photo" src={ticket.student_image} alt='Student image'/></div>}
               {!ticket.helper_image && <div className='statusBox'><h3>Expert:</h3><Fa icon={faUserCircle}/></div>}
-              {!ticket.student_image && <div className='statusBox'><h3>Student:</h3><Fa icon={faUserCircle}/></div>}
-              
-             
-                
+              {!ticket.student_image && <div className='statusBox'><h3>Student:</h3><Fa icon={faUserCircle}/></div>} 
             </div> 
-          
-          {/* Top div */}
+{/* End Status Div */}
 
-            {/* {ticket.status === 'open' && 
-              <div className='topDiv'>
-                <p>{ticket.student_name} created a new help request.</p>
-                <p>{timeago.format(ticket.created_at)}</p>
-                <br /><br /><br />
-              </div> 
-            } */}
-
+{/* Top div */}
             {ticket.status === 'assigned' && 
               <>
               {ticket.solution && 
               <div className='topDiv'>
-              {/* <p>Status: {ticket.status} : </p>  */}
               <p> {ticket.helper_name} has answered your question.</p>
               {/* timeago here, answered at time variable does not exists*/}
               </div> }
@@ -196,60 +307,67 @@ export default function ViewTicket(props) {
 
 {/* End Top div */}
             
-{/* Start student question div  */}
+{/* Student question div  */}
 
             <div className='studentDiv'>
               <div className='studentDivHeader'>
-                <div><p>Student {ticket.student_name} asked:</p></div>
+                <div><p>{ticket.student_name} asked:</p></div>
                 <div className='secondDiv'><p>{timeago.format(ticket.created_at)}</p></div>
               </div>
               <div><p>Title: {ticket.title}</p></div>
               <p>Description: {ticket.description}</p>
-              {openPictures.length > 0 && openPictures.map(image => <Image key={image} src={image}/>)}
-              {openVideo && <iframe src={openVideo}/>}
+
+              <div className='mediaDiv'>{openPictures.length > 0 && openPictures.map(image => <Image key={image} src={image.url}/>)}</div>
+              <div className='mediaDiv'>{openVideo && <iframe src={openVideo}/>}</div>
+              {currentUser.name === ticket.student_name && <button className='button' onClick={updateQuestion}>Update</button>}
             </div>
 
-            {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE STUDENT DIV
-            OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
-
 {/* End student question div  */}
-{/* Start helper response div  */}
 
-{/* commented this out: {ticket.status !== 'open' && */}
+{/* Answer div  */}
 
-            {ticket.status &&
-              <>
               {ticket.solution && 
               <div className='helperDiv'>
-              <div>Helper {ticket.helper_name} replied:</div>
-              <p>{timeago.format(ticket.resolved_at)}</p>
-              <p>{ticket.solution}</p>
+                <div>{ticket.helper_name} replied:</div>
+                <p>{timeago.format(ticket.resolved_at)}</p>
+                <p>{ticket.solution}</p>
+
+                <div className='mediaDiv'>{resolvedPictures.length > 0 && openPictures.map(image => <Image key={image} src={image.url}/>)}</div>
+                <div className='mediaDiv'>{resolvedVideo && <iframe src={resolvedVideo} />}</div>
+                {currentUser.name === ticket.student_name && <button className='button' onClick={updateAnswer}>Update</button>}
               </div>}
 
-{/* Answer box displays only if user is a helper */}
+{/* End answer div */}
 
-              {currentUser.helper && 
+{/* Answer box div */}
+    {/* displays only if user is assigned to the ticket (creator or helper assigned) */}
+              {currentUser.name === ticket.helper_name || currentUser.name === ticket.student_name && 
               <div className='answerContainer'>
-                  <div className='answerBox'>
-                  <h3>Write answer here:</h3>
-                  <textarea onChange={handleInput}></textarea>
-                  {/* <input type='text' placeholder="" onChange={handleInput} /> */}
-                  
-                  </div>
-                  <button className="button" onClick={resolveTicket}>Submit Answer</button>
+              <div className='answerBox'>
+                <h3>Write answer here:</h3>
+                <textarea onChange={handleInput}></textarea>
+              </div>
+              <div>
+                    <FileInput id='imageInput' className='input' type='file'  accept=".tiff,.jpeg,.gif,.png" onChange={e => setImages(e.target.files)} multiple/>
+                    <FileInput id='videoInput' className='input' type='file' accept=".avi,.mov,.mp4" onChange={e => setVideo(e.target.files[0])}/>
+                    <label style={{cursor: 'pointer'}} htmlFor='imageInput'>
+                        <FileDiv>
+                            <Fa icon={faImages}/><p>Add images</p>
+                        </FileDiv>
+                    </label>
+                    {images && Array.from(images).map(image => <p key={image.name}>{image.name}</p>)}
+                    <label style={{cursor: 'pointer'}} htmlFor='videoInput'>
+                        <FileDiv>
+                            <Fa icon={faFileVideo}/><p>Add a video</p>
+                        </FileDiv>
+                    </label>
+                <button className="button" onClick={resolveTicket}>Submit Answer</button>
+                </div>
               </div>}
-              
-              </>
-            }
-            {/* IF PHOTOS/VIDEOS STICK THEM HERE AT BOTTOM OF INSIDE HELPER DIV
-            OR MAKE ANOTHER DIV POP UP IF THE VALUES ARE NOT NULL FOR PHOTO/VIDEO */}
-            {resolvedPictures.length > 0 && openPictures.map(image => <Image key={image} src={image}/>)}
-            {resolvedVideo && <iframe src={resolvedVideo} />}
           </>
           );}})()}
    
-    </section>  
-  
+    </section>
     </StyledLoader>
   );
   
@@ -263,20 +381,21 @@ export default function ViewTicket(props) {
 //   }
 // })()}
 
-
 // {
 //   "ticket_details": {
-//     "id": 2,
-//     "title": "Where is he?",
-//     "category": "lost cousin",
-//     "description": "I cannot find Mose",
-//     "created_at": "2019-11-20T14:45:12.503Z",
+//     "id": 14,
+//     "title": "How do I style a select dropdown with only CSS?",
+//     "category": "CSS",
+//     "description": "Is tari",
+//     "created_at": "2019-11-22T09:08:28.189Z",
 //     "open_video": null,
+//     "student_image": null,
+//     "helper_image": null,
 //     "resolved_video": null,
 //     "solution": null,
-//     "student_name": "Dwight Schrute",
-//     "helper_name": "Creed Bratton",
-//     "status": "assigned",
+//     "student_name": "Chelsea Wetzel",
+//     "helper_name": null,
+//     "status": "open",
 //     "resolved_at": null
 //   },
 //   "open_pictures": [],
