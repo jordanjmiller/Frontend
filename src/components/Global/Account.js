@@ -4,7 +4,12 @@ import styled from 'styled-components';
 import { axiosWithAuth } from '../../utils/axiosWithAuth';
 import axios from 'axios';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPencilAlt, faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import {faPencilAlt, faUserCircle, faCamera} from "@fortawesome/free-solid-svg-icons";
+import LoadingOverlay from "react-loading-overlay";
+
+const StyledLoader = styled(LoadingOverlay)`
+    width:100%;
+`;
 
 const OuterDiv = styled.div `
     width: 100%;
@@ -21,11 +26,15 @@ const Div = styled.div `
     background: white;
     margin: 10rem auto;
     padding: 3rem;
+    text-align: center;
 `
-const Fa = styled(FontAwesomeIcon)`
-    width: 200px !important;
-    height: 200px;
+const ProOuter = styled.div `
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
+
 
 const MarginButton = styled.button `
     margin-top: 25px;
@@ -37,21 +46,77 @@ const PasswordDiv = styled.div `
     color: #BF0033;
 `
 
-const ProfilePicture = styled.div `
+const ImageInput = styled.input `
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+    width: 1px;
+    height: 1px;
+`
+const DefaultProfile = styled(FontAwesomeIcon) `
+    position: absolute;
+    width: 200px !important;
+    height: 200px;
+    border-radius: 50%;
+    background: white;
+
+
+    &:hover {
+        opacity: 0.2;
+    }
+`
+const shouldEditPic =  true ? (styled.div `
+            position: absolute;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+
+            &:hover {
+                opacity: 0.2;
+            }
+        `)
+    :
+     (styled.div `
+        position: absolute;
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    `)
+
+const ProfileImg = test;
+const ProfileWrapper = styled.div `
+    width: 200px;
+    height: 200px;
+    margin: 2rem;
+`
+
+const ProfileFilter = styled.div `
+    cursor: pointer;
+    font-family: 'Patua One', sans-serif;
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    margin: 0 auto;
+    display: flex;
+    font-size: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    .editPicture {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 `
 
+
 export default function Account() {
-
-
     const { currentUser } = useContext(CurrentUserContext);
-
+    const [loading, setLoading] = useState('');
     const [showEditForm, setShowEditForm] = useState(false);
 
     // state for when the user edits their account details
@@ -133,7 +198,7 @@ export default function Account() {
             const response = await axios.all(promises);
             }catch(err){
                 console.log("Edit Account Catch Error: ", err.response.data.message);
-                alert(err);
+                alert(err.response.data.message);
             }
         }
     }
@@ -202,9 +267,29 @@ export default function Account() {
 
     return (
         <OuterDiv>
-        <Div className='card'>    
+        <Div className='card'> 
+    <StyledLoader active={loading} spinner text='Uploading...'> 
             {!showEditForm && <>
-                {currentUser.profile_picture && <ProfilePicture style={{backgroundImage: `url('${currentUser.profile_picture}')`}}/> || <Fa icon={faUserCircle}/>}
+                {currentUser.profile_picture && 
+                    <ProOuter>
+                        <ProfileWrapper>
+                            {currentUser.profile_picture ? (
+                            <ProfileFilter>
+                                <div className='editPicture'>
+                                    Edit
+                                    <FontAwesomeIcon icon={faCamera} className='fa-1x'/>
+                                </div>
+                                <ProfileImg className='edit' style={{backgroundImage: `url('${currentUser.profile_picture}')`}}/>
+                            </ProfileFilter>) : (
+                            <ProfileFilter>
+                                <div className='editPicture'>
+                                    Edit
+                                    <FontAwesomeIcon icon={faCamera} className='fa-1x'/>
+                                </div>
+                                <DefaultProfile icon={faUserCircle}/>
+                            </ProfileFilter>)}
+                        </ProfileWrapper>
+                    </ProOuter>}
                 <p className> <h3 className="bold">Username:</h3> {currentUser.username}</p>
                 <p><h3 className="bold">Name:</h3> {currentUser.name}</p>
                 <p><h3 className="bold">Email:</h3> {currentUser.email !== null ? currentUser.email : 'None'} </p>
@@ -214,12 +299,31 @@ export default function Account() {
 
 
             {showEditForm && <form onSubmit={handleSubmit}>
-
-            <label><h3 className="bold">Username:</h3>
+            <ImageInput type='file' onChange={e => setProfilePicture(e.target.files[0])} id='imageInput'/>
+            <ProOuter>
+                <ProfileWrapper>
+                    <label htmlFor='imageInput'>{currentUser.profile_picture ? (
+                    <ProfileFilter>
+                        <div className='editPicture'>
+                            Edit
+                            <FontAwesomeIcon icon={faCamera} className='fa-1x'/>
+                        </div>
+                        <ProfileImg className='edit' style={{backgroundImage: `url('${currentUser.profile_picture}')`}}/>
+                    </ProfileFilter>) : (
+                    <ProfileFilter>
+                        <div className='editPicture'>
+                            Edit
+                            <FontAwesomeIcon icon={faCamera} className='fa-1x'/>
+                        </div>
+                        <DefaultProfile icon={faUserCircle}/>
+                    </ProfileFilter>)}</label>
+                </ProfileWrapper>
+            </ProOuter>
+            <label><h3 className="bold">Username:</h3>    
                 <input className="text-input" name="username" onChange={handleChange} placeholder={currentUser.username} type="text"/> 
             </label>
             <div>
-                <label>Picture:<input type='file' onChange={e => setProfilePicture(e.target.files[0])}/></label>
+                
             </div>
             <label><h3 className="bold">Name:</h3>
                 <input className="text-input" name="name" onChange={handleChange} placeholder={currentUser.name} />
@@ -232,7 +336,6 @@ export default function Account() {
             </label> 
             <label><h3 className="bold">Cohort:</h3>
                 <input className="text-input" name="cohort" type="text" onChange={handleChange} placeholder={currentUser.cohort !== null ? currentUser.cohort : ''} />
-            
             </label>
                   
             <label><h3 className="bold">New password:</h3>
@@ -250,6 +353,7 @@ export default function Account() {
             </form> }
 
             <MarginButton className="button" onClick={() => setShowEditForm(!showEditForm)}>{showEditForm && 'Cancel'}{!showEditForm && 'Edit'}</MarginButton>
+            </StyledLoader>  
         </Div>
         </OuterDiv>
     )

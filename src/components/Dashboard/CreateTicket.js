@@ -3,6 +3,11 @@ import styled from 'styled-components';
 import {axiosWithAuth} from '../../utils/axiosWithAuth';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileVideo, faImages} from "@fortawesome/free-solid-svg-icons";
+import LoadingOverlay from "react-loading-overlay";
+
+const StyledLoader = styled(LoadingOverlay)`
+    width:100%;
+`;
 
 const OuterDiv = styled.div `
     width: 100%;
@@ -119,6 +124,7 @@ const useInput = initialState => {
 }
 
 export default function CreateTicket() {
+    const [loading, setLoading] = useState('');
     const [images, setImages] = useInput([]);
     const [video, setVideo] = useInput(null);
     const [category, setCategory, handleCategory] = useInput('');
@@ -138,6 +144,7 @@ export default function CreateTicket() {
         }
         
         try{
+        setLoading(true);
         const ticket = await axiosWithAuth().post('https://ddq.herokuapp.com/api/tickets', ticketDetails);
     
         if(images){
@@ -152,15 +159,19 @@ export default function CreateTicket() {
           console.log(url);  
         }
 
-  
+        
+        setLoading(false);
         }catch(err){
-          console.log(err);
+            setLoading(false);
+            console.log(err.response.data.message);
+            alert(err.response.data.message);
         }
     }
 
     return (
         <OuterDiv>
             <Div>
+    <StyledLoader active={loading} spinner text='Uploading...'>
                 <h1> Create a Ticket</h1>
                 <Form onSubmit={handleSubmit}>
                 <MarginDiv>
@@ -188,6 +199,7 @@ export default function CreateTicket() {
                     <Button className='input' type='submit'>Submit</Button>
                 </MarginDiv>
                 </Form>
+    </StyledLoader>
             </Div>
         </OuterDiv>
     )
