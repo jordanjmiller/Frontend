@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import axios from 'axios';
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import * as timeago from 'timeago.js';
@@ -64,7 +65,7 @@ export default function ViewTicket(props) {
   const [resolvedVideo, setResolvedVideo] = useState(null);
   const [studentPicture, setStudentPicture] = useState(null);
   const [helperPicture, setHelperPicture] = useState(null);
-  const [images, setImages] = useState(null);
+  const [images, setImages] = useState([]);
   const [video, setVideo] = useState(null);
   const ticketID = props.match.params.id;
   
@@ -105,7 +106,7 @@ export default function ViewTicket(props) {
     if (currentUser.name === ticket.student_name && helperAnswer !== null){
         setLoading(true);
         axiosWithAuth()
-          .put(`/tickets/${ticketID}`, helperAnswer)
+          .put(`/tickets/${ticketID}`, {solution: helperAnswer})
           .then(res => {
             console.log('updateQuestion res:', res.data);
             setLoading(false);
@@ -130,7 +131,7 @@ export default function ViewTicket(props) {
     if ((currentUser.name === ticket.student_name || currentUser.name === ticket.teacher_name) && helperAnswer !== ''){
         setLoading(true);
         axiosWithAuth()
-          .put(`/tickets/${ticketID}`, helperAnswer)
+          .put(`/tickets/${ticketID}`, {solution: helperAnswer})
           .then(res => {
             console.log('updateQuestion res:', res.data);
             setLoading(false);
@@ -172,22 +173,43 @@ export default function ViewTicket(props) {
     }
   };
 
-  const resolveTicket = () => {
+  const resolveTicket = async () => {
     console.log('ResolveTicket() ticket.solution: ', {solution: helperAnswer})
+    const promises = [];
     if (helperAnswer !== ''){
         setLoading(true);
-        axiosWithAuth()
-          .post(`/tickets/${ticketID}/resolve`, {solution: helperAnswer})
-          .then(res => {
-            console.log('resolveTicket res:', res.data);
-            setLoading(false);
-            setTicket(res.data[0]);
-          })
-          .catch(err => {
-            console.log("CATCH ERROR: ", err.response.data.message);
-            setLoading(false);
-            alert(err.response.data.message);
-          });
+        try{
+          promises.push(axiosWithAuth().post(`/tickets/${ticketID}/resolve`, {solution: helperAnswer}));
+          // .then(res => {
+          //   console.log('resolveTicket res:', res.data);
+          //   setLoading(false);
+          //   setTicket(res.data[0]);
+          // })
+          // .catch(err => {
+          //   console.log("CATCH ERROR: ", err.response.data.message);
+          //   setLoading(false);
+          //   alert(err.response.data.message);
+          // });
+          if(video){
+            const videoData = new FormData();
+            videoData.append('video', video);
+            const url  = await axiosWithAuth().post(`https://ddq.herokuapp.com/api/tickets/${ticket.data.id}/video/resolved`, videoData);
+            console.log(url);  
+          }
+          if(images.length){
+            const imagesData = new FormData();
+            for(let i = 1; i <= images.length; i++) {
+                imagesData.append('image' + i, images[i-1]);
+            }
+            const urls  = await axiosWithAuth().post(`https://ddq.herokuapp.com/api/tickets/${ticket.data.id}/pictures/resolved`, imagesData);
+        }
+          const result = await axios.all(promises);
+          setLoading(false);
+        }catch(err){
+          console.log("viewTicket.js deleteTicket() CATCH ERROR: ", err);
+          setLoading(false);
+          alert(err);
+        };
     }
     else {
       alert('You must submit an answer to close the ticket.');
@@ -277,33 +299,12 @@ export default function ViewTicket(props) {
               <div className='statusBox'><h3>Current status:</h3> <p>{ticket.status.toUpperCase()}</p></div>
               {ticket.helper_image && <div className='statusBox'><h3>Expert:</h3><img className="photo" src={ticket.helper_image} alt='Expert image'/></div>}
               {ticket.student_image && <div className='statusBox'><h3>Student:</h3><img className="photo" src={ticket.student_image} alt='Student image'/></div>}
-              {!ticket.helper_image && <div className='statusBox'><h3>Expert:</h3><Fa icon={faUserCircle}/></div>}
+              {ticket.helper_name && !ticket.helper_image && <div className='statusBox'><h3>Expert:</h3><Fa icon={faUserCircle}/></div>}
               {!ticket.student_image && <div className='statusBox'><h3>Student:</h3><Fa icon={faUserCircle}/></div>} 
             </div> 
 {/* End Status Div */}
 
 {/* Top div */}
-            {ticket.status === 'assigned' && 
-              <>
-              {ticket.solution && 
-              <div className='topDiv'>
-              <p> {ticket.helper_name} has answered your question.</p>
-              {/* timeago here, answered at time variable does not exists*/}
-              </div> }
-              {!ticket.solution && 
-              <div className='topDiv'>
-              <p> {ticket.helper_name.toUpperCase()} has accepted your question and will be in touch shortly.</p>
-              {/* timeago here, assigned at time variable does not exists*/}
-              </div> }
-              </>
-            }
-
-            {ticket.status === 'resolved' && 
-              <div className='topDiv'>
-              {/* <p>Status: {ticket.status}</p> */}
-              </div> 
-              // remove mark closed button if closed
-            }
 
 {/* End Top div */}
             
@@ -336,18 +337,17 @@ export default function ViewTicket(props) {
                 <div className='mediaDiv'>{resolvedVideo && <iframe src={resolvedVideo} />}</div>
                 {currentUser.name === ticket.student_name && <button className='button' onClick={updateAnswer}>Update</button>}
               </div>}
-
 {/* End answer div */}
 
 {/* Answer box div */}
     {/* displays only if user is assigned to the ticket (creator or helper assigned) */}
-              {currentUser.name === ticket.helper_name || currentUser.name === ticket.student_name && 
+              {(currentUser.name === ticket.helper_name || currentUser.name === ticket.student_name) && 
               <div className='answerContainer'>
               <div className='answerBox'>
                 <h3>Write answer here:</h3>
                 <textarea onChange={handleInput}></textarea>
               </div>
-              <div>
+              <div className='uploadDiv'>
                     <FileInput id='imageInput' className='input' type='file'  accept=".tiff,.jpeg,.gif,.png" onChange={e => setImages(e.target.files)} multiple/>
                     <FileInput id='videoInput' className='input' type='file' accept=".avi,.mov,.mp4" onChange={e => setVideo(e.target.files[0])}/>
                     <label style={{cursor: 'pointer'}} htmlFor='imageInput'>
@@ -361,7 +361,9 @@ export default function ViewTicket(props) {
                             <Fa icon={faFileVideo}/><p>Add a video</p>
                         </FileDiv>
                     </label>
-                <button className="button" onClick={resolveTicket}>Submit Answer</button>
+                    {video && <p>{video.name}</p>}
+                {ticket.status === 'open' && <button className="button" onClick={resolveTicket}>Submit Answer</button>}
+                {ticket.status === 'assigned' && <button className="button" onClick={updateAnswer}>Update Answer</button>}
                 </div>
               </div>}
           </>

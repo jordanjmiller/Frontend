@@ -69,7 +69,7 @@ export default function ClosedTicketList() {
                     if (shouldReturn === true){
                         return (
                             <tr key={ticket.id}><ClosedTicket id={ticket.id} student_name={ticket.student_name} category={ticket.category} 
-                            title={ticket.title} description={ticket.description} created_at={ticket.created_at} /></tr> )
+                            title={ticket.title} description={ticket.description} created_at={ticket.created_at} student_image={ticket.student_image} helper_image={ticket.helper_image}/></tr> )
                     }
                     else{return null}
                     })}

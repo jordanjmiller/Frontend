@@ -2,11 +2,10 @@ import React, {useEffect, useState, useContext} from 'react';
 import { axiosWithAuth } from '../../../utils/axiosWithAuth';
 import axios from 'axios';
 import MyTicket from './MyTicket';
-
 import { CurrentUserContext } from '../../../contexts/CurrentUserContext.js';
-
 import styled from "styled-components";
 import LoadingOverlay from "react-loading-overlay";
+
 const StyledLoader = styled(LoadingOverlay)`
     min-height: 100vh;
     width:100%;
@@ -37,9 +36,20 @@ export default function UserTicketList() {
                         }
                     }
                 }
+
                 setLoading(false);
-                setAllUserTickets([...hey])
+                const yo = [];
+                const mommo = [];
+                for(let val of hey){
+                    if(yo.indexOf(val.id) == -1){
+                        yo.push(val.id);
+                        mommo.push(val);
+                    }
+                }
+                setAllUserTickets(mommo);
+                
                 // console.log(hey);
+                console.log('after', allUserTickets);
             }catch(err){
                 console.log('CATCH ERROR: ', err);
                 setLoading(false);
@@ -105,7 +115,7 @@ export default function UserTicketList() {
                         if (shouldReturn === true){
                             return (
                                 <tr key={ticket.id}><MyTicket id={ticket.id} currentUser={currentUser} student_name={ticket.student_name} category={ticket.category} 
-                                title={ticket.title} description={ticket.description} status={ticket.status} created_at={ticket.created_at} /></tr> )
+                                title={ticket.title} description={ticket.description} status={ticket.status} created_at={ticket.created_at} student_image={ticket.student_image} helper_image={ticket.helper_image}/></tr> )
                         }
                         else{return null}
                 })}

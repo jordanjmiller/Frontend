@@ -22,7 +22,8 @@ export default function OpenTicketList() {
         axiosWithAuth().get('/tickets/open')
         
         .then(res => {
-            // console.log(res.data)
+            //console.log(res.data)
+            //console.log(res.data);
             setOpenTickets(res.data)
             setLoading(false);
         })
@@ -72,7 +73,7 @@ export default function OpenTicketList() {
                         if (shouldReturn === true){
                             return (
                                 <tr key={ticket.id}><OpenTicket id={ticket.id} currentUser={currentUser} student_name={ticket.student_name} category={ticket.category} 
-                                title={ticket.title} description={ticket.description} created_at={ticket.created_at} /></tr> )
+                                title={ticket.title} description={ticket.description} created_at={ticket.created_at} student_image={ticket.student_image}/></tr> )
                         }
                         else{return null}
                         })}
