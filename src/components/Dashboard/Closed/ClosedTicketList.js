@@ -36,10 +36,10 @@ export default function ClosedTicketList() {
         <StyledLoader active={loading} spinner text='Loading...'>
             <table className='tickettable'>
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
+                <tr>
+                        <th className='firstTh'>Students</th>
                         <th>Subject</th>
+                        <th>Title</th>
                         <th>Age</th>
                         <th>Link</th>
                     </tr>

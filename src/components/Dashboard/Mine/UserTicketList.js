@@ -53,11 +53,10 @@ export default function UserTicketList() {
         <StyledLoader active={loading} spinner text='Loading...'>
             <table className='tickettable'>
                 <thead>
-                    <tr>
-                        <th>Status</th>
-                        <th>User</th>
+                      <tr>
+                        <th className='firstTh'>Students</th>
                         <th>Subject</th>
-                        <th>Description</th>
+                        <th>Title</th>
                         <th>Age</th>
                         <th>Link</th>
                     </tr>
@@ -86,7 +85,7 @@ export default function UserTicketList() {
                             }
                         }
 
-                        if (filterByOpenClosedAll === 'Closed' && ticket.status !== 'resolved')
+                        if (filterByOpenClosedAll === 'Resolved' && ticket.status !== 'resolved')
                         {
                             shouldReturn = false;
                         }

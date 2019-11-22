@@ -9,7 +9,7 @@ export default function OpenTicket(props) {
         <>
 
             {/* <td className='boldrows'>{props.student_name}</td>  */}
-            <td className='photo'><div><img className="photo" src={placeholder1} alt='Student image'/><img className="photo2" src={placeholder2} alt='Student image'/></div><div>{props.student_name}</div></td>
+            <td><div><img className="photo" src={placeholder1} alt='Student'/></div><div>{props.student_name}</div></td>
             <td className='boldrows'>{props.category}</td>
             <td>{props.title}</td>
             {/* <td>{props.description}</td> */}

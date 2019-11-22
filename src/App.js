@@ -8,7 +8,6 @@ import LoadingOverlay from "react-loading-overlay";
 import Header from './components/Global/Header';
 import LandingPage from './components/Global/LandingPage';
 import Login from './components/Global/Login';
-import LogOut from './components/Global/LogOut';
 import SignUpForm from './components/Global/SignUpForm';
 import Footer from './components/Global/Footer';
 import Credits from './components/Global/Credits';
@@ -63,7 +62,6 @@ function App(props) {
           <Route exact path='/Credits' render={Credits} />
           {!loading && 
           <div className="main-content">
-            <Route exact path='/LogOut' render={props => <LogOut {...props} />} />
             <Route exact path='/Register' render={props => <SignUpForm {...props} />} />
 
             <PrivateRoute path='/Dashboard' component={Dashboard} props={props} />

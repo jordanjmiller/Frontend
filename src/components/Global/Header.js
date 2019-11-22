@@ -11,7 +11,6 @@ export default function Header(props) {
     const logout = () => {
         sessionStorage.removeItem('token');
         setCurrentUser('');
-        alert('Logged out successfully. Come back soon!');
         props.history.push('/');
     }
 

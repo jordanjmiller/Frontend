@@ -43,9 +43,9 @@ export default function SidebarNav(props) {
             setFilterByOpenClosedAll('Open');
         }
         else if (filterByOpenClosedAll === 'Open') {
-            setFilterByOpenClosedAll('Closed');
+            setFilterByOpenClosedAll('Resolved');
         }
-        else if (filterByOpenClosedAll === 'Closed') {
+        else if (filterByOpenClosedAll === 'Resolved') {
             setFilterByOpenClosedAll('All');
         }
       }
@@ -89,21 +89,17 @@ export default function SidebarNav(props) {
                                         </select>
                                     </div>
                                     <input  className='searchBox' name="searchTerm" type="text" onChange={handleChange} value={searchTerm} placeholder="Filter" />
-                                    {/* was {`${searchType}...`} */}
-                                    {/* </label> */}
                                     <br />
                                     <button className="button" onClick={clearSearchTerm}>Clear</button>
                                     <br />
                                     {props.props.location.pathname === '/Dashboard/Mine' &&
                                         <>
                                         <label> Helper/Student:
-                                        <br />
-                                        <button onClick={toggleBool}>{filterByHelperStudentBoth} Tickets</button>
+                                        <button className="button" onClick={toggleBool}>{filterByHelperStudentBoth} Tickets</button>
                                         </label>
                                         <br />
-                                        <label> Display:
-                                        <br />
-                                        <button onClick={toggleButton}>{filterByOpenClosedAll} Tickets</button>
+                                        <label> Status:
+                                        <button className="button" onClick={toggleButton}>{filterByOpenClosedAll}</button>
                                         </label>
                                         </>
                                     }

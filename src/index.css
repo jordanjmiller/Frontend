@@ -441,7 +441,7 @@ header + section:first-of-type {
   background-color: #c3cfd9;
   border: 1px solid black;
   border-top: none;
-  width: 20%;
+  width: 25%;
   min-height: 100vh;
 }
 .filterToolsDiv {
@@ -487,6 +487,21 @@ tbody td,
 thead th {
   padding: 2%;
 }
+thead tr th:first-child {
+  width: 30%;
+}
+thead tr th:nth-child(2) {
+  width: 10%;
+}
+thead tr th:nth-child(3) {
+  width: 30%;
+}
+thead tr th:nth-child(4) {
+  width: 15%;
+}
+thead tr th:nth-child(5) {
+  width: 15%;
+}
 tbody tr {
   border-bottom: 1px solid #788896;
 }
@@ -500,6 +515,14 @@ th {
   position: sticky;
   top: 70px;
   background: white;
+  z-index: 99999999;
+}
+.firstTh {
+  text-align: left;
+  padding-left: 10%;
+}
+td div {
+  text-align: center;
 }
 .App {
   text-align: center;
@@ -619,7 +642,7 @@ th {
   margin-bottom: 20px;
 }
 .photo {
-  height: 75px;
+  height: 65px;
   border-top-left-radius: 1px;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 3px;
@@ -631,7 +654,7 @@ th {
   margin-left: 5%;
 }
 .photo2 {
-  height: 75px;
+  height: 65px;
   border-top-left-radius: 1px;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 3px;

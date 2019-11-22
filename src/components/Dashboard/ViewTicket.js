@@ -77,6 +77,9 @@ export default function ViewTicket(props) {
             alert(err.response.data.message);
           });
     }
+    else {
+      alert('You must submit an answer to close the ticket.');
+    }
   };
 
   return (
@@ -125,8 +128,8 @@ export default function ViewTicket(props) {
               
               <div className='statusBox'><h3>Category:</h3> <p>{ticket.category.toUpperCase()}</p></div>
               <div className='statusBox'><h3>Current status:</h3> <p>{ticket.status.toUpperCase()}</p></div>
-              <div className='statusBox'><h3>Helper:</h3><img className="photo" src={placeholder1} alt='Student image'/></div>
-              <div className='statusBox'><h3>Student:</h3><img className="photo" src={placeholder2} alt='Placeholder image'/></div>
+              <div className='statusBox'><h3>Expert:</h3><img className="photo" src={placeholder1} alt='Expert image'/></div>
+              <div className='statusBox'><h3>Student:</h3><img className="photo" src={placeholder2} alt='Student image'/></div>
               
              
                 
@@ -204,7 +207,7 @@ export default function ViewTicket(props) {
                   {/* <input type='text' placeholder="" onChange={handleInput} /> */}
                   
                   </div>
-                  <button className="button" onClick={updateAnswer}>Submit Answer</button>
+                  <button className="button" onClick={resolveTicket}>Submit Answer</button>
               </div>}
               
               </>

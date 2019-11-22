@@ -39,7 +39,7 @@ export default function OpenTicketList() {
             <table className='tickettable'>
                 <thead>
                     <tr>
-                        <th></th>
+                        <th className='firstTh'>Student</th>
                         <th>Subject</th>
                         <th>Title</th>
                         <th>Age</th>
