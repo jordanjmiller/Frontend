@@ -1,0 +1,65 @@
+
+header {
+    position: sticky;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    background-color: #fff;
+    height: 75px;
+    .flex(space-between, center);
+    padding: 0 40px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+
+    @media @phone-sm {
+        .flex(center, center, column);
+        height: initial;
+    }
+
+     // link surrounding logo
+    a:first-child {
+        // height: 100%;
+        position: relative;
+
+        @media @phone-sm {
+            margin-top: 2.5rem;
+        }
+    }
+
+    .logo {
+        height: 35px;
+        position: relative;
+        top: 6px;
+
+        @media @phone-sm {
+            height: 45px;
+        }
+    }
+
+    nav {
+        .flex(space-around, center);
+
+        @media @phone-sm {
+            .flex(center, center, column);
+        }
+
+        a {
+            margin-left: 4rem;
+            text-decoration: none;
+            color: @darkpurp;
+            font-weight: @bold-font-weight;
+
+            @media @phone-sm {
+                margin: 1.5rem 0;
+            }
+        }
+        button{
+            margin-left: 4rem;
+        }
+
+        .active{
+        color: @secondary-red;
+        }
+    }
+
+}
